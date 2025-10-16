@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FinMMEval Lab 2026</title>
+  <meta name="description" content="CLEF‑2026 shared task on financial reasoning: tasks, data, baselines, submission, timeline, and organizers." />
+  <link rel="icon" href="logo.jpg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+          colors: {
+            brand: {
+              50: '#ecfeff', 100: '#cffafe', 200: '#a5f3fc', 300: '#67e8f9', 400: '#22d3ee',
+              500: '#06b6d4', 600: '#0891b2', 700: '#0e7490', 800: '#155e75', 900: '#164e63'
+            },
+            money: {
+              50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399',
+              500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b'
+            }
+          },
+          boxShadow: {
+            glow: '0 0 0 4px rgba(16,185,129,0.15), 0 0 40px rgba(6,182,212,0.25)'
+          },
+          backgroundImage: {
+            'grid': 'linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px)',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Smooth fade-in */
+    .fade-in { animation: fadeIn 1s ease both; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: none; } }
+
+    /* Video overlay gradient */
+    .hero-overlay { background: radial-gradient(1200px 600px at 20% 10%, rgba(6,182,212,.35), transparent 60%), linear-gradient(180deg, rgba(2,6,23,.80), rgba(2,6,23,.75) 30%, rgba(2,6,23,.95)); }
+
+    /* Glass effect */
+    .glass { background: rgba(255,255,255,0.06); backdrop-filter: saturate(140%) blur(10px); border: 1px solid rgba(255,255,255,0.10); }
+
+    /* Section separators */
+    .divider { background: linear-gradient(90deg, rgba(16,185,129,0.0), rgba(16,185,129,0.6), rgba(16,185,129,0.0)); height: 1px; }
+
+    .timeline-dot {
+        position: absolute;
+        left: -30px;
+        top: 0.75rem;
+        height: 0.75rem;
+        width: 0.75rem;
+        border-radius: 9999px;
+        background-color: #34d399;
+        box-shadow: 0 0 0 3px rgba(16,185,129,0.15), 0 0 10px rgba(6,182,212,0.25);
+    }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-money-400/30 selection:text-white">
+  <!-- NAVBAR -->
+  <header class="fixed top-0 inset-x-0 z-40">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <nav class="mt-4 glass rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between shadow-glow">
+        <a href="#home" class="flex items-center gap-2">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-money-500 shadow-lg"><img src="logo.jpg" alt="Logo" /></span>
+          <span class="font-extrabold tracking-tight text-lg">FinMMEval Lab 2026</span>
+        </a>
+        <button id="menuBtn" class="lg:hidden rounded-xl px-3 py-2 hover:bg-white/10" aria-label="Open menu">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M4 12h16M4 18h16" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+        <ul id="navLinks" class="hidden lg:flex items-center gap-5 text-sm font-medium">
+          <li><a href="#about" class="hover:text-money-300">About</a></li>
+          <li><a href="#tasks" class="hover:text-money-300">Tasks</a></li>
+          <li><a href="#timeline" class="hover:text-money-300">Timeline</a></li>
+          <li><a href="#submission" class="hover:text-money-300"><b><u>Join In</u></b></a></li>
+          <li><a href="#organizers" class="hover:text-money-300">Organizers</a></li>
+          <li><a href="#faq" class="hover:text-money-300">FAQ</a></li>
+        </ul>
+      </nav>
+    </div>
+    <!-- mobile menu -->
+    <div id="mobileMenu" class="lg:hidden hidden mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mt-2 glass rounded-xl p-3">
+        <ul class="grid grid-cols-2 gap-2 text-sm">
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#about">About</a></li>
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#tasks">Tasks</a></li>
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#timeline">Timeline</a></li>
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#submission"><b><u>Join In</u></b></a></li>
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#organizers">Organizers</a></li>
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#faq">FAQ</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <!-- Constant background video covering the whole page -->
+  <!-- video class="fixed inset-0 w-full h-full object-cover opacity-40 -z-10" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1553729459-efe14ef6055d?q=80&w=1600&auto=format&fit=crop">
+    <source src="https://videos.pexels.com/video-files/3130140/3130140-uhd_2560_1440_30fps.mp4" type="video/mp4" />
+  </video -->
+  <img class="fixed inset-0 w-full h-full object-cover opacity-40 -z-10" src="background.jpg" alt="Background" />
+
+  <!-- HERO section background same as other sections -->
+<section id="home" class="relative text-center">
+  <div class="relative z-10 glass pt-36 pb-24 flex flex-col items-center justify-center px-6">
+    <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs tracking-wide uppercase">
+      <span class="inline-block h-2 w-2 rounded-full bg-money-400"></span>
+      CLEF 2026 - Call for Participation
+    </span>
+    <h1 class="mt-5 text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight max-w-4xl"><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-money-500">FinMMEval Lab 2026</span></h1>
+    <p class="mt-4 text-slate-300 max-w-3xl">Multilingual and Multimodal Evaluation of Financial AI Systems</p>
+    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <a href="#submission" class="rounded-xl bg-money-500 hover:bg-money-600 px-5 py-3 font-semibold shadow-glow">SIGN UP</a>
+      <a href="#tasks" class="rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-5 py-3 font-semibold">Explore Tasks</a>
+    </div>
+  </div>
+  <div class="divider mx-auto max-w-6xl"></div>
+</section>
+
+  <main class="relative -mt-10">
+    <!-- ABOUT -->
+    <section id="about" class="relative">
+      <div class="mx-auto max-w-7xl px-6 py-20 sm:py-28">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <h2 class="text-3xl sm:text-4xl font-bold">About the Lab</h2>
+            <p class="mt-4 text-slate-300 leading-relaxed">FinMMEval Lab integrates financial reasoning, multilingual understanding, and decision-making into a unified evaluation suite designed to promote robust, transparent, and globally competent financial AI. <span class="text-white font-semibold">The 2026 edition introduces three interconnected tasks spanning five languages</span>.</p>
+            <ul class="mt-6 space-y-3 text-slate-200">
+              <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-md bg-money-400/20"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Multi-modal inputs: news, filings, macro indicators, tests.</li>
+              <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-md bg-money-400/20"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Multiple languages with low-resource representations:<br/>English, Chinese, Arabic, Hindi, Greek, Japanese, Spanish.</li>
+              <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-md bg-money-400/20"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Tasks spanning Q&A, and decision making.</li>
+              <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-md bg-money-400/20"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Metrics centered on Accuracy, ROUGE-1, BLEURT<br/>and performance quantitative metrics (e.g. CR, SR, MD).</li>
+            </ul>
+          </div>
+          <div class="glass rounded-3xl p-6 border border-white/10">
+            <img class="rounded-2xl" src="finllmframework.jpg" alt="Financial analytics dashboard" />
+            <div class="mt-4 text-sm text-slate-300">FinMMEval Lab 2026</div>
+          </div>
+        </div>
+      </div>
+      <div class="divider mx-auto max-w-6xl"></div>
+    </section>
+
+    <!-- TASKS -->
+    <section id="tasks" class="relative">
+      <div class="mx-auto max-w-7xl px-6 py-20 sm:py-28">
+        <h2 class="text-3xl sm:text-4xl font-bold">Tasks</h2>
+        <p class="mt-3 text-slate-300">Choose one or more tasks. Each submission must provide calibrated confidence scores and an evidence trace.</p>
+        <div class="mt-8 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+          <!-- Card -->
+          <article class="glass rounded-2xl p-6">
+            <h3 class="font-semibold text-lg">Task 1 - Financial Exam Q&A</h3>
+            <p class="mt-2 text-slate-300">Given a stand-alone multiple-choice question <i>Q</i> with four candidate options <i>{ A<sub>1</sub>, A<sub>2</sub>, A<sub>3</sub>, A<sub>4</sub> }</i>, the system must select the correct answer <i>A<sup>∗</sup></i>. Questions cover valuation, accounting, ethics, corporate finance, and regulatory knowledge. The focus is on conceptual understanding and precise financial reasoning rather than surface pattern recognition.</p>
+            <ul class="mt-4 space-y-2 text-sm text-slate-300 list-disc pl-5">
+              <li><b>Motivation:</b> Professional financial qualification exams (e.g., CFA, EFPA) require the integration of theoretical and regulatory knowledge with applied reasoning. Existing LLMs often rely on factual recall without demonstrating the analytical rigor expected from human candidates. This task evaluates whether models can achieve domain-level understanding and reasoning consistency across multilingual financial contexts.</li>
+              <li><b>Data:</b> Combination of existing multilingual financial exam datasets with newly collected materials:
+                <dl class="mt-2 space-y-1" style="margin-bottom: 10px;">
+                  <div>
+                    <dt class="font-semibold"><b>EFPA</b> (Spanish):</dt>
+                    <dd class="ml-4">50 exam-style financial questions on investment and regulation.</dd>
+                  </div>
+                  <div>
+                    <dt class="font-semibold"><b>GRFinQA</b> (Greek):</dt>
+                    <dd class="ml-4">225 multiple-choice finance questions from university-level exams.</dd>
+                  </div>
+                  <div>
+                    <dt class="font-semibold"><b>CFA</b> (English):</dt>
+                    <dd class="ml-4">600 exam-style multiple-choice questions covering nine core domains - Ethical and Professional Standards, Quantitative Methods, Economics, Financial Reporting and Analysis, Corporate Finance, Equity Investments, Fixed Income, Derivatives, and Portfolio Management.</dd>
+                  </div>
+                  <div>
+                    <dt class="font-semibold"><b>CPA</b> (Chinese):</dt>
+                    <dd class="ml-4">300 exam-style financial questions focusing on major modules - Accounting, Auditing, Financial Management, Taxation, Economic Law, and Strategy.</dd>
+                  </div>
+                  <div>
+                    <dt class="font-semibold"><b>BBF</b> (Hindi):</dt>
+                    <dd class="ml-4">500-1000 exam-style financial multiple-choice questions covering over 30 domains of the Indian financial landscape. The questions are drawn from about 25 financial and institutional exams across India, covering areas such as problem solving, mathematics for finance, and governance.</dd>
+                  </div>
+                </dl>
+                All questions were reviewed by financial professionals to ensure correctness and conceptual balance.
+              </li>
+              <li><b>Evaluation:</b> Models are required to output the correct answer label. Performance is measured by accuracy, defined as the proportion of correctly identified options in the test set.</li>
+            </ul>
+          </article>
+          
+          <article class="glass rounded-2xl p-6">
+            <h3 class="font-semibold text-lg">Task 2 - Multilingual Financial Q&A</h3>
+            <p class="mt-2 text-slate-300" style="margin-bottom: 10px;">Given a financial report <i>R</i> (English 10-K/10-Q excerpts) and multilingual news articles <i>N = { N<sub>en</sub>, N<sub>zh</sub>, N<sub>ja</sub>, N<sub>es</sub>, N<sub>el</sub> }</i> related to the same company filings, the model receives a question <i>Q</i> and must generate an answer <i>A</i> supported by multilingual textual evidence.</p><p style="margin-bottom: 10px;"><u>Two difficulty tiers are included:</u></p>
+            <dl>
+                <dt class="font-semibold">PolyFiQA-Easy:</dt>
+                <dd class="ml-4">Factual or numerical trend questions (e.g., revenue growth, cash flow irregularities);</dd>
+                <dt class="font-semibold">PolyFiQA-Expert:</dt>
+                <dd class="ml-4">Complex analytical questions requiring multi-document reasoning (e.g., investment strategies, capital allocation).</dd>
+            </dl>
+            <ul class="mt-4 space-y-2 text-sm text-slate-300 list-disc pl-5">
+              <li><b>Motivation:</b> Global finance increasingly demands multilingual reasoning across documents such as English financial filings and foreign-language news. However, most existing benchmarks are monolingual. This task introduces the first cross-lingual financial reasoning benchmark, testing a model’s ability to integrate multilingual textual signals and perform analytical reasoning grounded in authentic financial data.</li>
+              <li><b>Data:</b> Combination of the <i>PolyFiQA-Easy</i> and <i>PolyFiQA-Expert</i> datasets, which combine U.S. SEC filings with multilingual news (English, Chinese, Japanese,Spanish, Greek). Each tier includes 172 Q&A instances (344 total). All questions and answers were manually written and validated by financial experts, with inter-annotator agreement above 89%. The dataset is released under the MIT License.</li>
+              <li><b>Evaluation:</b> Models must produce concise, evidence-grounded textual answers (≤100 words). Performance is evaluated using ROUGE-1 as the primary metric, measuring unigram overlap with expert references. Optional metrics such as BLEURT and factual consistency may be used for secondary analysis.</li>
+            </ul>
+          </article>
+
+          <article class="glass rounded-2xl p-6">
+            <h3 class="font-semibold text-lg">Task 3 - Financial Decision Making</h3>
+            <p class="mt-2 text-slate-300" style="margin-bottom: 10px;">Given a market context <i>C = { P<sub>t</sub>, N<sub>t</sub> }</i>, where <i>P<sub>t</sub></i> represents the historical price series, <i>N<sub>t</sub></i> denotes contemporaneous textual information (e.g., news, reports), models are required to predict one of three discrete actions: <i>Buy</i>, <i>Hold</i>, or <i>Sell</i>. Each prediction must be accompanied by a concise textual rationale (≤50 words) that explicitly cites the supporting evidence or reasoning process.</p>
+            <ul class="mt-4 space-y-2 text-sm text-slate-300 list-disc pl-5">
+              <li><b>Motivation:</b> Real-world investment decisions demand the integration of heterogeneous information sources—such as textual news, market price dynamics, and current portfolio positions—to form actionable insights. Unlike static question-answering tasks, this task centers on <i>reasoning-to-action</i>: evaluating how models synthesize complex, time-varying market contexts to generate trading strategies that are both evidence-grounded and risk-aware.</li>
+              <li><b>Data:</b> Combination of  two curated JSON datasets that provide daily market contexts for BTC and TSLA. Each context is indexed by ISO date (YYYY-MM-DD) and aggregates heterogeneous signals for that trading day:
+                <dl class="mt-2 space-y-1" style="margin-bottom: 10px;">
+                  <div>
+                    <dt class="font-semibold"><b>Assets and coverage</b>:</dt>
+                    <dd class="ml-4"><b>a)</b> BTC: 2025-07-21 to 2025-10-09, 81 daily contexts (aggregated daily snapshots despite 24/7 trading).</dd>
+                    <dd class="ml-4"><b>b)</b> TSLA: 2024-07-23 to 2025-10-09, 444 daily contexts.</dd>
+                  </div>
+                  <div>
+                    <dt class="font-semibold"><b>Fields per date </b><i>d</i>:</dt>
+                    <dd class="ml-4"><b>a) prices (float)</b>: a single representative USD value per day (not OHLC and not intra-day series).</dd>
+                    <dd class="ml-4"><b>b) news (array[string])</b>: one or more long-form textual syntheses summarizing that day’s market/newsflow.</dd>
+                    <dd class="ml-4"><b>c) momentum (categorical)</b>: <i>{ bullish, neutral, bearish }</i>; a daily market-momentum label manually annotated based on the accompanying news (not a computed technical indicator).</dd>
+                    <dd class="ml-4"><b>d) future_price_diff (float | null)</b>: one-day-ahead price change <i>P<sub>d+1</sub> - P<sub>d</sub></i>; null on the last available date.</dd>
+                    <dd class="ml-4"><b>e) 10k, 10q (array)</b>: fundamental filings associated with the asset. For BTC, all entries are empty arrays. For TSLA, most dates are empty, but 2025-09-29 includes one 10-K and two 10-Q entries.</dd>
+                  </div>
+                  <div>
+                    <dt class="font-semibold"><b>Format</b>:</dt>
+                    <dd class="ml-4">UTF-8 JSON; keys are calendar dates (no intra-day timestamps).</dd>
+                  </div>
+                </dl>
+                This dataset provides the daily market context <i>C = { P<sub>t</sub>, N<sub>t</sub> }</i> for decision-making; models produce actions (Buy/Hold/Sell), while <b>future_price_diff</b> serves as the supervisory signal for next-day PnL evaluation in a continuous <i>live-trading</i> setup.
+              </li>
+              <li><b>Evaluation:</b> Model performance is jointly assessed for profitability, stability, and risk control using established quantitative metrics:
+                <dl class="mt-2 space-y-1" style="margin-bottom: 10px;">
+                  <div>
+                    <dt class="font-semibold"><b>Primary</b>:</dt>
+                    <dd class="ml-4">Cumulative Return (CR).</dd>
+                  </div>
+                  <div>
+                    <dt class="font-semibold"><b>Secondary</b>:</dt>
+                    <dd class="ml-4">Sharpe Ratio (SR), Maximum Drawdown (MD), Daily Volatility (DV), and Annualized Volatility (AV).</dd>
+                  </div>
+                </dl>
+                Together, these indicators capture the model's ability to balance reward and risk, maintain behavioral consistency, and adapt to varying market regimes in a dynamic trading environment.
+              </li>
+            </ul>
+          </article>
+        </div>
+      </div>
+      <div class="divider mx-auto max-w-6xl"></div>
+    </section>
+
+    <!-- TIMELINE -->
+    <section id="timeline" class="relative">
+      <div class="mx-auto max-w-7xl px-6 py-20 sm:py-28">
+        <h2 class="text-3xl sm:text-4xl font-bold">Timeline (Tentative)</h2>
+        <ol class="mt-8 relative border-s border-white/10 pl-6 space-y-6">
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Task Definitions Release</div>
+            <div class="text-slate-300 text-sm">Fall, 2025</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Registration Opens</div>
+            <div class="text-slate-300 text-sm">January, 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Submission Deadline (Experiments)</div>
+            <div class="text-slate-300 text-sm">May, 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Submission Deadline (Reports)</div>
+            <div class="text-slate-300 text-sm">June, 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Camera Ready Submission</div>
+            <div class="text-slate-300 text-sm">July, 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">CLEF 2026 Workshop</div>
+            <div class="text-slate-300 text-sm">Sep, 2026</div>
+          </li>
+        </ol>
+      </div>
+      <div class="divider mx-auto max-w-6xl"></div>
+    </section>
+
+    <!-- SUBMISSION -->
+    <section id="submission" class="relative">
+      <div class="mx-auto max-w-7xl px-6 py-20 sm:py-28">
+        <div class="grid lg:grid-cols-2 gap-10 items-start">
+          <div>
+            <h2 class="text-3xl sm:text-4xl font-bold">HOW TO PARTICIPATE</h2>
+            <p class="mt-3 text-slate-300">Engage with the challenges in a way that suits you - from a quick, one-time experiment to a detailed research project. While we invite you to share your findings in our workshop notes, you are also free to develop promising results into a full paper for an archival journal. The workshop itself is a perfect opportunity to refine your ideas through discussion with peers.</p>
+            <p class="mt-4 text-slate-300"><b>Ready to join? Sign up now by emailing the FinMMEval organizers<!-- a href="mailto:info@clef2026.org">info@clef2026.org</a -->.</b></p>
+          </div>
+          <div class="glass rounded-2xl p-6">
+            <h3 class="font-semibold text-lg">Packaging Checklist</h3>
+            <ul class="mt-4 space-y-2 text-sm text-slate-300 list-disc pl-5">
+              <li>Results JSONL (per task)</li>
+              <li>System Card (architecture, data usage, risks)</li>
+              <li>Reproducibility (seed, versions, hardware)</li>
+              <li>License compliance acknowledgements (if applicable)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="divider mx-auto max-w-6xl"></div>
+    </section>
+
+    <!-- ORGANIZERS -->
+    <section id="organizers" class="relative">
+      <div class="mx-auto max-w-7xl px-6 py-20 sm:py-28">
+        <h2 class="text-3xl sm:text-4xl font-bold">Organizers</h2>
+        <p class="mt-3 text-slate-300">We thank our supporters from academia and industry.</p>
+        <div class="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
+          <!-- Replace with actual logos -->
+          <div class="glass rounded-xl p-4 grid place-items-center h-40"><img src="MBZUAI_logo.png" alt="MBZUAI"/></div>
+          <div class="glass rounded-xl p-4 grid place-items-center h-40"><img src="University_of_Tokyo_logo.png" alt="University of Tokyo"/></div>
+          <div class="glass rounded-xl p-4 grid place-items-center h-40"><img src="unisofia_logo.png" alt="University of Sofia"/></div>
+          <div class="glass rounded-xl p-4 grid place-items-center h-40"><img src="finai_logo.jfif" alt="The Fin AI" width="50%"/></div>
+          <div class="glass rounded-xl p-4 grid place-items-center h-40"><img src="uniarizona_logo.jpg" alt="University of Arizona"/></div>
+          <div class="glass rounded-xl p-4 grid place-items-center h-40"><img src="insait-logo.png" alt="INSAIT"/></div>
+        </div>
+      </div>
+      <div class="divider mx-auto max-w-6xl"></div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="relative">
+      <div class="mx-auto max-w-7xl px-6 py-20 sm:py-28">
+        <h2 class="text-3xl sm:text-4xl font-bold">FAQ</h2>
+        <div class="mt-8 grid md:grid-cols-2 gap-6">
+          <details class="glass rounded-2xl p-6 group">
+            <summary class="cursor-pointer font-semibold">Who can participate?</summary>
+            <p class="mt-2 text-slate-300 text-sm">Researchers and practitioners from academia and industry. Student teams are particularly welcome.</p>
+          </details>
+          <details class="glass rounded-2xl p-6 group">
+            <summary class="cursor-pointer font-semibold">How is data licensed?</summary>
+            <p class="mt-2 text-slate-300 text-sm">Research-only license; redistribution of raw sources may be restricted.</p>
+          </details>
+          <details class="glass rounded-2xl p-6 group">
+            <summary class="cursor-pointer font-semibold">Can we submit to multiple tasks?</summary>
+            <p class="mt-2 text-slate-300 text-sm">Yes. Submit independent result bundles per task.</p>
+          </details>
+          <details class="glass rounded-2xl p-6 group">
+            <summary class="cursor-pointer font-semibold">Are ensembles allowed?</summary>
+            <p class="mt-2 text-slate-300 text-sm">Yes, but disclose all components in the system card.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="relative">
+    <div class="mx-auto max-w-7xl px-6 py-10">
+      <div class="glass rounded-2xl p-6 flex flex-col items-center justify-center text-center">
+        <div class="text-sm text-slate-300">© 2025 FinMMEval Lab • Part of CLEF 2026</div>
+      </div>
+    </div>
+  </footer>
+
+  <button id="toTop" class="fixed bottom-5 right-5 hidden rounded-full bg-money-500 hover:bg-money-600 p-3 shadow-glow" aria-label="Back to top">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5m0 0l-7 7m7-7l7 7" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+  </button>
+
+  <script>
+    // Simple smooth-scroll and helpers
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Mobile menu toggle
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const navLinks = document.getElementById('navLinks');
+    menuBtn?.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+
+    // Back to top
+    const toTop = document.getElementById('toTop');
+    window.addEventListener('scroll', () => {
+      toTop.classList.toggle('hidden', window.scrollY < 600);
+    });
+    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  </script>
+</body>
+</html>
