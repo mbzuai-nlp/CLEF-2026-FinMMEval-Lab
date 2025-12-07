@@ -3,433 +3,912 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FinMMEval Lab 2026</title>
+  <title>FinMMEval Lab 2026 - CLEF</title>
   <meta name="description" content="CLEF‑2026 shared task on financial reasoning: tasks, data, baselines, submission, timeline, and organizers." />
   <link rel="icon" href="images/favicon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ['Inter', 'ui-sans-serif', 'system-ui'] },
+          fontFamily: { 
+            sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+            serif: ['Source Serif Pro', 'Georgia', 'serif']
+          },
           colors: {
-            brand: {
-              50: '#ecfeff', 100: '#cffafe', 200: '#a5f3fc', 300: '#67e8f9', 400: '#22d3ee',
-              500: '#06b6d4', 600: '#0891b2', 700: '#0e7490', 800: '#155e75', 900: '#164e63'
+            primary: {
+              50: '#f8fafc',
+              100: '#f1f5f9',
+              200: '#e2e8f0',
+              300: '#cbd5e1',
+              400: '#94a3b8',
+              500: '#64748b',
+              600: '#475569',
+              700: '#334155',
+              800: '#1e293b',
+              900: '#0f172a',
             },
-            money: {
-              50: '#ecfdf5', 100: '#d1fae5', 200: '#a7f3d0', 300: '#6ee7b7', 400: '#34d399',
-              500: '#10b981', 600: '#059669', 700: '#047857', 800: '#065f46', 900: '#064e3b'
+            accent: {
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              300: '#93c5fd',
+              400: '#60a5fa',
+              500: '#3b82f6',
+              600: '#2563eb',
+              700: '#1d4ed8',
+              800: '#1e40af',
+              900: '#1e3a8a',
             }
           },
           boxShadow: {
-            glow: '0 0 0 4px rgba(16,185,129,0.15), 0 0 40px rgba(6,182,212,0.25)'
-          },
-          backgroundImage: {
-            'grid': 'linear-gradient(to right, rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.06) 1px, transparent 1px)',
+            'subtle': '0 2px 8px rgba(0,0,0,0.08)',
+            'elevated': '0 4px 20px rgba(0,0,0,0.12)'
           }
         }
       }
     }
   </script>
   <style>
-    /* Smooth fade-in */
-    .fade-in { animation: fadeIn 1s ease both; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(6px);} to { opacity: 1; transform: none; } }
-
-    /* Video overlay gradient */
-    .hero-overlay { background: radial-gradient(1200px 600px at 20% 10%, rgba(6,182,212,.35), transparent 60%), linear-gradient(180deg, rgba(2,6,23,.80), rgba(2,6,23,.75) 30%, rgba(2,6,23,.95)); }
-
-    /* Glass effect */
-    .glass { background: rgba(255,255,255,0.06); backdrop-filter: saturate(140%) blur(10px); border: 1px solid rgba(255,255,255,0.10); }
-
-    /* Section separators */
-    .divider { background: linear-gradient(90deg, rgba(16,185,129,0.0), rgba(16,185,129,0.6), rgba(16,185,129,0.0)); height: 1px; }
-
-    .timeline-dot {
-        position: absolute;
-        left: -30px;
-        top: 0.75rem;
-        height: 0.75rem;
-        width: 0.75rem;
-        border-radius: 9999px;
-        background-color: #34d399;
-        box-shadow: 0 0 0 3px rgba(16,185,129,0.15), 0 0 10px rgba(6,182,212,0.25);
+    /* Academic styling */
+    body {
+      background-color: #f9fafb;
+    }
+    
+    .academic-section {
+      background-color: white;
+      border-radius: 0.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    
+    .tab-button {
+      border: none;
+      background: transparent;
+      padding: 0.75rem 1.5rem;
+      font-weight: 600;
+      color: #64748b;
+      border-bottom: 3px solid transparent;
+      transition: all 0.2s;
+    }
+    
+    .tab-button:hover {
+      color: #3b82f6;
+      background-color: #f8fafc;
+    }
+    
+    .tab-button.active {
+      color: #1d4ed8;
+      border-bottom-color: #1d4ed8;
+      background-color: #eff6ff;
+    }
+    
+    .hero-newspaper {
+      background-image: url('images/background.jpg');
+      background-color: rgba(255, 255, 255, 0.92); /* Overlay color */
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: overlay;
+      position: relative;
+    }
+    
+    .hero-newspaper::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.02) 1px, rgba(0,0,0,0.02) 2px),
+        repeating-linear-gradient(90deg, transparent, transparent 1px, rgba(0,0,0,0.02) 1px, rgba(0,0,0,0.02) 2px);
+      pointer-events: none;
+      opacity: 0.3;
+    }
+    
+    .academic-heading {
+      position: relative;
+      padding-bottom: 0.75rem;
+    }
+    
+    .academic-heading::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 3rem;
+      height: 3px;
+      background-color: #3b82f6;
+    }
+    
+    .timeline-item {
+      position: relative;
+      padding-left: 1.75rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.5rem;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: #3b82f6;
+      border: 2px solid #bfdbfe;
+    }
+    
+    .timeline-item::after {
+      content: '';
+      position: absolute;
+      left: 5px;
+      top: 1.5rem;
+      bottom: -1.5rem;
+      width: 2px;
+      background-color: #e2e8f0;
+    }
+    
+    .timeline-item:last-child::after {
+      display: none;
+    }
+    
+    .glass-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(229, 231, 235, 0.8);
+    }
+    
+    .nav-link {
+      position: relative;
+      color: #475569;
+      padding: 0.5rem 0;
+      font-weight: 500;
+    }
+    
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #3b82f6;
+      transition: width 0.3s;
+    }
+    
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    
+    .nav-link:hover {
+      color: #1e40af;
+    }
+    
+    .fade-in {
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Organizer avatar style */
+    .organizer-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    
+    /* CLEF Banner */
+    .clef-banner {
+      background: linear-gradient(90deg, #1e40af, #3b82f6);
+      color: white;
+      padding: 0.75rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .clef-banner-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+    
+    .clef-banner-badge {
+      background: rgba(255,255,255,0.2);
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.875rem;
     }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 antialiased selection:bg-money-400/30 selection:text-white">
-  <!-- NAVBAR -->
-  <header class="fixed top-0 inset-x-0 z-40">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <nav class="mt-4 glass rounded-2xl px-4 sm:px-6 py-3 flex items-center justify-between shadow-glow">
-        <a href="#home" class="flex items-center gap-2">
-          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-money-500 shadow-lg"><img src="images/logo.png" alt="Logo" /></span>
-          <span class="font-extrabold tracking-tight text-lg">FinMMEval Lab</span>
+<body class="text-gray-800 font-sans antialiased">
+  <!-- CLEF BANNER -->
+  <div class="clef-banner">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="clef-banner-content">
+        <span class="clef-banner-badge">CLEF 2026</span>
+        <span class="font-medium">FinMMEval Lab - Call for Participation</span>
+        <a href="#submission" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="ml-4 bg-white text-accent-700 hover:bg-gray-100 px-4 py-1.5 rounded-lg font-semibold text-sm transition shadow-sm">
+          Register Now
         </a>
-        <button id="menuBtn" class="lg:hidden rounded-xl px-3 py-2 hover:bg-white/10" aria-label="Open menu">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16M4 12h16M4 18h16" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
-        </button>
-        <ul id="navLinks" class="hidden lg:flex items-center gap-5 text-sm font-medium">
-          <li><a href="#about" class="hover:text-money-300">About</a></li>
-          <li><a href="#tasks" class="hover:text-money-300">Tasks</a></li>
-          <li><a href="#timeline" class="hover:text-money-300">Timeline</a></li>
-          <li><a href="https://clef-labs-registration.dipintra.it/registrationForm.php#registrationFrom" target="_blank" rel="noopener noreferrer" class="hover:text-money-300"><b><u>Join In</u></b></a></li>
-          <li><a href="#organizers" class="hover:text-money-300">Organizers</a></li>
-          <li><a href="#faq" class="hover:text-money-300">FAQ</a></li>
-        </ul>
-      </nav>
+      </div>
     </div>
-    <!-- mobile menu -->
-    <div id="mobileMenu" class="lg:hidden hidden mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-      <div class="mt-2 glass rounded-xl p-3">
-        <ul class="grid grid-cols-2 gap-2 text-sm">
-          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#about">About</a></li>
-          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#tasks">Tasks</a></li>
-          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#timeline">Timeline</a></li>
-          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="https://clef-labs-registration.dipintra.it/registrationForm.php#registrationFrom" target="_blank" rel="noopener noreferrer"><b><u>Join In</u></b></a></li>
-          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#organizers">Organizers</a></li>
-          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#faq">FAQ</a></li>
-        </ul>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="sticky top-12 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-16">
+        <div class="flex items-center space-x-2">
+          <div class="w-12 h-12 rounded-lg flex items-center justify-center">
+            <!-- span class="text-white font-bold text-sm">F</span -->
+            <img src="images/favicon.png" alt="FinMMEval Logo">
+          </div>
+          <span class="font-bold text-gray-900">FinMMEval Lab 2026</span>
+        </div>
+        
+        <nav class="hidden md:flex space-x-8">
+          <a href="#about" class="nav-link">About</a>
+          <a href="#tasks" class="nav-link">Tasks</a>
+          <a href="#timeline" class="nav-link">Timeline</a>
+          <a href="#submission" class="nav-link">Submission</a>
+          <a href="#organizers" class="nav-link">Organizers</a>
+          <a href="#faq" class="nav-link">FAQ</a>
+        </nav>
+        
+        <!-- a href="https://clef-labs-registration.dipintra.it/registrationForm.php#registrationFrom" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="bg-accent-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-accent-700 transition shadow-subtle">
+          Join Now
+        </a -->
+        
+        <button id="menuBtn" class="md:hidden text-gray-600">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Mobile menu -->
+      <div id="mobileMenu" class="md:hidden hidden py-4 border-t border-gray-200">
+        <div class="space-y-1">
+          <a href="#about" class="block py-2 text-gray-700 hover:text-accent-600">About</a>
+          <a href="#tasks" class="block py-2 text-gray-700 hover:text-accent-600">Tasks</a>
+          <a href="#timeline" class="block py-2 text-gray-700 hover:text-accent-600">Timeline</a>
+          <a href="#submission" class="block py-2 text-gray-700 hover:text-accent-600">Submission</a>
+          <a href="#organizers" class="block py-2 text-gray-700 hover:text-accent-600">Organizers</a>
+          <a href="#faq" class="block py-2 text-gray-700 hover:text-accent-600">FAQ</a>
+        </div>
       </div>
     </div>
   </header>
 
-  <!-- Constant background video covering the whole page -->
-  <!-- video class="fixed inset-0 w-full h-full object-cover opacity-40 -z-10" autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1553729459-efe14ef6055d?q=80&w=1600&auto=format&fit=crop">
-    <source src="https://videos.pexels.com/video-files/3130140/3130140-uhd_2560_1440_30fps.mp4" type="video/mp4" />
-  </video -->
-  <img class="fixed inset-0 w-full h-full object-cover opacity-20 -z-10" src="images/background.jpg" alt="Background" />
-
-  <!-- HERO section background same as other sections -->
-<section id="home" class="relative text-center">
-  <div class="relative z-10 glass pt-36 pb-24 flex flex-col items-center justify-center px-6">
-    <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs tracking-wide uppercase">
-      <span class="inline-block h-2 w-2 rounded-full bg-money-400"></span>
-      CLEF 2026 - Call for Participation
-    </span>
-    <h1 class="mt-5 text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight max-w-4xl"><span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-500 to-money-500">FinMMEval Lab 2026</span></h1>
-    <p class="mt-4 text-slate-300 max-w-3xl">Multilingual and Multimodal Evaluation of Financial AI Systems</p>
-    <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
-      <a href="https://clef-labs-registration.dipintra.it/registrationForm.php#registrationFrom" target="_blank" rel="noopener noreferrer" class="rounded-xl bg-money-500 hover:bg-money-600 px-5 py-3 font-semibold shadow-glow">SIGN UP</a>
-      <a href="#tasks" class="rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 px-5 py-3 font-semibold">Explore Tasks</a>
+  <!-- HERO -->
+  <section id="home" class="hero-newspaper py-20">
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <div class="inline-flex items-center space-x-2 bg-accent-50 text-accent-700 px-4 py-2 rounded-full mb-6">
+          <span class="w-2 h-2 bg-accent-500 rounded-full"></span>
+          <span class="text-sm font-medium">CLEF 2026 - Call for Participation</span>
+        </div>
+        
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+          <span class="font-serif">FinMMEval Lab 2026</span>
+        </h1>
+        
+        <p class="text-xl text-gray-600 max-w-3xl mx-auto mb-8 font-serif">
+          Multilingual and Multimodal Evaluation of Financial AI Systems
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="#submission" 
+             target="_blank" 
+             rel="noopener noreferrer"
+             class="bg-accent-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-accent-700 transition shadow-subtle">
+            Register Now
+          </a>
+          <a href="#tasks" 
+             class="border border-gray-300 text-gray-700 px-6 py-3 rounded-lg font-semibold hover:bg-gray-50 transition">
+            Explore Tasks
+          </a>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="divider mx-auto max-w-6xl"></div>
-</section>
+  </section>
 
-  <main class="relative -mt-10">
+  <main class="py-12">
     <!-- ABOUT -->
-    <section id="about" class="relative">
-      <div class="mx-auto max-w-7xl px-6 py-20 sm:py-28">
-        <div class="grid lg:grid-cols-2 gap-10 items-center">
+    <section id="about" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="academic-section p-8">
+        <h2 class="text-3xl font-bold text-gray-900 academic-heading mb-6">About the Lab</h2>
+        
+        <div class="grid lg:grid-cols-2 gap-8">
           <div>
-            <h2 class="text-3xl sm:text-4xl font-bold">About the Lab</h2>
-            <p class="mt-4 text-slate-300 leading-relaxed">FinMMEval Lab integrates financial reasoning, multilingual understanding, and decision-making into a unified evaluation suite designed to promote robust, transparent, and globally competent financial AI. <span class="text-white font-semibold">The 2026 edition introduces three interconnected tasks spanning five languages</span>.</p>
-            <ul class="mt-6 space-y-3 text-slate-200">
-              <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-md bg-money-400/20"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Multi-modal inputs: news, filings, macro indicators, tests.</li>
-              <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-md bg-money-400/20"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Multiple languages with low-resource representations:<br/>English, Chinese, Arabic, Hindi, Greek, Japanese, Spanish.</li>
-              <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-md bg-money-400/20"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Tasks spanning Q&A, and decision making.</li>
-              <li class="flex items-start gap-3"><span class="mt-1 inline-flex h-5 w-5 items-center justify-center rounded-md bg-money-400/20"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></span> Metrics centered on Accuracy, ROUGE-1, BLEURT<br/>and performance quantitative metrics (e.g. CR, SR, MD).</li>
-            </ul>
+            <p class="text-gray-700 mb-6 leading-relaxed">
+              FinMMEval Lab integrates financial reasoning, multilingual understanding, and decision-making into a unified evaluation suite designed to promote robust, transparent, and globally competent financial AI. <span class="font-semibold text-gray-900">The 2026 edition introduces three interconnected tasks spanning five languages</span>.
+            </p>
+            
+            <div class="space-y-4">
+              <div class="flex items-start space-x-3">
+                <div class="w-6 h-6 bg-accent-100 text-accent-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  ✓
+                </div>
+                <p class="text-gray-700">Multi-modal inputs: news, filings, macro indicators, tests.</p>
+              </div>
+              
+              <div class="flex items-start space-x-3">
+                <div class="w-6 h-6 bg-accent-100 text-accent-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  ✓
+                </div>
+                <p class="text-gray-700">Multiple languages with low-resource representations: English, Chinese, Arabic, Hindi, Greek, Japanese, Spanish.</p>
+              </div>
+              
+              <div class="flex items-start space-x-3">
+                <div class="w-6 h-6 bg-accent-100 text-accent-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  ✓
+                </div>
+                <p class="text-gray-700">Tasks spanning Q&A, and decision making.</p>
+              </div>
+              
+              <div class="flex items-start space-x-3">
+                <div class="w-6 h-6 bg-accent-100 text-accent-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  ✓
+                </div>
+                <p class="text-gray-700">Metrics centered on Accuracy, ROUGE-1, BLEURT and performance quantitative metrics (e.g. CR, SR, MD).</p>
+              </div>
+            </div>
           </div>
-          <div class="glass rounded-3xl p-6 border border-white/10">
-            <img class="rounded-2xl" src="images/finllmframework.jpg" alt="Financial analytics dashboard" />
-            <div class="mt-4 text-sm text-slate-300">How can I tailor my setup to make an LLM exceptionally good at finance?</div>
+          
+          <div class="glass-card rounded-lg p-6 border border-gray-200">
+            <img src="images/finllmframework.jpg" alt="Financial AI Framework" class="rounded-lg mb-4 w-full">
+            <p class="text-gray-600 text-sm font-serif italic">
+              "How can I tailor my setup to make an LLM exceptionally good at finance?"
+            </p>
           </div>
         </div>
       </div>
-      <div class="divider mx-auto max-w-6xl"></div>
     </section>
 
-    <!-- TASKS -->
-    <section id="tasks" class="relative">
-      <div class="mx-auto max-w-7xl px-6 py-20 sm:py-28">
-        <h2 class="text-3xl sm:text-4xl font-bold">Tasks</h2>
-        <p class="mt-3 text-slate-300">Choose one or more tasks. Each submission must provide calibrated confidence scores and an evidence trace.</p>
-        <div class="mt-8 grid md:grid-cols-2 xl:grid-cols-3 gap-6">
-          <!-- Card -->
-          <article class="glass rounded-2xl p-6">
-            <h3 class="font-semibold text-lg">Task 1 - Financial Exam Q&A</h3>
-            <p class="mt-2 text-slate-300">Given a stand-alone multiple-choice question <i>Q</i> with four candidate options <i>{ A<sub>1</sub>, A<sub>2</sub>, A<sub>3</sub>, A<sub>4</sub> }</i>, the system must select the correct answer <i>A<sup>∗</sup></i>. Questions cover valuation, accounting, ethics, corporate finance, and regulatory knowledge. The focus is on conceptual understanding and precise financial reasoning rather than surface pattern recognition.</p>
-            <ul class="mt-4 space-y-2 text-sm text-slate-300 list-disc pl-5">
-              <li><b>Motivation:</b> Professional financial qualification exams (e.g., CFA, EFPA) require the integration of theoretical and regulatory knowledge with applied reasoning. Existing LLMs often rely on factual recall without demonstrating the analytical rigor expected from human candidates. This task evaluates whether models can achieve domain-level understanding and reasoning consistency across multilingual financial contexts.</li>
-              <li><b>Data:</b> Combination of existing multilingual financial exam datasets with newly collected materials:
-                <dl class="mt-2 space-y-1" style="margin-bottom: 10px;">
-                  <div>
-                    <dt class="font-semibold"><b>EFPA</b> (Spanish):</dt>
-                    <dd class="ml-4">50 exam-style financial questions on investment and regulation.</dd>
-                  </div>
-                  <div>
-                    <dt class="font-semibold"><b>GRFinQA</b> (Greek):</dt>
-                    <dd class="ml-4">225 multiple-choice finance questions from university-level exams.</dd>
-                  </div>
-                  <div>
-                    <dt class="font-semibold"><b>CFA</b> (English):</dt>
-                    <dd class="ml-4">600 exam-style multiple-choice questions covering nine core domains - Ethical and Professional Standards, Quantitative Methods, Economics, Financial Reporting and Analysis, Corporate Finance, Equity Investments, Fixed Income, Derivatives, and Portfolio Management.</dd>
-                  </div>
-                  <div>
-                    <dt class="font-semibold"><b>CPA</b> (Chinese):</dt>
-                    <dd class="ml-4">300 exam-style financial questions focusing on major modules - Accounting, Auditing, Financial Management, Taxation, Economic Law, and Strategy.</dd>
-                  </div>
-                  <div>
-                    <dt class="font-semibold"><b>BBF</b> (Hindi):</dt>
-                    <dd class="ml-4">500-1000 exam-style financial multiple-choice questions covering over 30 domains of the Indian financial landscape. The questions are drawn from about 25 financial and institutional exams across India, covering areas such as problem solving, mathematics for finance, and governance.</dd>
-                  </div>
-                </dl>
-                All questions were reviewed by financial professionals to ensure correctness and conceptual balance.
-              </li>
-              <li><b>Evaluation:</b> Models are required to output the correct answer label. Performance is measured by accuracy, defined as the proportion of correctly identified options in the test set.</li>
-            </ul>
-          </article>
-          
-          <article class="glass rounded-2xl p-6">
-            <h3 class="font-semibold text-lg">Task 2 - Multilingual Financial Q&A</h3>
-            <p class="mt-2 text-slate-300" style="margin-bottom: 10px;">Given a financial report <i>R</i> (English 10-K/10-Q excerpts) and multilingual news articles <i>N = { N<sub>en</sub>, N<sub>zh</sub>, N<sub>ja</sub>, N<sub>es</sub>, N<sub>el</sub> }</i> related to the same company filings, the model receives a question <i>Q</i> and must generate an answer <i>A</i> supported by multilingual textual evidence.</p><p style="margin-bottom: 10px;"><u>Two difficulty tiers are included:</u></p>
-            <dl>
-                <dt class="font-semibold">PolyFiQA-Easy:</dt>
-                <dd class="ml-4">Factual or numerical trend questions (e.g., revenue growth, cash flow irregularities);</dd>
-                <dt class="font-semibold">PolyFiQA-Expert:</dt>
-                <dd class="ml-4">Complex analytical questions requiring multi-document reasoning (e.g., investment strategies, capital allocation).</dd>
-            </dl>
-            <ul class="mt-4 space-y-2 text-sm text-slate-300 list-disc pl-5">
-              <li><b>Motivation:</b> Global finance increasingly demands multilingual reasoning across documents such as English financial filings and foreign-language news. However, most existing benchmarks are monolingual. This task introduces the first cross-lingual financial reasoning benchmark, testing a model’s ability to integrate multilingual textual signals and perform analytical reasoning grounded in authentic financial data.</li>
-              <li><b>Data:</b> Combination of the <i>PolyFiQA-Easy</i> and <i>PolyFiQA-Expert</i> datasets, which combine U.S. SEC filings with multilingual news (English, Chinese, Japanese,Spanish, Greek). Each tier includes 172 Q&A instances (344 total). All questions and answers were manually written and validated by financial experts, with inter-annotator agreement above 89%. The dataset is released under the MIT License.</li>
-              <li><b>Evaluation:</b> Models must produce concise, evidence-grounded textual answers (≤100 words). Performance is evaluated using ROUGE-1 as the primary metric, measuring unigram overlap with expert references. Optional metrics such as BLEURT and factual consistency may be used for secondary analysis.</li>
-            </ul>
-          </article>
-
-          <article class="glass rounded-2xl p-6">
-            <h3 class="font-semibold text-lg">Task 3 - Financial Decision Making</h3>
-            <p class="mt-2 text-slate-300" style="margin-bottom: 10px;">Given a market context <i>C = { P<sub>t</sub>, N<sub>t</sub> }</i>, where <i>P<sub>t</sub></i> represents the historical price series, <i>N<sub>t</sub></i> denotes contemporaneous textual information (e.g., news, reports), models are required to predict one of three discrete actions: <i>Buy</i>, <i>Hold</i>, or <i>Sell</i>. Each prediction must be accompanied by a concise textual rationale (≤50 words) that explicitly cites the supporting evidence or reasoning process.</p>
-            <ul class="mt-4 space-y-2 text-sm text-slate-300 list-disc pl-5">
-              <li><b>Motivation:</b> Real-world investment decisions demand the integration of heterogeneous information sources—such as textual news, market price dynamics, and current portfolio positions—to form actionable insights. Unlike static question-answering tasks, this task centers on <i>reasoning-to-action</i>: evaluating how models synthesize complex, time-varying market contexts to generate trading strategies that are both evidence-grounded and risk-aware.</li>
-              <li><b>Data:</b> Combination of  two curated JSON datasets that provide daily market contexts for BTC and TSLA. Each context is indexed by ISO date (YYYY-MM-DD) and aggregates heterogeneous signals for that trading day:
-                <dl class="mt-2 space-y-1" style="margin-bottom: 10px;">
-                  <div>
-                    <dt class="font-semibold"><b>Assets and coverage</b>:</dt>
-                    <dd class="ml-4"><b>a)</b> BTC: 2025-07-21 to 2025-10-09, 81 daily contexts (aggregated daily snapshots despite 24/7 trading).</dd>
-                    <dd class="ml-4"><b>b)</b> TSLA: 2024-07-23 to 2025-10-09, 444 daily contexts.</dd>
-                  </div>
-                  <div>
-                    <dt class="font-semibold"><b>Fields per date </b><i>d</i>:</dt>
-                    <dd class="ml-4"><b>a) prices (float)</b>: a single representative USD value per day (not OHLC and not intra-day series).</dd>
-                    <dd class="ml-4"><b>b) news (array[string])</b>: one or more long-form textual syntheses summarizing that day’s market/newsflow.</dd>
-                    <dd class="ml-4"><b>c) momentum (categorical)</b>: <i>{ bullish, neutral, bearish }</i>; a daily market-momentum label manually annotated based on the accompanying news (not a computed technical indicator).</dd>
-                    <dd class="ml-4"><b>d) future_price_diff (float | null)</b>: one-day-ahead price change <i>P<sub>d+1</sub> - P<sub>d</sub></i>; null on the last available date.</dd>
-                    <dd class="ml-4"><b>e) 10k, 10q (array)</b>: fundamental filings associated with the asset. For BTC, all entries are empty arrays. For TSLA, most dates are empty, but 2025-09-29 includes one 10-K and two 10-Q entries.</dd>
-                  </div>
-                  <div>
-                    <dt class="font-semibold"><b>Format</b>:</dt>
-                    <dd class="ml-4">UTF-8 JSON; keys are calendar dates (no intra-day timestamps).</dd>
-                  </div>
-                </dl>
-                This dataset provides the daily market context <i>C = { P<sub>t</sub>, N<sub>t</sub> }</i> for decision-making; models produce actions (Buy/Hold/Sell), while <b>future_price_diff</b> serves as the supervisory signal for next-day PnL evaluation in a continuous <i>live-trading</i> setup.
-              </li>
-              <li><b>Evaluation:</b> Model performance is jointly assessed for profitability, stability, and risk control using established quantitative metrics:
-                <dl class="mt-2 space-y-1" style="margin-bottom: 10px;">
-                  <div>
-                    <dt class="font-semibold"><b>Primary</b>:</dt>
-                    <dd class="ml-4">Cumulative Return (CR).</dd>
-                  </div>
-                  <div>
-                    <dt class="font-semibold"><b>Secondary</b>:</dt>
-                    <dd class="ml-4">Sharpe Ratio (SR), Maximum Drawdown (MD), Daily Volatility (DV), and Annualized Volatility (AV).</dd>
-                  </div>
-                </dl>
-                Together, these indicators capture the model's ability to balance reward and risk, maintain behavioral consistency, and adapt to varying market regimes in a dynamic trading environment.
-              </li>
-            </ul>
-          </article>
+    <!-- TASKS - TABBED INTERFACE -->
+    <section id="tasks" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="academic-section p-8">
+        <h2 class="text-3xl font-bold text-gray-900 academic-heading mb-6">Tasks</h2>
+        <p class="text-gray-600 mb-8">Choose one or more tasks. Each submission must provide calibrated confidence scores and an evidence trace.</p>
+        
+        <!-- Tab Navigation -->
+        <div class="flex flex-wrap border-b border-gray-200 mb-8">
+          <button class="tab-button active" data-tab="task1">Task 1: Financial Exam Q&A</button>
+          <button class="tab-button" data-tab="task2">Task 2: Multilingual Financial Q&A</button>
+          <button class="tab-button" data-tab="task3">Task 3: Financial Decision Making</button>
+        </div>
+        
+        <!-- Tab Content -->
+        <div id="task1" class="tab-content fade-in">
+          <div class="glass-card rounded-lg p-6 border border-gray-200">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Task 1 - Financial Exam Q&A</h3>
+            <p class="text-gray-700 mb-4">
+              Given a stand-alone multiple-choice question <i>Q</i> with four candidate options <i>{ A<sub>1</sub>, A<sub>2</sub>, A<sub>3</sub>, A<sub>4</sub> }</i>, the system must select the correct answer <i>A<sup>∗</sup></i>. Questions cover valuation, accounting, ethics, corporate finance, and regulatory knowledge.
+            </p>
+            
+            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+              <h4 class="font-bold text-gray-800 mb-2">Motivation</h4>
+              <p class="text-gray-700 text-sm">
+                Professional financial qualification exams (e.g., CFA, EFPA) require the integration of theoretical and regulatory knowledge with applied reasoning. Existing LLMs often rely on factual recall without demonstrating the analytical rigor expected from human candidates.
+              </p>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+              <h4 class="font-bold text-gray-800 mb-2">Data</h4>
+              <ul class="text-gray-700 text-sm space-y-2">
+                <li><span class="font-semibold">EFPA (Spanish):</span> 50 exam-style financial questions on investment and regulation.</li>
+                <li><span class="font-semibold">GRFinQA (Greek):</span> 225 multiple-choice finance questions from university-level exams.</li>
+                <li><span class="font-semibold">CFA (English):</span> 600 exam-style multiple-choice questions covering nine core domains.</li>
+                <li><span class="font-semibold">CPA (Chinese):</span> 300 exam-style financial questions focusing on major modules.</li>
+                <li><span class="font-semibold">BBF (Hindi):</span> 500-1000 exam-style financial multiple-choice questions covering over 30 domains.</li>
+              </ul>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h4 class="font-bold text-gray-800 mb-2">Evaluation</h4>
+              <p class="text-gray-700 text-sm">
+                Models are required to output the correct answer label. Performance is measured by accuracy, defined as the proportion of correctly identified options in the test set.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div id="task2" class="tab-content hidden fade-in">
+          <div class="glass-card rounded-lg p-6 border border-gray-200">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Task 2 - Multilingual Financial Q&A</h3>
+            <p class="text-gray-700 mb-4">
+              Given a financial report <i>R</i> (English 10-K/10-Q excerpts) and multilingual news articles <i>N = { N<sub>en</sub>, N<sub>zh</sub>, N<sub>ja</sub>, N<sub>es</sub>, N<sub>el</sub> }</i> related to the same company filings, the model receives a question <i>Q</i> and must generate an answer <i>A</i> supported by multilingual textual evidence.
+            </p>
+            
+            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+              <h4 class="font-bold text-gray-800 mb-2">Motivation</h4>
+              <p class="text-gray-700 text-sm">
+                Global finance increasingly demands multilingual reasoning across documents such as English financial filings and foreign-language news. However, most existing benchmarks are monolingual. This task introduces the first cross-lingual financial reasoning benchmark, testing a model's ability to integrate multilingual textual signals and perform analytical reasoning grounded in authentic financial data.
+              </p>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+              <h4 class="font-bold text-gray-800 mb-2">Difficulty Tiers</h4>
+              <div class="grid md:grid-cols-2 gap-4 mb-4">
+                <div class="bg-accent-50 rounded-lg p-4">
+                  <h4 class="font-bold text-gray-800 mb-2">PolyFiQA-Easy</h4>
+                  <p class="text-gray-700 text-sm">Factual or numerical trend questions (e.g., revenue growth, cash flow irregularities)</p>
+                </div>
+                <div class="bg-accent-50 rounded-lg p-4">
+                  <h4 class="font-bold text-gray-800 mb-2">PolyFiQA-Expert</h4>
+                  <p class="text-gray-700 text-sm">Complex analytical questions requiring multi-document reasoning (e.g., investment strategies, capital allocation)</p>
+                </div>
+              </div>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+              <h4 class="font-bold text-gray-800 mb-2">Data</h4>
+              <p class="text-gray-700 text-sm">
+                Combination of the <i>PolyFiQA-Easy</i> and <i>PolyFiQA-Expert</i> datasets, which combine U.S. SEC filings with multilingual news (English, Chinese, Japanese, Spanish, Greek). Each tier includes 172 Q&A instances (344 total).
+              </p>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h4 class="font-bold text-gray-800 mb-2">Evaluation</h4>
+              <p class="text-gray-700 text-sm">
+                Models must produce concise, evidence-grounded textual answers (≤100 words). Performance is evaluated using ROUGE-1 as the primary metric, measuring unigram overlap with expert references.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div id="task3" class="tab-content hidden fade-in">
+          <div class="glass-card rounded-lg p-6 border border-gray-200">
+            <h3 class="text-xl font-bold text-gray-900 mb-4">Task 3 - Financial Decision Making</h3>
+            <p class="text-gray-700 mb-4">
+              Given a market context <i>C = { P<sub>t</sub>, N<sub>t</sub> }</i>, where <i>P<sub>t</sub></i> represents the historical price series, <i>N<sub>t</sub></i> denotes contemporaneous textual information (e.g., news, reports), models are required to predict one of three discrete actions: <i>Buy</i>, <i>Hold</i>, or <i>Sell</i>.
+            </p>
+            
+            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+              <h4 class="font-bold text-gray-800 mb-2">Motivation</h4>
+              <p class="text-gray-700 text-sm">
+                Real-world investment decisions demand the integration of heterogeneous information sources—such as textual news, market price dynamics, and current portfolio positions—to form actionable insights.
+              </p>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+              <h4 class="font-bold text-gray-800 mb-2">Data</h4>
+              <p class="text-gray-700 text-sm mb-2">Two curated JSON datasets that provide daily market contexts:</p>
+              <ul class="text-gray-700 text-sm space-y-2">
+                <li><span class="font-semibold">BTC:</span> 2025-07-21 to 2025-10-09, 81 daily contexts</li>
+                <li><span class="font-semibold">TSLA:</span> 2024-07-23 to 2025-10-09, 444 daily contexts</li>
+              </ul>
+              <p class="text-gray-700 text-sm mt-2">
+                Each context includes: prices, news summaries, momentum labels, future_price_diff, and fundamental filings.
+              </p>
+            </div>
+            
+            <div class="bg-gray-50 rounded-lg p-4">
+              <h4 class="font-bold text-gray-800 mb-2">Evaluation</h4>
+              <p class="text-gray-700 text-sm mb-2"><span class="font-semibold">Primary:</span> Cumulative Return (CR)</p>
+              <p class="text-gray-700 text-sm"><span class="font-semibold">Secondary:</span> Sharpe Ratio (SR), Maximum Drawdown (MD), Daily Volatility (DV), and Annualized Volatility (AV)</p>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="divider mx-auto max-w-6xl"></div>
     </section>
 
     <!-- TIMELINE -->
-    <section id="timeline" class="relative">
-      <div class="mx-auto max-w-7xl px-6 py-20 sm:py-28">
-        <h2 class="text-3xl sm:text-4xl font-bold">Important Dates</h2>
-        <p class="mt-3 text-slate-300 text-sm">Specific dates will be announced once they are fixed.</p>
-        <ol class="mt-6 relative border-s border-white/10 pl-6 space-y-6">
-          <li class="relative">
-            <span class="timeline-dot"></span>
-            <div class="font-semibold">Lab registration opens</div>
-            <div class="text-slate-300 text-sm">17 November 2025</div>
-          </li>
-          <li class="relative">
-            <span class="timeline-dot"></span>
-            <div class="font-semibold">Release of the training materials</div>
-            <div class="text-slate-300 text-sm">December 2025</div>
-          </li>
-          <li class="relative">
-            <span class="timeline-dot"></span>
-            <div class="font-semibold">Lab registration closes</div>
-            <div class="text-slate-300 text-sm">23 April 2026</div>
-          </li>
-          <li class="relative">
-            <span class="timeline-dot"></span>
-            <div class="font-semibold">Beginning of the evaluation cycle (test sets release)</div>
-            <div class="text-slate-300 text-sm">May 2026</div>
-          </li>
-          <li class="relative">
-            <span class="timeline-dot"></span>
-            <div class="font-semibold">End of the evaluation cycle (run submission)</div>
-            <div class="text-slate-300 text-sm">07 May 2026</div>
-          </li>
-          <li class="relative">
-            <span class="timeline-dot"></span>
-            <div class="font-semibold">Deadline for the submission of working notes [CEUR-WS]</div>
-            <div class="text-slate-300 text-sm">28 May 2026</div>
-          </li>
-          <li class="relative">
-            <span class="timeline-dot"></span>
-            <div class="font-semibold">Review process of participant papers</div>
-            <div class="text-slate-300 text-sm">28 May – 30 June 2026</div>
-          </li>
-          <li class="relative">
-            <span class="timeline-dot"></span>
-            <div class="font-semibold">Submission of Condensed Lab Overviews [LNCS]</div>
-            <div class="text-slate-300 text-sm">08 June 2026</div>
-          </li>
-          <li class="relative">
-            <span class="timeline-dot"></span>
-            <div class="font-semibold">Notification of Acceptance for Condensed Lab Overviews [LNCS]</div>
-            <div class="text-slate-300 text-sm">15 June 2026</div>
-          </li>
-          <li class="relative">
-            <span class="timeline-dot"></span>
-            <div class="font-semibold">Camera Ready Copy of Condensed Lab Overviews [LNCS] due</div>
-            <div class="text-slate-300 text-sm">22 June 2026</div>
-          </li>
-          <li class="relative">
-            <span class="timeline-dot"></span>
-            <div class="font-semibold">Notification of Acceptance for Participant Papers [CEUR-WS]</div>
-            <div class="text-slate-300 text-sm">30 June 2026</div>
-          </li>
-          <li class="relative">
-            <span class="timeline-dot"></span>
-            <div class="font-semibold">Camera Ready Copy of Participant Papers and Extended Lab Overviews [CEUR-WS] due</div>
-            <div class="text-slate-300 text-sm">06 July 2026</div>
-          </li>
-          <li class="relative">
-            <span class="timeline-dot"></span>
-            <div class="font-semibold">CLEF 2026 Conference</div>
-            <div class="text-slate-300 text-sm">21–24 September 2026 • Jena, Germany</div>
-          </li>
-        </ol>
+    <section id="timeline" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="academic-section p-8">
+        <h2 class="text-3xl font-bold text-gray-900 academic-heading mb-6">Important Dates</h2>
+        <p class="text-gray-600 mb-8 text-sm">Specific dates will be announced once they are fixed.</p>
+        
+        <div class="gap-0">
+          <div class="timeline-item">
+            <div class="font-semibold text-gray-900">Lab registration opens</div>
+            <div class="text-gray-600 text-sm">17 November 2025</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="font-semibold text-gray-900">Release of the training materials</div>
+            <div class="text-gray-600 text-sm">December 2025</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="font-semibold text-gray-900">Lab registration closes</div>
+            <div class="text-gray-600 text-sm">23 April 2026</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="font-semibold text-gray-900">Beginning of the evaluation cycle (test sets release)</div>
+            <div class="text-gray-600 text-sm">May 2026</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="font-semibold text-gray-900">End of the evaluation cycle (run submission)</div>
+            <div class="text-gray-600 text-sm">07 May 2026</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="font-semibold text-gray-900">Deadline for the submission of working notes [CEUR-WS]</div>
+            <div class="text-gray-600 text-sm">28 May 2026</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="font-semibold text-gray-900">Review process of participant papers</div>
+            <div class="text-gray-600 text-sm">28 May – 30 June 2026</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="font-semibold text-gray-900">Submission of Condensed Lab Overviews [LNCS]</div>
+            <div class="text-gray-600 text-sm">08 June 2026</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="font-semibold text-gray-900">Notification of Acceptance for Condensed Lab Overviews [LNCS]</div>
+            <div class="text-gray-600 text-sm">15 June 2026</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="font-semibold text-gray-900">Camera Ready Copy of Condensed Lab Overviews [LNCS] due</div>
+            <div class="text-gray-600 text-sm">22 June 2026</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="font-semibold text-gray-900">Notification of Acceptance for Participant Papers [CEUR-WS]</div>
+            <div class="text-gray-600 text-sm">30 June 2026</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="font-semibold text-gray-900">Camera Ready Copy of Participant Papers and Extended Lab Overviews [CEUR-WS] due</div>
+            <div class="text-gray-600 text-sm">06 July 2026</div>
+          </div>
+          
+          <div class="timeline-item">
+            <div class="font-semibold text-gray-900">CLEF 2026 Conference</div>
+            <div class="text-gray-600 text-sm">21–24 September 2026 • Jena, Germany</div>
+          </div>
+        </div>
       </div>
-      <div class="divider mx-auto max-w-6xl"></div>
     </section>
 
     <!-- SUBMISSION -->
-    <section id="submission" class="relative">
-      <div class="mx-auto max-w-7xl px-6 py-20 sm:py-28">
-        <div class="grid lg:grid-cols-2 gap-10 items-start">
+    <section id="submission" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="academic-section p-8">
+        <h2 class="text-3xl font-bold text-gray-900 academic-heading mb-6">How to Participate</h2>
+        
+        <div class="grid lg:grid-cols-2 gap-8">
           <div>
-            <h2 class="text-3xl sm:text-4xl font-bold">HOW TO PARTICIPATE</h2>
-            <p class="mt-3 text-slate-300">Engage with the challenges in a way that suits you - from a quick, one-time experiment to a detailed research project. While we invite you to share your findings in our workshop notes, you are also free to develop promising results into a full paper for an archival journal. The workshop itself is a perfect opportunity to refine your ideas through discussion with peers.</p>
-            <p class="mt-4 text-slate-300"><b>Ready to join? Sign up via the CLEF registration form (FinMMEval section): <a class="text-money-300 hover:text-money-200" href="https://clef-labs-registration.dipintra.it/registrationForm.php#registrationFrom" target="_blank" rel="noopener noreferrer">https://clef-labs-registration.dipintra.it/registrationForm.php</a>.</b></p>
+            <p class="text-gray-700 mb-4">
+              Engage with the challenges in a way that suits you - from a quick, one-time experiment to a detailed research project. While we invite you to share your findings in our workshop notes, you are also free to develop promising results into a full paper for an archival journal.
+            </p>
+            
+            <p class="text-gray-700 mb-6">
+              The workshop itself is a perfect opportunity to refine your ideas through discussion with peers.
+            </p>
+            
+            <div class="bg-accent-50 rounded-lg p-6">
+              <p class="text-gray-800 font-semibold mb-4">Ready to join?</p>
+              <div class="flex flex-col sm:flex-row gap-6 items-start">
+                <a href="https://clef-labs-registration.dipintra.it/registrationForm.php#registrationFrom" 
+                   target="_blank" 
+                   rel="noopener noreferrer"
+                   class="whitespace-nowrap bg-accent-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-accent-700 transition shadow-subtle text-center">
+                  Sign Up
+                </a>
+                <p class="text-gray-700 text-sm">
+                  Sign up via the CLEF registration form (FinMMEval section)
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="glass rounded-2xl p-6">
-            <h3 class="font-semibold text-lg">Packaging Checklist</h3>
-            <ul class="mt-4 space-y-2 text-sm text-slate-300 list-disc pl-5">
-              <li>Results JSONL (per task)</li>
-              <li>System Card (architecture, data usage, risks)</li>
-              <li>Reproducibility (seed, versions, hardware)</li>
-              <li>License compliance acknowledgements (if applicable)</li>
+          
+          <div class="glass-card rounded-lg p-6 border border-gray-200">
+            <h3 class="font-bold text-gray-900 mb-4">Packaging Checklist</h3><br/>
+            <ul class="space-y-3">
+              <li class="flex items-start space-x-3">
+                <div class="w-5 h-5 bg-green-100 text-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  ✓
+                </div>
+                <span class="text-gray-700">Results JSONL (per task)</span>
+              </li>
+              <li class="flex items-start space-x-3">
+                <div class="w-5 h-5 bg-green-100 text-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  ✓
+                </div>
+                <span class="text-gray-700">System Card (architecture, data usage, risks)</span>
+              </li>
+              <li class="flex items-start space-x-3">
+                <div class="w-5 h-5 bg-green-100 text-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  ✓
+                </div>
+                <span class="text-gray-700">Reproducibility (seed, versions, hardware)</span>
+              </li>
+              <li class="flex items-start space-x-3">
+                <div class="w-5 h-5 bg-green-100 text-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  ✓
+                </div>
+                <span class="text-gray-700">License compliance acknowledgements (if applicable)</span>
+              </li>
             </ul>
           </div>
         </div>
       </div>
-      <div class="divider mx-auto max-w-6xl"></div>
     </section>
 
     <!-- ORGANIZERS -->
-    <section id="organizers" class="relative">
-      <div class="mx-auto max-w-7xl px-6 py-20 sm:py-28">
-        <h2 class="text-3xl sm:text-4xl font-bold">Organizers</h2>
-        <p class="mt-3 text-slate-300">Organizing committee and partner institutions.</p>
-        <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-3 text-slate-200 text-sm">
-          <div class="glass rounded-xl p-4">Zhuohan Xie • MBZUAI (UAE)</div>
-          <div class="glass rounded-xl p-4">Rania Elbadry • MBZUAI (UAE)</div>
-          <div class="glass rounded-xl p-4">Fan Zhang • University of Tokyo (Japan)</div>
-          <div class="glass rounded-xl p-4">Georgi Georgiev • Sofia University &quot;St. Kliment Ohridski&quot; (Bulgaria)</div>
-          <div class="glass rounded-xl p-4">Xueqing Peng • The Fin AI (USA)</div>
-          <div class="glass rounded-xl p-4">Lingfei Qian • The Fin AI (USA)</div>
-          <div class="glass rounded-xl p-4">Jimin Huang • The Fin AI (USA)</div>
-          <div class="glass rounded-xl p-4">Dimitar Dimitrov • Sofia University &quot;St. Kliment Ohridski&quot; (Bulgaria)</div>
-          <div class="glass rounded-xl p-4">Vanshikaa Jani • University of Arizona (USA)</div>
-          <div class="glass rounded-xl p-4">Yuyang Dai • INSAIT (Bulgaria)</div>
-          <div class="glass rounded-xl p-4">Jiahui Geng • MBZUAI (UAE)</div>
-          <div class="glass rounded-xl p-4">Yuxia Wang • INSAIT (Bulgaria)</div>
-          <div class="glass rounded-xl p-4">Ivan Koychev • Sofia University &quot;St. Kliment Ohridski&quot; (Bulgaria)</div>
-          <div class="glass rounded-xl p-4">Veselin Stoyanov • MBZUAI (UAE)</div>
-          <div class="glass rounded-xl p-4">Preslav Nakov • MBZUAI (UAE)</div>
+    <section id="organizers" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="academic-section p-8">
+        <h2 class="text-3xl font-bold text-gray-900 academic-heading mb-6">Organizers</h2>
+        <p class="text-gray-600 mb-8">Organizing committee and partner institutions.</p>
+        
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+          <!-- Organizer 1 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <img src="https://media.licdn.com/dms/image/v2/D5603AQH089ja0Msf9Q/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1688275655470?e=2147483647&v=beta&t=rnBIzQsMjkYJBfgXld1IeypvgPPzsaONEn1JHGAdf64" alt="Zhuohan Xie" class="w-12 h-12">
+            <div>
+              <div class="font-semibold text-gray-900">Zhuohan Xie</div>
+              <div class="text-gray-600 text-sm mt-1">MBZUAI (UAE)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 2 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <div class="organizer-avatar">RE</div>
+            <div>
+              <div class="font-semibold text-gray-900">Rania Elbadry</div>
+              <div class="text-gray-600 text-sm mt-1">MBZUAI (UAE)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 3 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <div class="organizer-avatar">FZ</div>
+            <div>
+              <div class="font-semibold text-gray-900">Fan Zhang</div>
+              <div class="text-gray-600 text-sm mt-1">University of Tokyo (Japan)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 4 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <img src="https://media.licdn.com/dms/image/v2/D4D03AQE8jKY4mwgTyA/profile-displayphoto-scale_400_400/B4DZqYfReJKIAg-/0/1763494927203?e=2147483647&v=beta&t=0ltzJJsR62HzMC8XdTX3uXUg1SOIbY6n_9H-XTZQjgc" alt="Georgi Georgiev" class="w-12 h-12">
+            <div>
+              <div class="font-semibold text-gray-900">Georgi Georgiev</div>
+              <div class="text-gray-600 text-sm mt-1">Sofia University "St. Kliment Ohridski" (Bulgaria)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 5 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <div class="organizer-avatar">XP</div>
+            <div>
+              <div class="font-semibold text-gray-900">Xueqing Peng</div>
+              <div class="text-gray-600 text-sm mt-1">The Fin AI (USA)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 6 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <div class="organizer-avatar">LQ</div>
+            <div>
+              <div class="font-semibold text-gray-900">Lingfei Qian</div>
+              <div class="text-gray-600 text-sm mt-1">The Fin AI (USA)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 7 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <img src="https://media.licdn.com/dms/image/v2/D4D03AQH8gC5R_to-Mw/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1714584713209?e=2147483647&v=beta&t=fSDaPwKnnz-FxfAHXDs1oKvE3AotKm2QsZw1dCiNOAs" alt="Jimin Huang" class="w-12 h-12">
+            <div>
+              <div class="font-semibold text-gray-900">Jimin Huang</div>
+              <div class="text-gray-600 text-sm mt-1">The Fin AI (USA)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 8 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <img src="https://media.licdn.com/dms/image/v2/C4D03AQHWFbC4yQc8fQ/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1585933896838?e=1766620800&v=beta&t=6xM1KRDhcGHn3pOyJ6fgTUgxSXaojPg3dxIt75JdesA" alt="Dimitar Dimitrov" class="w-12 h-12">
+            <div>
+              <div class="font-semibold text-gray-900">Dimitar Dimitrov</div>
+              <div class="text-gray-600 text-sm mt-1">Sofia University "St. Kliment Ohridski" (Bulgaria)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 9 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <div class="organizer-avatar">VJ</div>
+            <div>
+              <div class="font-semibold text-gray-900">Vanshikaa Jani</div>
+              <div class="text-gray-600 text-sm mt-1">University of Arizona (USA)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 10 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <div class="organizer-avatar">YD</div>
+            <div>
+              <div class="font-semibold text-gray-900">Yuyang Dai</div>
+              <div class="text-gray-600 text-sm mt-1">INSAIT (Bulgaria)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 11 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <div class="organizer-avatar">JG</div>
+            <div>
+              <div class="font-semibold text-gray-900">Jiahui Geng</div>
+              <div class="text-gray-600 text-sm mt-1">MBZUAI (UAE)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 12 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <img src="https://media.licdn.com/dms/image/v2/D4E03AQFb1j5oSxngCA/profile-displayphoto-shrink_400_400/profile-displayphoto-shrink_400_400/0/1709530428395?e=1766620800&v=beta&t=fgQAbIvPtedU4RAT5XySVGfPkzdM88uDmlF_JKsY970" alt="Yuxia Wang" class="w-12 h-12">
+            <div>
+              <div class="font-semibold text-gray-900">Yuxia Wang</div>
+              <div class="text-gray-600 text-sm mt-1">INSAIT (Bulgaria)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 13 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <img src="https://media.licdn.com/dms/image/v2/C4E03AQHulOMJGAsELg/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1516282435096?e=1766620800&v=beta&t=OqfJzw6uz29JlMHqh3PtMXiKQ8XLaBAnF2PNE7zK1VU" alt="Ivan Koychev" class="w-12 h-12">
+            <div>
+              <div class="font-semibold text-gray-900">Ivan Koychev</div>
+              <div class="text-gray-600 text-sm mt-1">Sofia University "St. Kliment Ohridski" (Bulgaria)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 14 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <img src="https://lh3.googleusercontent.com/proxy/vqUBOeEXAzGY4HYSuRxh-wkm_inhrDfRwcRwMwmfJVnKfAGVmWYQPtbDv4opOMgnSx0tVR7DpqSjY2UZtuKP421d5w" alt="Veselin Stoyanov" class="w-12 h-12">
+            <div>
+              <div class="font-semibold text-gray-900">Veselin Stoyanov</div>
+              <div class="text-gray-600 text-sm mt-1">MBZUAI (UAE)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 15 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <img src="https://lml.bas.bg/~nakov/nakov_skali.jpg" alt="Preslav Nakov" class="w-12 h-12">
+            <div>
+              <div class="font-semibold text-gray-900">Preslav Nakov</div>
+              <div class="text-gray-600 text-sm mt-1">MBZUAI (UAE)</div>
+            </div>
+          </div>
         </div>
+        
         <div class="mt-8 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6 items-center">
-          <!-- Replace with actual logos -->
-          <div class="glass rounded-xl p-4 grid place-items-center h-40"><a href="https://mbzuai.ac.ae/research-department/natural-language-processing-department" target="_blank"><img src="images/MBZUAI_logo.png" alt="MBZUAI"/></a></div>
-          <div class="glass rounded-xl p-4 grid place-items-center h-40"><a href="https://www.u-tokyo.ac.jp/en" target="_blank"><img src="images/University_of_Tokyo_logo.png" alt="University of Tokyo"/></a></div>
-          <div class="glass rounded-xl p-4 grid place-items-center h-40"><a href="https://www.fmi.uni-sofia.bg/en" target="_blank"><img src="images/unisofia_logo.png" alt="Sofia University St. Kliment Ohridski"/></a></div>
-          <div class="glass rounded-xl p-4 grid place-items-center h-40"><a href="https://thefin.ai" target="_blank"><img src="images/finai_logo.png" alt="The Fin AI"/></a></div>
-          <div class="glass rounded-xl p-4 grid place-items-center h-40"><a href="https://www.arizona.edu" target="_blank"><img src="images/uniarizona_logo.png" alt="University of Arizona"/></a></div>
-          <div class="glass rounded-xl p-4 grid place-items-center h-40"><a href="https://www.insait.ai" target="_blank"><img src="images/insait-logo.png" alt="INSAIT"/></a></div>
+          <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition flex items-center justify-center h-28">
+            <a href="https://mbzuai.ac.ae/research-department/natural-language-processing-department" target="_blank">
+              <img src="https://storage-prtl-co.imgix.net/endor/organisations/19934/logos/1579510187_mbzuofai_fullname_rgb.jpg" alt="MBZUAI">
+            </a>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition flex items-center justify-center h-28">
+            <a href="https://www.u-tokyo.ac.jp/en" target="_blank">
+              <img src="images/University_of_Tokyo_logo.png" alt="University of Tokyo">
+            </a>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition flex items-center justify-center h-28">
+            <a href="https://www.fmi.uni-sofia.bg/en" target="_blank">
+              <img src="https://www.resilience-ri.eu/wp-content/uploads/2022/02/logo_su_eng_horizontal-300x261.png" alt="Sofia University">
+            </a>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition flex items-center justify-center h-28">
+            <a href="https://thefin.ai" target="_blank">
+              <img src="https://cdn-avatars.huggingface.co/v1/production/uploads/63b58ed5889aa6707f0bb0f4/ZK5nQKw34W3-eH3p4NAYc.jpeg" alt="The Fin AI">
+            </a>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition flex items-center justify-center h-28">
+            <a href="https://www.arizona.edu" target="_blank">
+              <img src="images/uniarizona_logo.png" alt="University of Arizona">
+            </a>
+          </div>
+          <div class="border border-gray-200 rounded-lg p-4 hover:bg-gray-50 transition flex items-center justify-center h-28">
+            <a href="https://www.insait.ai" target="_blank">
+              <img src="images/insait-logo.png" alt="INSAIT">
+            </a>
+          </div>
         </div>
       </div>
-      <div class="divider mx-auto max-w-6xl"></div>
     </section>
 
     <!-- FAQ -->
-    <section id="faq" class="relative">
-      <div class="mx-auto max-w-7xl px-6 py-20 sm:py-28">
-        <h2 class="text-3xl sm:text-4xl font-bold">FAQ</h2>
-        <div class="mt-8 grid md:grid-cols-2 gap-6">
-          <details class="glass rounded-2xl p-6 group">
-            <summary class="cursor-pointer font-semibold">Who can participate?</summary>
-            <p class="mt-2 text-slate-300 text-sm">Researchers and practitioners from academia and industry. Student teams are particularly welcome.</p>
-          </details>
-          <details class="glass rounded-2xl p-6 group">
-            <summary class="cursor-pointer font-semibold">How is data licensed?</summary>
-            <p class="mt-2 text-slate-300 text-sm">Research-only license; redistribution of raw sources may be restricted.</p>
-          </details>
-          <details class="glass rounded-2xl p-6 group">
-            <summary class="cursor-pointer font-semibold">Can we submit to multiple tasks?</summary>
-            <p class="mt-2 text-slate-300 text-sm">Yes. Submit independent result bundles per task.</p>
-          </details>
-          <details class="glass rounded-2xl p-6 group">
-            <summary class="cursor-pointer font-semibold">Are ensembles allowed?</summary>
-            <p class="mt-2 text-slate-300 text-sm">Yes, but disclose all components in the system card.</p>
-          </details>
+    <section id="faq" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="academic-section p-8">
+        <h2 class="text-3xl font-bold text-gray-900 academic-heading mb-6">Frequently Asked Questions</h2>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">
+            <h3 class="font-bold text-gray-900 mb-2">Who can participate?</h3>
+            <p class="text-gray-700 text-sm">Researchers and practitioners from academia and industry. Student teams are particularly welcome.</p>
+          </div>
+          
+          <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">
+            <h3 class="font-bold text-gray-900 mb-2">How is data licensed?</h3>
+            <p class="text-gray-700 text-sm">Research-only license; redistribution of raw sources may be restricted.</p>
+          </div>
+          
+          <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">
+            <h3 class="font-bold text-gray-900 mb-2">Can we submit to multiple tasks?</h3>
+            <p class="text-gray-700 text-sm">Yes. Submit independent result bundles per task.</p>
+          </div>
+          
+          <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">
+            <h3 class="font-bold text-gray-900 mb-2">Are ensembles allowed?</h3>
+            <p class="text-gray-700 text-sm">Yes, but disclose all components in the system card.</p>
+          </div>
         </div>
       </div>
     </section>
   </main>
 
   <!-- FOOTER -->
-  <footer class="relative">
-    <div class="mx-auto max-w-7xl px-6 py-10">
-      <div class="glass rounded-2xl p-6 flex flex-col items-center justify-center text-center">
-        <div class="text-sm text-slate-300">© FinMMEval Lab • Part of CLEF 2026</div>
+  <footer class="bg-gray-100 text-black py-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <div class="flex justify-center items-center space-x-2 mb-4">
+          <div class="w-12 h-12 rounded-lg flex items-center justify-center">
+            <!-- span class="text-white font-bold text-sm">F</span -->
+            <img src="images/favicon.png" alt="FinMMEval Logo">
+          </div>
+          <span class="font-bold">FinMMEval Lab</span>
+        </div>
+        <p class="text-gray-400 text-sm">© FinMMEval Lab • Part of CLEF 2026</p>
       </div>
     </div>
   </footer>
 
-  <button id="toTop" class="fixed bottom-5 right-5 hidden rounded-full bg-money-500 hover:bg-money-600 p-3 shadow-glow" aria-label="Back to top">
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 19V5m0 0l-7 7m7-7l7 7" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+  <button id="toTop" class="fixed bottom-8 right-8 hidden bg-accent-600 text-white p-3 rounded-full shadow-elevated hover:bg-accent-700 transition">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"/>
+    </svg>
   </button>
 
   <script>
-    // Simple smooth-scroll and helpers
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-      a.addEventListener('click', e => {
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) {
-          e.preventDefault();
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Tab functionality
+    document.querySelectorAll('.tab-button').forEach(button => {
+      button.addEventListener('click', () => {
+        // Remove active class from all tabs
+        document.querySelectorAll('.tab-button').forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        // Hide all tab contents
+        document.querySelectorAll('.tab-content').forEach(content => {
+          content.classList.add('hidden');
+        });
+        
+        // Add active class to clicked tab
+        button.classList.add('active');
+        
+        // Show corresponding content
+        const tabId = button.getAttribute('data-tab');
+        const tabContent = document.getElementById(tabId);
+        if (tabContent) {
+          tabContent.classList.remove('hidden');
+          tabContent.classList.add('fade-in');
         }
       });
     });
@@ -437,17 +916,44 @@
     // Mobile menu toggle
     const menuBtn = document.getElementById('menuBtn');
     const mobileMenu = document.getElementById('mobileMenu');
-    const navLinks = document.getElementById('navLinks');
+    
     menuBtn?.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
     });
 
-    // Back to top
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        if (targetId === '#') return;
+        
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+          window.scrollTo({
+            top: targetElement.offsetTop - 140, // Adjusted for sticky banner
+            behavior: 'smooth'
+          });
+          
+          // Close mobile menu if open
+          mobileMenu.classList.add('hidden');
+        }
+      });
+    });
+
+    // Back to top button
     const toTop = document.getElementById('toTop');
     window.addEventListener('scroll', () => {
-      toTop.classList.toggle('hidden', window.scrollY < 600);
+      if (window.scrollY > 300) {
+        toTop.classList.remove('hidden');
+      } else {
+        toTop.classList.add('hidden');
+      }
     });
-    toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    
+    toTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   </script>
 </body>
 </html>
