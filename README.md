@@ -16,6 +16,10 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 - Register via the official CLEF form (choose FinMMEval tasks): https://clef-labs-registration.dipintra.it/registrationForm.php#registrationFrom
 - Full call, visuals, and timeline: https://mbzuai-nlp.github.io/CLEF-2026-FinMMEval-Lab/
 
+## Training Data (Released)
+- Download the full training collection on Hugging Face: https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026
+- Contains training splits for all three tasks (exam Q&A, multilingual Q&A, and trading decision making). See each dataset card in the collection for licenses and format details.
+
 ## Organizers
 - Zhuohan Xie (Mohamed bin Zayed University of Artificial Intelligence, UAE)
 - Rania Elbadry (Mohamed bin Zayed University of Artificial Intelligence, UAE)

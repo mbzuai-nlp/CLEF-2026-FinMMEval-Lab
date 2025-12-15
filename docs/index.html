@@ -344,19 +344,29 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
         </button>
-      </div>
-      
-      <!-- Mobile menu -->
-      <div id="mobileMenu" class="md:hidden hidden py-4 border-t border-gray-200">
-        <div class="space-y-1">
-          <a href="#about" class="block py-2 text-gray-700 hover:text-accent-600">About</a>
-          <a href="#tasks" class="block py-2 text-gray-700 hover:text-accent-600">Tasks</a>
-          <a href="#timeline" class="block py-2 text-gray-700 hover:text-accent-600">Timeline</a>
-          <a href="#news" class="block py-2 text-gray-700 hover:text-accent-600">News</a>
-          <a href="#submission" class="block py-2 text-gray-700 hover:text-accent-600">Submission</a>
-          <a href="#organizers" class="block py-2 text-gray-700 hover:text-accent-600">Organizers</a>
-          <a href="#faq" class="block py-2 text-gray-700 hover:text-accent-600">FAQ</a>
-        </div>
+        <ul id="navLinks" class="hidden lg:flex items-center gap-5 text-sm font-medium">
+          <li><a href="#about" class="hover:text-money-300">About</a></li>
+          <li><a href="#data" class="hover:text-money-300">Data</a></li>
+          <li><a href="#tasks" class="hover:text-money-300">Tasks</a></li>
+          <li><a href="#timeline" class="hover:text-money-300">Timeline</a></li>
+          <li><a href="https://clef-labs-registration.dipintra.it/registrationForm.php#registrationFrom" target="_blank" rel="noopener noreferrer" class="hover:text-money-300"><b><u>Join In</u></b></a></li>
+          <li><a href="#organizers" class="hover:text-money-300">Organizers</a></li>
+          <li><a href="#faq" class="hover:text-money-300">FAQ</a></li>
+        </ul>
+      </nav>
+    </div>
+    <!-- mobile menu -->
+    <div id="mobileMenu" class="lg:hidden hidden mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="mt-2 glass rounded-xl p-3">
+        <ul class="grid grid-cols-2 gap-2 text-sm">
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#about">About</a></li>
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#data">Data</a></li>
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#tasks">Tasks</a></li>
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#timeline">Timeline</a></li>
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="https://clef-labs-registration.dipintra.it/registrationForm.php#registrationFrom" target="_blank" rel="noopener noreferrer"><b><u>Join In</u></b></a></li>
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#organizers">Organizers</a></li>
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#faq">FAQ</a></li>
+        </ul>
       </div>
     </div>
   </header>
@@ -394,7 +404,35 @@
     </div>
   </section>
 
-  <main class="py-12">
+  <main class="relative -mt-10">
+    <!-- DATA -->
+    <section id="data" class="relative">
+      <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16">
+        <div class="glass rounded-3xl p-6 sm:p-8 border border-white/10 shadow-glow">
+          <div class="grid lg:grid-cols-3 gap-6 items-center">
+            <div class="lg:col-span-2">
+              <h2 class="text-3xl sm:text-4xl font-bold">Training Data Released</h2>
+              <p class="mt-3 text-slate-300 leading-relaxed">The full training collection for all three tasks is now live on Hugging Face. Access exam-style Q&amp;A, multilingual financial QA, and trading decision-making contexts, with detailed dataset cards and licensing notes.</p>
+              <ul class="mt-4 space-y-2 text-sm text-slate-200 list-disc pl-5">
+                <li>Task 1: Multilingual financial exam-style multiple-choice sets.</li>
+                <li>Task 2: PolyFiQA (Easy + Expert) filings with multilingual news Q&amp;A.</li>
+                <li>Task 3: BTC and TSLA daily market contexts for Buy/Hold/Sell reasoning.</li>
+              </ul>
+            </div>
+            <div class="lg:justify-self-end lg:w-80">
+              <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
+                <div class="text-xs uppercase tracking-wide text-money-300 font-semibold">New</div>
+                <div class="mt-2 text-sm text-slate-200">Browse the Hugging Face collection to download splits and review licensing.</div>
+                <a href="https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center justify-center rounded-xl bg-money-500 hover:bg-money-600 px-4 py-2 font-semibold w-full text-center">Open Collection</a>
+                <p class="mt-3 text-[13px] text-slate-400">Check each dataset card for citation, licensing, and format details.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="divider mx-auto max-w-6xl"></div>
+    </section>
+
     <!-- ABOUT -->
     <section id="about" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
       <div class="academic-section p-8">
@@ -576,128 +614,77 @@
     </section>
 
     <!-- TIMELINE -->
-    <section id="timeline" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-      <div class="academic-section p-8">
-        <h2 class="text-3xl font-bold text-gray-900 academic-heading mb-6">Important Dates</h2>
-        <p class="text-gray-600 mb-8 text-sm">Specific dates will be announced once they are fixed.</p>
-        
-        <div class="gap-0">
-          <div class="timeline-item">
-            <div class="font-semibold text-gray-900">Lab registration opens</div>
-            <div class="text-gray-600 text-sm">17 November 2025</div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="font-semibold text-gray-900">Release of the training materials</div>
-            <div class="text-gray-600 text-sm">December 2025</div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="font-semibold text-gray-900">Lab registration closes</div>
-            <div class="text-gray-600 text-sm">23 April 2026</div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="font-semibold text-gray-900">Beginning of the evaluation cycle (test sets release)</div>
-            <div class="text-gray-600 text-sm">May 2026</div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="font-semibold text-gray-900">End of the evaluation cycle (run submission)</div>
-            <div class="text-gray-600 text-sm">07 May 2026</div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="font-semibold text-gray-900">Deadline for the submission of working notes [CEUR-WS]</div>
-            <div class="text-gray-600 text-sm">28 May 2026</div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="font-semibold text-gray-900">Review process of participant papers</div>
-            <div class="text-gray-600 text-sm">28 May – 30 June 2026</div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="font-semibold text-gray-900">Submission of Condensed Lab Overviews [LNCS]</div>
-            <div class="text-gray-600 text-sm">08 June 2026</div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="font-semibold text-gray-900">Notification of Acceptance for Condensed Lab Overviews [LNCS]</div>
-            <div class="text-gray-600 text-sm">15 June 2026</div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="font-semibold text-gray-900">Camera Ready Copy of Condensed Lab Overviews [LNCS] due</div>
-            <div class="text-gray-600 text-sm">22 June 2026</div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="font-semibold text-gray-900">Notification of Acceptance for Participant Papers [CEUR-WS]</div>
-            <div class="text-gray-600 text-sm">30 June 2026</div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="font-semibold text-gray-900">Camera Ready Copy of Participant Papers and Extended Lab Overviews [CEUR-WS] due</div>
-            <div class="text-gray-600 text-sm">06 July 2026</div>
-          </div>
-          
-          <div class="timeline-item">
-            <div class="font-semibold text-gray-900">CLEF 2026 Conference</div>
-            <div class="text-gray-600 text-sm">21–24 September 2026 • Jena, Germany</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-        <!-- NEWS CAROUSEL -->
-    <section id="news" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-      <div class="academic-section p-8">
-        <h2 class="text-3xl font-bold text-gray-900 academic-heading mb-6">Latest News</h2>
-        
-        <div class="relative">
-          <!-- Carousel Container -->
-          <div id="newsCarousel" class="overflow-hidden rounded-lg w-full">
-            <div class="flex transition-transform duration-500 ease-in-out w-full" id="carouselTrack">
-              <!-- Slide 1 -->
-              <div class="min-w-full w-full">
-                <div class="glass-card rounded-lg p-8 border border-gray-200 w-full h-full">
-                  <div class="flex items-center text-sm text-gray-500 mb-3">
-                    <span class="bg-accent-100 text-accent-700 px-3 py-1 rounded-full font-medium">Announcement</span>
-                    <span class="mx-2">•</span>
-                    <span>December 7, 2025</span>
-                  </div>
-                  <h3 class="text-xl font-bold text-gray-900 mb-3">Unique registered participants grow every day</h3>
-                  <p class="text-gray-700 mb-4">We are experiencing consistent growth in unique participants through registrations, demonstrating interest prior to the start of our marketing campaign.</p>
-                  <img src="images/registrants.png" alt="Registration Growth" class="rounded-lg mb-4 w-full">
-                  <a href="https://clef-labs-registration.dipintra.it/" class="text-accent-600 hover:text-accent-800 font-semibold text-sm inline-flex items-center" target="_blank">
-                    Read more →
-                  </a>
-                </div>
-              </div>
-            
-            </div>
-          </div>
-          
-          <!-- Navigation Buttons -->
-          <button id="prevBtn" class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white rounded-full p-2 shadow-elevated hover:bg-gray-50">
-            <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button id="nextBtn" class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white rounded-full p-2 shadow-elevated hover:bg-gray-50">
-            <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-          
-          <!-- Dots Indicator -->
-          <div class="flex justify-center mt-6 space-x-2">
-            <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition" data-index="0"></button>
-            <!-- button class="carousel-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition" data-index="1"></button>
-            <button class="carousel-dot w-3 h-3 rounded-full bg-gray-300 hover:bg-gray-400 transition" data-index="2"></button -->
-          </div>
-        </div>
+    <section id="timeline" class="relative">
+      <div class="mx-auto max-w-7xl px-6 py-20 sm:py-28">
+        <h2 class="text-3xl sm:text-4xl font-bold">Important Dates</h2>
+        <p class="mt-3 text-slate-300 text-sm">Specific dates will be announced once they are fixed.</p>
+        <ol class="mt-6 relative border-s border-white/10 pl-6 space-y-6">
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Lab registration opens</div>
+            <div class="text-slate-300 text-sm">17 November 2025</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Training data released</div>
+            <div class="text-slate-300 text-sm">Available now via the <a class="text-money-300 hover:text-money-200 underline" href="https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026" target="_blank" rel="noopener noreferrer">Hugging Face collection</a></div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Lab registration closes</div>
+            <div class="text-slate-300 text-sm">23 April 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Beginning of the evaluation cycle (test sets release)</div>
+            <div class="text-slate-300 text-sm">May 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">End of the evaluation cycle (run submission)</div>
+            <div class="text-slate-300 text-sm">07 May 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Deadline for the submission of working notes [CEUR-WS]</div>
+            <div class="text-slate-300 text-sm">28 May 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Review process of participant papers</div>
+            <div class="text-slate-300 text-sm">28 May – 30 June 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Submission of Condensed Lab Overviews [LNCS]</div>
+            <div class="text-slate-300 text-sm">08 June 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Notification of Acceptance for Condensed Lab Overviews [LNCS]</div>
+            <div class="text-slate-300 text-sm">15 June 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Camera Ready Copy of Condensed Lab Overviews [LNCS] due</div>
+            <div class="text-slate-300 text-sm">22 June 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Notification of Acceptance for Participant Papers [CEUR-WS]</div>
+            <div class="text-slate-300 text-sm">30 June 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Camera Ready Copy of Participant Papers and Extended Lab Overviews [CEUR-WS] due</div>
+            <div class="text-slate-300 text-sm">06 July 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">CLEF 2026 Conference</div>
+            <div class="text-slate-300 text-sm">21–24 September 2026 • Jena, Germany</div>
+          </li>
+        </ol>
       </div>
     </section>
 
