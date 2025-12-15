@@ -302,6 +302,25 @@
     #prevBtn, #nextBtn {
       z-index: 20;
     }
+
+    /* Data card styling */
+    .data-card {
+      background: linear-gradient(145deg, #e8f1ff 0%, #f8fafc 40%, #ffffff 100%);
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 20px 60px rgba(37, 99, 235, 0.12);
+    }
+
+    .data-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: #eef2ff;
+      color: #1d4ed8;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
   </style>
 </head>
 <body class="text-ink-soft font-sans antialiased">
@@ -409,23 +428,49 @@
     <!-- DATA -->
     <section id="data" class="relative">
       <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16">
-        <div class="glass rounded-3xl p-6 sm:p-8 border border-white/10 shadow-glow">
-          <div class="grid lg:grid-cols-3 gap-6 items-center">
-            <div class="lg:col-span-2">
-              <h2 class="text-3xl sm:text-4xl font-bold">Training Data Released</h2>
-              <p class="mt-3 text-ink-muted leading-relaxed">The full training collection for all three tasks is now live on Hugging Face. Access exam-style Q&amp;A, multilingual financial QA, and trading decision-making contexts, with detailed dataset cards and licensing notes.</p>
-              <ul class="mt-4 space-y-2 text-sm text-ink-soft list-disc pl-5">
-                <li>Task 1: Multilingual financial exam-style multiple-choice sets.</li>
-                <li>Task 2: PolyFiQA (Easy + Expert) filings with multilingual news Q&amp;A.</li>
-                <li>Task 3: BTC and TSLA daily market contexts for Buy/Hold/Sell reasoning.</li>
-              </ul>
+        <div class="rounded-3xl data-card p-8 sm:p-10 relative overflow-hidden">
+          <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(700px 400px at 80% 20%, rgba(37,99,235,0.08), transparent);"></div>
+          <div class="relative grid lg:grid-cols-3 gap-8 items-center">
+            <div class="lg:col-span-2 space-y-5">
+              <div class="flex flex-wrap items-center gap-3">
+                <span class="data-pill">Training Data Released</span>
+                <span class="text-ink-muted text-sm">Released: 15 December 2025</span>
+              </div>
+              <h2 class="text-3xl sm:text-4xl font-bold text-ink">Ready-to-use splits for all tasks</h2>
+              <p class="text-ink-muted leading-relaxed max-w-3xl">Get calibrated training splits for exam-style Q&amp;A, multilingual financial reasoning, and trading decision-making. Each dataset card includes format, licensing, and citation guidance.</p>
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle">
+                  <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">1</div>
+                  <div>
+                    <div class="font-semibold text-ink">Task 1</div>
+                    <div class="text-ink-muted text-sm">Multilingual exam-style multiple choice.</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle">
+                  <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">2</div>
+                  <div>
+                    <div class="font-semibold text-ink">Task 2</div>
+                    <div class="text-ink-muted text-sm">PolyFiQA (Easy + Expert) filings with multilingual news Q&amp;A.</div>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle md:col-span-2">
+                  <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">3</div>
+                  <div>
+                    <div class="font-semibold text-ink">Task 3</div>
+                    <div class="text-ink-muted text-sm">BTC and TSLA daily contexts for Buy/Hold/Sell reasoning.</div>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="lg:justify-self-end lg:w-80">
-              <div class="rounded-2xl bg-white/5 border border-white/10 p-5">
-                <div class="text-xs uppercase tracking-wide text-money-300 font-semibold">New</div>
-                <div class="mt-2 text-sm text-ink-soft">Browse the Hugging Face collection to download splits and review licensing.</div>
-                <a href="https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026" target="_blank" rel="noopener noreferrer" class="mt-4 inline-flex items-center justify-center rounded-xl bg-money-500 hover:bg-money-600 px-4 py-2 font-semibold w-full text-center">Open Collection</a>
-                <p class="mt-3 text-[13px] text-ink-muted">Check each dataset card for citation, licensing, and format details.</p>
+              <div class="rounded-2xl bg-white border border-gray-200 p-6 shadow-elevated relative overflow-hidden">
+                <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(400px 300px at 30% 20%, rgba(37,99,235,0.08), transparent);"></div>
+                <div class="relative space-y-3">
+                  <div class="text-xs uppercase tracking-wide text-accent-700 font-semibold">New</div>
+                  <div class="text-sm text-ink-soft">Browse the Hugging Face collection to download splits and review licensing.</div>
+                  <a href="https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-xl bg-accent-600 hover:bg-accent-700 px-4 py-2 font-semibold text-white w-full text-center shadow-subtle">Open Collection</a>
+                  <p class="text-[13px] text-ink-muted">Check each dataset card for citation, licensing, and format details.</p>
+                </div>
               </div>
             </div>
           </div>
