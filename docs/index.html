@@ -671,25 +671,105 @@
           <div class="glass-card rounded-lg p-6 border border-gray-200">
             <h3 class="text-xl font-bold text-ink mb-4">Task 3 - Financial Decision Making</h3>
             <p class="text-ink-soft mb-4">
-              Given a market context <i>C = { P<sub>t</sub>, N<sub>t</sub> }</i>, where <i>P<sub>t</sub></i> represents the historical price series, <i>N<sub>t</sub></i> denotes contemporaneous textual information (e.g., news, reports), models are required to predict one of three discrete actions: <i>Buy</i>, <i>Hold</i>, or <i>Sell</i>.
+              Task 3 is a daily, news-driven trading workflow. We collect market news each day, call each submitted endpoint once, and execute positions from the returned action: <i>BUY</i>, <i>HOLD</i>, or <i>SELL</i>.
             </p>
             
             <div class="bg-gray-50 rounded-lg p-4 mb-4">
-              <h4 class="font-bold text-ink mb-2">Motivation</h4>
-              <p class="text-ink-soft text-sm">
-                Real-world investment decisions demand the integration of heterogeneous information sources—such as textual news, market price dynamics, and current portfolio positions—to form actionable insights.
-              </p>
+              <h4 class="font-bold text-ink mb-2">Daily Workflow</h4>
+              <ul class="text-ink-soft text-sm space-y-2 list-disc pl-5">
+                <li>Each endpoint receives one request per day and must return one action: <span class="font-semibold">BUY</span>, <span class="font-semibold">HOLD</span>, or <span class="font-semibold">SELL</span>.</li>
+                <li>Position mapping: <span class="font-semibold">BUY -&gt; long</span>, <span class="font-semibold">HOLD -&gt; flat</span>, <span class="font-semibold">SELL -&gt; short</span>.</li>
+                <li>Execution rule: each new action fully replaces the previous day&rsquo;s position.</li>
+                <li>Price convention: daily close price.</li>
+              </ul>
             </div>
             
             <div class="bg-gray-50 rounded-lg p-4 mb-4">
-              <h4 class="font-bold text-ink mb-2">Data</h4>
-              <p class="text-ink-soft text-sm mb-2">Two curated JSON datasets that provide daily market contexts:</p>
-              <ul class="text-ink-soft text-sm space-y-2">
-                <li><span class="font-semibold">BTC:</span> 2025-07-21 to 2025-10-09, 81 daily contexts</li>
-                <li><span class="font-semibold">TSLA:</span> 2024-07-23 to 2025-10-09, 444 daily contexts</li>
+              <h4 class="font-bold text-ink mb-2">Scheduling &amp; Request Policy</h4>
+              <ul class="text-ink-soft text-sm space-y-2 list-disc pl-5">
+                <li>Daily process starts at <span class="font-semibold">00:00 UTC</span>.</li>
+                <li>Requests are sent progressively after start time.</li>
+                <li>Per-request timeout is <span class="font-semibold">3 minutes</span>.</li>
+                <li>If a request fails (timeout, server error, or invalid response), the action defaults to <span class="font-semibold">HOLD</span>.</li>
               </ul>
-              <p class="text-ink-soft text-sm mt-2">
-                Each context includes: prices, news summaries, momentum labels, future_price_diff, and fundamental filings.
+            </div>
+
+            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+              <h4 class="font-bold text-ink mb-2">Request / Response Format</h4>
+              <p class="text-ink-soft text-sm mb-2">
+                Input is a JSON object containing <span class="font-semibold">date</span>, <span class="font-semibold">price</span>, <span class="font-semibold">news</span>, <span class="font-semibold">symbol</span>, <span class="font-semibold">momentum</span>, <span class="font-semibold">history_price</span>, and optional <span class="font-semibold">10k</span>/<span class="font-semibold">10q</span> (object or <span class="font-semibold">null</span>). The symbol varies by asset (e.g., TSLA, BTC).
+              </p>
+              <pre class="text-xs bg-white border border-gray-200 rounded p-3 overflow-x-auto text-ink-soft"><code>{
+  "recommended_action": "BUY"
+}</code></pre>
+              <p class="text-ink-soft text-sm mt-2">Valid actions: <span class="font-semibold">BUY</span>, <span class="font-semibold">HOLD</span>, <span class="font-semibold">SELL</span>.</p>
+            </div>
+
+            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+              <h4 class="font-bold text-ink mb-2">Input Samples</h4>
+              <p class="text-ink-soft text-sm mb-2"><span class="font-semibold">Sample A (TSLA):</span></p>
+              <p class="text-ink-soft text-xs mb-2"><span class="font-semibold">Note:</span> <code>10k</code> and <code>10q</code> can each be an object <span class="font-semibold">or null</span>.</p>
+              <pre class="text-xs bg-white border border-gray-200 rounded p-3 overflow-x-auto text-ink-soft mb-3"><code>{
+  "date": "2025-01-15",
+  "price": {"TSLA": 250.50},
+  "news": {"TSLA": ["Tesla announces new production milestone"]},
+  "symbol": ["TSLA"],
+  "momentum": {"TSLA": "bullish"},
+  "10k": {"TSLA": ["[SEC 10-K Filing - 2025-01-15]\nSummary..."]},
+  "10q": {"TSLA": ["[SEC 10-Q Filing - 2025-01-15]\nSummary..."]},
+  "history_price": {"TSLA": [
+    {"date": "2025-01-12", "price": 249.80},
+    ...,
+    {"date": "2025-01-13", "price": 250.50},
+    {"date": "2025-01-14", "price": 250.30}
+  ]}
+}</code></pre>
+              <p class="text-ink-soft text-sm mb-2"><span class="font-semibold">Sample B (BTC):</span></p>
+              <pre class="text-xs bg-white border border-gray-200 rounded p-3 overflow-x-auto text-ink-soft"><code>{
+  "date": "2025-01-15",
+  "price": {"BTC": 67890.50},
+  "news": {"BTC": ["Bitcoin ETF inflows remain strong"]},
+  "symbol": ["BTC"],
+  "momentum": {"BTC": "neutral"},
+  "10k": null,
+  "10q": null,
+  "history_price": {"BTC": [
+    {"date": "2025-01-12", "price": 67580.00},
+    ...,
+    {"date": "2025-01-13", "price": 67720.00},
+    {"date": "2025-01-14", "price": 67810.00}
+  ]}
+}</code></pre>
+            </div>
+
+            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+              <h4 class="font-bold text-ink mb-2">cURL Sample</h4>
+              <pre class="text-xs bg-white border border-gray-200 rounded p-3 overflow-x-auto text-ink-soft"><code>curl -X POST "&lt;your_endpoint&gt;" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "date": "2025-01-15",
+    "price": {"TSLA": 250.50},
+    "news": {"TSLA": ["Tesla announces new production milestone"]},
+    "symbol": ["TSLA"],
+    "momentum": {"TSLA": "bullish"},
+    "10k": {"TSLA": ["[SEC 10-K Filing - 2025-01-15]\nSummary..."]},
+    "10q": {"TSLA": ["[SEC 10-Q Filing - 2025-01-15]\nSummary..."]},
+    "history_price": {"TSLA": [
+      {"date": "2025-01-12", "price": 249.80},
+      ...,
+      {"date": "2025-01-13", "price": 250.50},
+      {"date": "2025-01-14", "price": 250.30}
+    ]}
+  }'</code></pre>
+            </div>
+
+            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+              <h4 class="font-bold text-ink mb-2">Data &amp; Submission</h4>
+              <p class="text-ink-soft text-sm mb-2">
+                Historical data for backtesting, validation, and model training: <a class="text-accent-700 hover:text-accent-800 underline" href="https://huggingface.co/TheFinAI/CLEF_Task3_Trading" target="_blank" rel="noopener noreferrer">TheFinAI/CLEF_Task3_Trading</a>.
+              </p>
+              <p class="text-ink-soft text-sm">
+                To participate, submit your endpoint via the Agent Market Arena page (Google Form): <a class="text-accent-700 hover:text-accent-800 underline" href="https://huggingface.co/spaces/TheFinAI/Agent-Market-Arena" target="_blank" rel="noopener noreferrer">https://huggingface.co/spaces/TheFinAI/Agent-Market-Arena</a>.
               </p>
             </div>
             
