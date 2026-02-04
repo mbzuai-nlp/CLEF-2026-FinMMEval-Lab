@@ -248,17 +248,9 @@
     }
 
     /* Carousel Styles */
-    #newsCarousel {
-      height: 500px;
+    #dataCarousel {
       overflow: hidden;
-      border-radius: 0.5rem;
-    }
-
-    #newsCarousel img {
-      width: 100%;
-      height: auto;
-      max-height: 250px;
-      object-fit: contain; /* Shows entire image without cropping */
+      border-radius: 0.75rem;
     }
     
     .carousel-dot.active {
@@ -266,36 +258,18 @@
       transform: scale(1.2);
     }
     
-    #carouselTrack {
+    #dataTrack {
       height: 100%;
       display: flex;
       transition: transform 0.5s ease-in-out;
       width: 100%;
     }
     
-    #newsCarousel .min-w-full {
+    #dataCarousel .min-w-full {
       flex: 0 0 100%;
       height: 100%;
-      padding: 0 0.5rem;
+      padding: 0;
       box-sizing: border-box;
-    }
-    
-    #newsCarousel .glass-card {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-
-    #newsCarousel .glass-card > *:not(img) {
-      flex-shrink: 0;
-    }
-
-    #newsCarousel .glass-card p {
-      flex-grow: 1;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 3; /* Limit text to 3 lines */
-      -webkit-box-orient: vertical;
     }
     
     /* Navigation button positioning */
@@ -368,24 +342,8 @@
   </style>
 </head>
 <body class="text-ink-soft font-sans antialiased">
-  <!-- CLEF BANNER -->
-  <div class="clef-banner">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="clef-banner-content">
-        <span class="clef-banner-badge">CLEF 2026</span>
-        <span class="font-medium">FinMMEval Lab - Call for Participation</span>
-        <a href="#submission" 
-           target="_blank" 
-           rel="noopener noreferrer"
-           class="ml-4 bg-white text-accent-700 hover:bg-gray-100 px-4 py-1.5 rounded-lg font-semibold text-sm transition shadow-sm">
-          Register Now
-        </a>
-      </div>
-    </div>
-  </div>
-
   <!-- NAVBAR -->
-  <header class="sticky top-12 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200">
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-gray-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <div class="flex items-center space-x-2">
@@ -439,9 +397,15 @@
   <section id="home" class="hero-newspaper py-20">
     <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center">
-        <div class="inline-flex items-center space-x-2 bg-accent-50 text-accent-700 px-4 py-2 rounded-full mb-6">
-          <span class="w-2 h-2 bg-accent-500 rounded-full"></span>
-          <span class="text-sm font-medium">CLEF 2026 - Call for Participation</span>
+        <div class="flex flex-col items-center gap-2 text-accent-700 mb-6">
+          <div class="inline-flex items-center space-x-2">
+            <span class="w-2 h-2 bg-accent-500 rounded-full"></span>
+            <span class="text-sm font-medium">CLEF 2026 - Call for Participation</span>
+          </div>
+          <div class="inline-flex items-center space-x-2">
+            <span class="w-2 h-2 bg-accent-500 rounded-full"></span>
+            <span class="text-sm font-medium">Task 3 leaderboard is ready</span>
+          </div>
         </div>
         
         <h1 class="text-4xl md:text-5xl font-bold text-ink mb-4">
@@ -468,56 +432,127 @@
     </div>
   </section>
 
-  <main class="relative -mt-10">
+  <main class="relative mt-10">
     <!-- DATA -->
     <section id="data" class="relative">
       <div class="mx-auto max-w-7xl px-6 py-14 sm:py-16">
-        <div class="rounded-3xl data-card p-8 sm:p-10 relative overflow-hidden">
-          <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(700px 400px at 80% 20%, rgba(37,99,235,0.08), transparent);"></div>
-          <div class="relative grid lg:grid-cols-3 gap-8 items-center">
-            <div class="lg:col-span-2 space-y-5">
-              <div class="flex flex-wrap items-center gap-3">
-                <span class="data-pill">Training Data Released</span>
-                <span class="text-ink-muted text-sm">Released: 15 December 2025</span>
-              </div>
-              <h2 class="text-3xl sm:text-4xl font-bold text-ink">Ready-to-use splits for all tasks</h2>
-              <p class="text-ink-muted leading-relaxed max-w-3xl">Get calibrated training splits for exam-style Q&amp;A, multilingual financial reasoning, and trading decision-making. Each dataset card includes format, licensing, and citation guidance.</p>
-              <div class="grid md:grid-cols-2 gap-4">
-                <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle">
-                  <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">1</div>
-                  <div>
-                    <div class="font-semibold text-ink">Task 1</div>
-                    <div class="text-ink-muted text-sm">Multilingual exam-style multiple choice.</div>
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-bold text-ink">Latest News</h2>
+          </div>
+          <div class="flex items-center gap-2">
+            <button id="dataPrevBtn" class="w-9 h-9 rounded-full border border-gray-200 hover:bg-gray-50 text-ink-soft">‹</button>
+            <button id="dataNextBtn" class="w-9 h-9 rounded-full border border-gray-200 hover:bg-gray-50 text-ink-soft">›</button>
+          </div>
+        </div>
+
+        <div id="dataCarousel" class="relative">
+          <div id="dataTrack">
+            <div class="min-w-full">
+              <div class="rounded-3xl data-card p-8 sm:p-10 relative overflow-hidden">
+                <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(700px 400px at 80% 20%, rgba(37,99,235,0.08), transparent);"></div>
+                <div class="relative grid lg:grid-cols-3 gap-8 items-center">
+                  <div class="lg:col-span-2 space-y-5">
+                    <div class="flex flex-wrap items-center gap-3">
+                      <span class="data-pill">Leaderboard Ready</span>
+                      <span class="text-ink-muted text-sm">Updated: 4 February 2026</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-ink">Leaderboard Ready for Task 3 - Financial Decision Making</h2>
+                    <p class="text-ink-muted leading-relaxed max-w-3xl">The Task 3 leaderboard is live. Deploy your endpoint and receive daily evaluations on BTC and TSLA decision-making.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                      <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle">
+                        <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">1</div>
+                        <div>
+                          <div class="font-semibold text-ink">Daily Requests</div>
+                          <div class="text-ink-muted text-sm">One call per day at 00:00 UTC.</div>
+                        </div>
+                      </div>
+                      <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle">
+                        <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">2</div>
+                        <div>
+                          <div class="font-semibold text-ink">Actions</div>
+                          <div class="text-ink-muted text-sm">BUY / HOLD / SELL mapped to long / flat / short.</div>
+                        </div>
+                      </div>
+                      <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle md:col-span-2">
+                        <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">3</div>
+                        <div>
+                          <div class="font-semibold text-ink">Live Metrics</div>
+                          <div class="text-ink-muted text-sm">Track performance updates on the leaderboard as evaluations run.</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle">
-                  <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">2</div>
-                  <div>
-                    <div class="font-semibold text-ink">Task 2</div>
-                    <div class="text-ink-muted text-sm">PolyFiQA (Easy + Expert) filings with multilingual news Q&amp;A.</div>
-                  </div>
-                </div>
-                <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle md:col-span-2">
-                  <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">3</div>
-                  <div>
-                    <div class="font-semibold text-ink">Task 3</div>
-                    <div class="text-ink-muted text-sm">BTC and TSLA daily contexts for Buy/Hold/Sell reasoning.</div>
+                  <div class="lg:justify-self-end lg:w-80">
+                    <div class="rounded-2xl bg-white border border-gray-200 p-6 shadow-elevated relative overflow-hidden">
+                      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(400px 300px at 30% 20%, rgba(37,99,235,0.08), transparent);"></div>
+                      <div class="relative space-y-3">
+                        <div class="text-xs uppercase tracking-wide text-accent-700 font-semibold">Submit Now</div>
+                        <div class="text-sm text-ink-soft">Submit your endpoint via the Agent Market Arena Google Form.</div>
+                        <a href="https://huggingface.co/spaces/TheFinAI/Agent-Market-Arena" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-xl bg-accent-600 hover:bg-accent-700 px-4 py-2 font-semibold text-white w-full text-center shadow-subtle">Submit Endpoint</a>
+                        <p class="text-[13px] text-ink-muted">Dataset: <code>TheFinAI/CLEF_Task3_Trading</code></p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="lg:justify-self-end lg:w-80">
-              <div class="rounded-2xl bg-white border border-gray-200 p-6 shadow-elevated relative overflow-hidden">
-                <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(400px 300px at 30% 20%, rgba(37,99,235,0.08), transparent);"></div>
-                <div class="relative space-y-3">
-                  <div class="text-xs uppercase tracking-wide text-accent-700 font-semibold">New</div>
-                  <div class="text-sm text-ink-soft">Browse the Hugging Face collection to download splits and review licensing.</div>
-                  <a href="https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-xl bg-accent-600 hover:bg-accent-700 px-4 py-2 font-semibold text-white w-full text-center shadow-subtle">Open Collection</a>
-                  <p class="text-[13px] text-ink-muted">Check each dataset card for citation, licensing, and format details.</p>
+
+            <div class="min-w-full">
+              <div class="rounded-3xl data-card p-8 sm:p-10 relative overflow-hidden">
+                <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(700px 400px at 80% 20%, rgba(37,99,235,0.08), transparent);"></div>
+                <div class="relative grid lg:grid-cols-3 gap-8 items-center">
+                  <div class="lg:col-span-2 space-y-5">
+                    <div class="flex flex-wrap items-center gap-3">
+                      <span class="data-pill">Training Data Released</span>
+                      <span class="text-ink-muted text-sm">Released: 15 December 2025</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-ink">Ready-to-use splits for all tasks</h2>
+                    <p class="text-ink-muted leading-relaxed max-w-3xl">Get calibrated training splits for exam-style Q&amp;A, multilingual financial reasoning, and trading decision-making. Each dataset card includes format, licensing, and citation guidance.</p>
+                    <div class="grid md:grid-cols-2 gap-4">
+                      <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle">
+                        <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">1</div>
+                        <div>
+                          <div class="font-semibold text-ink">Task 1</div>
+                          <div class="text-ink-muted text-sm">Multilingual exam-style multiple choice.</div>
+                        </div>
+                      </div>
+                      <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle">
+                        <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">2</div>
+                        <div>
+                          <div class="font-semibold text-ink">Task 2</div>
+                          <div class="text-ink-muted text-sm">PolyFiQA (Easy + Expert) filings with multilingual news Q&amp;A.</div>
+                        </div>
+                      </div>
+                      <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle md:col-span-2">
+                        <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">3</div>
+                        <div>
+                          <div class="font-semibold text-ink">Task 3</div>
+                          <div class="text-ink-muted text-sm">BTC and TSLA daily contexts for Buy/Hold/Sell reasoning.</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="lg:justify-self-end lg:w-80">
+                    <div class="rounded-2xl bg-white border border-gray-200 p-6 shadow-elevated relative overflow-hidden">
+                      <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(400px 300px at 30% 20%, rgba(37,99,235,0.08), transparent);"></div>
+                      <div class="relative space-y-3">
+                        <div class="text-xs uppercase tracking-wide text-accent-700 font-semibold">New</div>
+                        <div class="text-sm text-ink-soft">Browse the Hugging Face collection to download splits and review licensing.</div>
+                        <a href="https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-xl bg-accent-600 hover:bg-accent-700 px-4 py-2 font-semibold text-white w-full text-center shadow-subtle">Open Collection</a>
+                        <p class="text-[13px] text-ink-muted">Check each dataset card for citation, licensing, and format details.</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+
+        <div class="flex items-center justify-center gap-2 mt-4">
+          <button class="carousel-dot w-2.5 h-2.5 rounded-full bg-gray-300" data-index="0"></button>
+          <button class="carousel-dot w-2.5 h-2.5 rounded-full bg-gray-300" data-index="1"></button>
         </div>
       </div>
       <div class="divider mx-auto max-w-6xl"></div>
@@ -673,6 +708,17 @@
             <p class="text-ink-soft mb-4">
               Task 3 is a daily, news-driven trading workflow. We collect market news each day, call each submitted endpoint once, and execute positions from the returned action: <i>BUY</i>, <i>HOLD</i>, or <i>SELL</i>.
             </p>
+
+            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+              <h4 class="font-bold text-ink mb-2">Data &amp; Submission</h4>
+              <p class="text-ink-soft text-sm mb-2">
+                Historical data for backtesting, validation, and model training: <code>TheFinAI/CLEF_Task3_Trading</code>.
+              </p>
+              <p class="text-ink-soft text-sm">
+                To participate, submit your endpoint via the Agent Market Arena page (Google Form):
+                <a href="https://huggingface.co/spaces/TheFinAI/Agent-Market-Arena" target="_blank" rel="noopener noreferrer" class="text-accent-700 hover:underline">Agent Market Arena</a>.
+              </p>
+            </div>
             
             <div class="bg-gray-50 rounded-lg p-4 mb-4">
               <h4 class="font-bold text-ink mb-2">Daily Workflow</h4>
@@ -931,7 +977,7 @@
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
           <!-- Organizer 1 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/zhuohan.jfif" alt="Zhuohan Xie" class="w-12 h-12">
+            <img src="images/zhuohan.jfif" alt="Zhuohan Xie" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Zhuohan Xie</div>
               <div class="text-ink-muted text-sm mt-1">MBZUAI (UAE)</div>
@@ -940,7 +986,7 @@
           
           <!-- Organizer 2 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/rania.jfif" alt="Rania Elbadry" class="w-12 h-12">
+            <img src="images/rania.jfif" alt="Rania Elbadry" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Rania Elbadry</div>
               <div class="text-ink-muted text-sm mt-1">MBZUAI (UAE)</div>
@@ -949,16 +995,16 @@
           
           <!-- Organizer 3 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/fan.jfif" alt="Fan Zhang" class="w-12 h-12">
+            <img src="images/fan.jfif" alt="Fan Zhang" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Fan Zhang</div>
-              <div class="text-ink-muted text-sm mt-1">University of Tokyo (Japan)</div>
+              <div class="text-ink-muted text-sm mt-1">The University of Tokyo (Japan)</div>
             </div>
           </div>
           
           <!-- Organizer 4 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/georgi.jfif" alt="Georgi Georgiev" class="w-12 h-12">
+            <img src="images/georgi.jfif" alt="Georgi Georgiev" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Georgi Georgiev</div>
               <div class="text-ink-muted text-sm mt-1">Sofia University "St. Kliment Ohridski" (Bulgaria)</div>
@@ -967,7 +1013,7 @@
           
           <!-- Organizer 5 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/xueqing.jfif" alt="Xueqing Peng" class="w-12 h-12">
+            <img src="images/xueqing.jfif" alt="Xueqing Peng" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Xueqing Peng</div>
               <div class="text-ink-muted text-sm mt-1">The Fin AI (USA)</div>
@@ -976,7 +1022,7 @@
           
           <!-- Organizer 6 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/lingfei.jfif" alt="Lingfei Qian" class="w-12 h-12">
+            <img src="images/lingfei.jfif" alt="Lingfei Qian" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Lingfei Qian</div>
               <div class="text-ink-muted text-sm mt-1">The Fin AI (USA)</div>
@@ -985,7 +1031,7 @@
           
           <!-- Organizer 7 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/jimin.jfif" alt="Jimin Huang" class="w-12 h-12">
+            <img src="images/jimin.jfif" alt="Jimin Huang" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Jimin Huang</div>
               <div class="text-ink-muted text-sm mt-1">The Fin AI (USA)</div>
@@ -994,7 +1040,7 @@
           
           <!-- Organizer 8 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/dimitar.jfif" alt="Dimitar Dimitrov" class="w-12 h-12">
+            <img src="images/dimitar.jfif" alt="Dimitar Dimitrov" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Dimitar Dimitrov</div>
               <div class="text-ink-muted text-sm mt-1">Sofia University "St. Kliment Ohridski" (Bulgaria)</div>
@@ -1003,7 +1049,7 @@
           
           <!-- Organizer 9 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/vanshikaa.jpg" alt="Vanshikaa Jani" class="w-12 h-12">
+            <img src="images/vanshikaa.jpg" alt="Vanshikaa Jani" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Vanshikaa Jani</div>
               <div class="text-ink-muted text-sm mt-1">University of Arizona (USA)</div>
@@ -1012,7 +1058,7 @@
           
           <!-- Organizer 10 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/yuyang.png" alt="Yuyang Dai" class="w-12 h-12">
+            <img src="images/yuyang.png" alt="Yuyang Dai" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Yuyang Dai</div>
               <div class="text-ink-muted text-sm mt-1">INSAIT (Bulgaria)</div>
@@ -1021,43 +1067,88 @@
           
           <!-- Organizer 11 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/jiahui.jfif" alt="Jiahui Geng" class="w-12 h-12">
+            <img src="images/jiahui.jfif" alt="Jiahui Geng" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Jiahui Geng</div>
-              <div class="text-ink-muted text-sm mt-1">MBZUAI (UAE)</div>
+              <div class="text-ink-muted text-sm mt-1">Linköping University (Sweden)</div>
+            </div>
+          </div>
+
+          <!-- Organizer 12 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <img src="images/yankai.jpg" alt="Yankai Chen" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <div class="font-semibold text-ink">Yankai Chen</div>
+              <div class="text-ink-muted text-sm mt-1">McGill University (Canada) &amp; MBZUAI (UAE)</div>
+            </div>
+          </div>
+
+          <!-- Organizer 13 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <img src="images/yuanye.jpg" alt="Yuan Ye" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <div class="font-semibold text-ink">Yuan Ye</div>
+              <div class="text-ink-muted text-sm mt-1">McGill University (Canada) &amp; Mila - Quebec AI Institute (Canada)</div>
+            </div>
+          </div>
+
+          <!-- Organizer 14 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <img src="images/haolun.jpg" alt="Haolun Wu" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <div class="font-semibold text-ink">Haolun Wu</div>
+              <div class="text-ink-muted text-sm mt-1">McGill University (Canada) &amp; Mila - Quebec AI Institute (Canada)</div>
             </div>
           </div>
           
-          <!-- Organizer 12 -->
+          <!-- Organizer 15 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/yuxia.jfif" alt="Yuxia Wang" class="w-12 h-12">
+            <img src="images/yuxia.jfif" alt="Yuxia Wang" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Yuxia Wang</div>
               <div class="text-ink-muted text-sm mt-1">INSAIT (Bulgaria)</div>
             </div>
           </div>
           
-          <!-- Organizer 13 -->
+          <!-- Organizer 16 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/ivan.jfif" alt="Ivan Koychev" class="w-12 h-12">
+            <img src="images/ivan.jfif" alt="Ivan Koychev" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Ivan Koychev</div>
               <div class="text-ink-muted text-sm mt-1">Sofia University "St. Kliment Ohridski" (Bulgaria)</div>
             </div>
           </div>
           
-          <!-- Organizer 14 -->
+          <!-- Organizer 17 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/veselin.png" alt="Veselin Stoyanov" class="w-12 h-12">
+            <img src="images/veselin.png" alt="Veselin Stoyanov" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Veselin Stoyanov</div>
               <div class="text-ink-muted text-sm mt-1">MBZUAI (UAE)</div>
             </div>
           </div>
-          
-          <!-- Organizer 15 -->
+
+          <!-- Organizer 18 -->
           <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
-            <img src="images/preslav.jpg" alt="Preslav Nakov" class="w-12 h-12">
+            <img src="images/Yuchen.jpg" alt="Yu Chen" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <div class="font-semibold text-ink">Yu Chen</div>
+              <div class="text-ink-muted text-sm mt-1">The University of Tokyo (Japan)</div>
+            </div>
+          </div>
+
+          <!-- Organizer 19 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <img src="images/steve.jpg" alt="Steve Liu" class="w-12 h-12 rounded-full object-cover">
+            <div>
+              <div class="font-semibold text-ink">Steve Liu</div>
+              <div class="text-ink-muted text-sm mt-1">McGill University (Canada) &amp; MBZUAI (UAE)</div>
+            </div>
+          </div>
+          
+          <!-- Organizer 20 -->
+          <div class="border border-gray-200 rounded-lg p-5 hover:bg-gray-50 transition flex items-start space-x-4">
+            <img src="images/preslav.jpg" alt="Preslav Nakov" class="w-12 h-12 rounded-full object-cover">
             <div>
               <div class="font-semibold text-ink">Preslav Nakov</div>
               <div class="text-ink-muted text-sm mt-1">MBZUAI (UAE)</div>
@@ -1157,7 +1248,7 @@
           <div class="bg-white border border-gray-200 rounded-xl p-6">
             <div class="text-sm uppercase tracking-wide text-accent-700 font-semibold">Discord</div>
             <p class="mt-2">
-              <a class="text-accent-700 hover:text-accent-800 underline" href="https://discord.gg/Neb8MGCB" target="_blank" rel="noopener noreferrer">Join the FinMMEval server</a>
+              <a class="text-accent-700 hover:text-accent-800 underline" href="https://discord.gg/xR23AbBy" target="_blank" rel="noopener noreferrer">Join the FinMMEval server</a>
             </p>
             <p class="text-ink-muted text-sm mt-2">Ask questions, share progress, and get updates.</p>
           </div>
@@ -1233,7 +1324,7 @@
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
           window.scrollTo({
-            top: targetElement.offsetTop - 140, // Adjusted for sticky banner
+            top: targetElement.offsetTop - 80, // Adjusted for sticky header
             behavior: 'smooth'
           });
           
@@ -1257,14 +1348,15 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // News Carousel
+    // Data Carousel
     let currentSlide = 0;
-    const slides = document.querySelectorAll('#carouselTrack .min-w-full');
-    const dots = document.querySelectorAll('.carousel-dot');
-    const track = document.getElementById('carouselTrack');
+    const track = document.getElementById('dataTrack');
+    const slides = track ? track.querySelectorAll('.min-w-full') : [];
+    const dots = document.querySelectorAll('#data .carousel-dot');
     const totalSlides = slides.length;
 
     function updateCarousel() {
+      if (!track || totalSlides === 0) return;
       track.style.transform = `translateX(-${currentSlide * 100}%)`;
       
       // Update dots
@@ -1274,13 +1366,15 @@
     }
 
     // Next button
-    document.getElementById('nextBtn')?.addEventListener('click', () => {
+    document.getElementById('dataNextBtn')?.addEventListener('click', () => {
+      if (totalSlides === 0) return;
       currentSlide = (currentSlide + 1) % totalSlides;
       updateCarousel();
     });
 
     // Previous button
-    document.getElementById('prevBtn')?.addEventListener('click', () => {
+    document.getElementById('dataPrevBtn')?.addEventListener('click', () => {
+      if (totalSlides === 0) return;
       currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
       updateCarousel();
     });
@@ -1288,16 +1382,22 @@
     // Dot navigation
     dots.forEach(dot => {
       dot.addEventListener('click', () => {
-        currentSlide = parseInt(dot.getAttribute('data-index'));
+        const index = parseInt(dot.getAttribute('data-index'), 10);
+        if (Number.isNaN(index)) return;
+        currentSlide = index;
         updateCarousel();
       });
     });
 
+    updateCarousel();
+
     // Auto-advance every 10 seconds (optional)
-    setInterval(() => {
-      currentSlide = (currentSlide + 1) % totalSlides;
-      updateCarousel();
-    }, 10000);
+    if (totalSlides > 1) {
+      setInterval(() => {
+        currentSlide = (currentSlide + 1) % totalSlides;
+        updateCarousel();
+      }, 10000);
+    }
   </script>
 </body>
 </html>
