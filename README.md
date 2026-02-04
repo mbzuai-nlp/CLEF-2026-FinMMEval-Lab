@@ -14,19 +14,27 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 
 ## How to Participate
 - Register via the official CLEF form (choose FinMMEval tasks): https://clef-labs-registration.dipintra.it/registrationForm.php#registrationFrom
+- Task 3 endpoint submission (Agent Market Arena Google Form): https://huggingface.co/spaces/TheFinAI/Agent-Market-Arena
+- Task 3 submission deadline: 28 April 2026
 - Full call, visuals, and timeline: https://mbzuai-nlp.github.io/CLEF-2026-FinMMEval-Lab/
 
 ## Training Data (Released)
 - Download the training collection on Hugging Face (released 2025-12-15): https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026
 - Contains training splits for all three tasks (exam Q&A, multilingual Q&A, and trading decision making). See each dataset card in the collection for licenses and format details.
+- Task 3 historical data for backtesting, validation, and training: TheFinAI/CLEF_Task3_Trading
+
+## Awards
+- 🏆 Best Paper Award: USD 500
+- 🥈 Outstanding Paper Award ×3: USD 300 each
+- 🌱 Merit / Encouragement Award ×2: USD 200 each
 
 ## Contact
 - Email: zhuohan.xie@mbzuai.ac.ae
-- Discord: https://discord.gg/Neb8MGCB
+- Discord: https://discord.gg/xR23AbBy
 
 ## Organizers
-- Zhuohan Xie (Mohamed bin Zayed University of Artificial Intelligence, UAE)
-- Rania Elbadry (Mohamed bin Zayed University of Artificial Intelligence, UAE)
+- Zhuohan Xie (MBZUAI, UAE)
+- Rania Elbadry (MBZUAI, UAE)
 - Fan Zhang (The University of Tokyo, Japan)
 - Georgi Georgiev (Sofia University "St. Kliment Ohridski", Bulgaria)
 - Xueqing Peng (The Fin AI, USA)
@@ -35,10 +43,16 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 - Dimitar Dimitrov (Sofia University "St. Kliment Ohridski", Bulgaria)
 - Vanshikaa Jani (University of Arizona, USA)
 - Yuyang Dai (INSAIT, Bulgaria)
-- Jiahui Geng (Mohamed bin Zayed University of Artificial Intelligence, UAE)
+- Jiahui Geng (Linköping University, Sweden)
+- Yankai Chen (McGill University, Canada & MBZUAI, UAE)
+- Yuan Ye (McGill University, Canada & Mila - Quebec AI Institute, Canada)
+- Haolun Wu (McGill University, Canada & Mila - Quebec AI Institute, Canada)
 - Yuxia Wang (INSAIT, Bulgaria)
 - Ivan Koychev (Sofia University "St. Kliment Ohridski", Bulgaria)
-- Veselin Stoyanov (Mohamed bin Zayed University of Artificial Intelligence, UAE)
-- Preslav Nakov (Mohamed bin Zayed University of Artificial Intelligence, UAE)
+- Veselin Stoyanov (MBZUAI, UAE)
+- Mingzi Song (Nikkei Financial Technology Research Institute, Inc., Japan)
+- Yu Chen (The University of Tokyo, Japan)
+- Steve Liu (McGill University, Canada & MBZUAI, UAE)
+- Preslav Nakov (MBZUAI, UAE)
 
 Questions? Reach out to the organizers listed above or via the website.
