@@ -296,6 +296,19 @@
       font-size: 0.85rem;
     }
 
+    .deadline-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.75rem;
+      border-radius: 999px;
+      background: #fee2e2;
+      color: #b91c1c;
+      border: 1px solid #fecaca;
+      font-weight: 600;
+      font-size: 0.85rem;
+    }
+
     /* Timeline cards */
     .timeline-grid {
       display: grid;
@@ -404,7 +417,7 @@
           </div>
           <div class="inline-flex items-center space-x-2">
             <span class="w-2 h-2 bg-accent-500 rounded-full"></span>
-            <span class="text-sm font-medium">Task 3 leaderboard is ready</span>
+            <span class="text-sm font-medium">Task 3 leaderboard is ready · Submission deadline: 28 April 2026</span>
           </div>
         </div>
         
@@ -456,8 +469,9 @@
                     <div class="flex flex-wrap items-center gap-3">
                       <span class="data-pill">Leaderboard Ready</span>
                       <span class="text-ink-muted text-sm">Updated: 4 February 2026</span>
+                      <span class="deadline-pill">Deadline: 28 April 2026</span>
                     </div>
-                    <h2 class="text-3xl sm:text-4xl font-bold text-ink">Leaderboard Ready for Task 3 - Financial Decision Making</h2>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-ink leading-tight">Leaderboard Ready for Task 3 - Financial Decision Making</h2>
                     <p class="text-ink-muted leading-relaxed max-w-3xl">The Task 3 leaderboard is live. Deploy your endpoint and receive daily evaluations on BTC and TSLA decision-making.</p>
                     <div class="grid md:grid-cols-2 gap-4">
                       <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle">
@@ -849,6 +863,11 @@
             <span class="timeline-dot"></span>
             <div class="font-semibold">Lab registration closes</div>
             <div class="text-ink-muted text-sm">23 April 2026</div>
+          </li>
+          <li class="relative">
+            <span class="timeline-dot"></span>
+            <div class="font-semibold">Task 3 submission deadline</div>
+            <div class="text-ink-muted text-sm">28 April 2026</div>
           </li>
           <li class="relative">
             <span class="timeline-dot"></span>
@@ -1405,7 +1424,7 @@
       setInterval(() => {
         currentSlide = (currentSlide + 1) % totalSlides;
         updateCarousel();
-      }, 10000);
+      }, 15000);
     }
   </script>
 </body>
