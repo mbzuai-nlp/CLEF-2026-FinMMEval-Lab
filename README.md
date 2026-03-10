@@ -30,7 +30,9 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 
 ## Contact
 - Email: zhuohan.xie@mbzuai.ac.ae
-- Discord: https://discord.gg/xR23AbBy
+- Discord: https://discord.gg/PEMh4a2YHV
+
+![FinMMEval Discord QR Code](docs/images/qr_fac04f98525d666b.png)
 
 ## Organizers
 - Zhuohan Xie (MBZUAI, UAE)
