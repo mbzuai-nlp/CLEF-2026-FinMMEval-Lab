@@ -20,10 +20,9 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 
 ## Task 3 Endpoint Example
 - A reference FastAPI endpoint implementation is available at `examples/simple_trading_api.py`.
-- You can use it as a starting point for deployment and API format alignment.
+- The example matches the documented Task 3 request/response format and returns `recommended_action` only.
 
 ## Task 3 Notes
-- Task 3 endpoint submission deadline: 28 April 2026.
 - Task 3 uses a longer endpoint-based evaluation workflow and submitted systems may be run over an extended period through late May 2026.
 - Participants are encouraged to prepare their working notes early. The paper should primarily describe the system architecture, methodology, and experimental setup; results can be updated later if the evaluation status is stated clearly.
 - Awards are decided primarily based on paper quality, with leaderboard performance considered as supporting evidence.
