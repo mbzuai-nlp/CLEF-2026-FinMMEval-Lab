@@ -22,6 +22,12 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 - A reference FastAPI endpoint implementation is available at `examples/simple_trading_api.py`.
 - You can use it as a starting point for deployment and API format alignment.
 
+## Task 3 Notes
+- Task 3 endpoint submission deadline: 28 April 2026.
+- Task 3 uses a longer endpoint-based evaluation workflow and submitted systems may be run over an extended period through late May 2026.
+- Participants are encouraged to prepare their working notes early. The paper should primarily describe the system architecture, methodology, and experimental setup; results can be updated later if the evaluation status is stated clearly.
+- Awards are decided primarily based on paper quality, with leaderboard performance considered as supporting evidence.
+
 ## Training Data (Released)
 - Download the training collection on Hugging Face (released 2025-12-15): https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026
 - Contains training splits for all three tasks (exam Q&A, multilingual Q&A, and trading decision making). See each dataset card in the collection for licenses and format details.
