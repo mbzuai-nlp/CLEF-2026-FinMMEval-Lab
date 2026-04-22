@@ -15,7 +15,7 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 ## How to Participate
 - Register via the official CLEF form (choose FinMMEval tasks): https://clef-labs-registration.dipintra.it/registrationForm.php#registrationFrom
 - Task 3 endpoint submission (Agent Market Arena Google Form): https://huggingface.co/spaces/TheFinAI/Agent-Market-Arena
-- Task 3 endpoint submission deadline: 28 April 2026
+- Updated Task 3 endpoint submission deadline: 05 May 2026
 - Full call, visuals, and timeline: https://mbzuai-nlp.github.io/CLEF-2026-FinMMEval-Lab/
 
 ## Task 3 Endpoint Example
