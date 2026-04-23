@@ -218,6 +218,40 @@
       color: var(--ink);
     }
     .button:hover { transform: translateY(-1px); }
+    .embed-block {
+      margin: 24px 0 0;
+    }
+    .embed-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .embed-header h3 {
+      margin: 0;
+      font-size: 18px;
+    }
+    .embed-header p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .embed-shell {
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: #f8fbff;
+      padding: 10px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    }
+    .leaderboard-frame {
+      width: 100%;
+      min-height: 760px;
+      border: 0;
+      border-radius: 14px;
+      background: white;
+    }
     .notes {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -244,6 +278,7 @@
       .stats, .notes { grid-template-columns: 1fr; }
       .hero { padding: 24px; }
       .content { padding: 22px; }
+      .leaderboard-frame { min-height: 680px; }
     }
   </style>
 </head>
@@ -308,7 +343,6 @@
             </div>
             <div class="actions">
               <a class="button primary" href="https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/submit">Open Arabic Submission</a>
-              <a class="button secondary" href="https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/leaderboard">Open Arabic Leaderboard</a>
               <a class="button secondary" href="https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/devset/download">Download Arabic Dev Set</a>
             </div>
             <div class="notes">
@@ -319,6 +353,22 @@
               <div class="note">
                 <h3>Submission Format</h3>
                 <p>Participants submit `.json` or `.jsonl` files using the per-item `id` and predicted answer letter.</p>
+              </div>
+            </div>
+            <div class="embed-block">
+              <div class="embed-header">
+                <div>
+                  <h3>Arabic Live Leaderboard</h3>
+                  <p>The leaderboard is embedded here so participants can check the current ranking without leaving the Task 1 hub.</p>
+                </div>
+              </div>
+              <div class="embed-shell">
+                <iframe
+                  class="leaderboard-frame"
+                  loading="lazy"
+                  src="https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/leaderboard"
+                  title="Arabic Task 1 live leaderboard"
+                ></iframe>
               </div>
             </div>
           </div>
@@ -340,7 +390,6 @@
             </div>
             <div class="actions">
               <a class="button primary" href="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/submit">Open Hindi Submission</a>
-              <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/leaderboard">Open Hindi Leaderboard</a>
               <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/devset/download">Download Hindi Dev Set</a>
             </div>
             <div class="notes">
@@ -351,6 +400,22 @@
               <div class="note">
                 <h3>Submission Format</h3>
                 <p>Participants submit `.json` or `.jsonl` files using the public `hindi-dev-*` identifiers and one answer letter per question.</p>
+              </div>
+            </div>
+            <div class="embed-block">
+              <div class="embed-header">
+                <div>
+                  <h3>Hindi Live Leaderboard</h3>
+                  <p>The leaderboard is embedded here so participants can check the current ranking without leaving the Task 1 hub.</p>
+                </div>
+              </div>
+              <div class="embed-shell">
+                <iframe
+                  class="leaderboard-frame"
+                  loading="lazy"
+                  src="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/leaderboard"
+                  title="Hindi Task 1 live leaderboard"
+                ></iframe>
               </div>
             </div>
           </div>
