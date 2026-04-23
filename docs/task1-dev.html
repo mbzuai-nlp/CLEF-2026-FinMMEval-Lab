@@ -101,14 +101,6 @@
       margin: 0;
     }
 
-    .summary {
-      margin: 6px 0 0;
-      max-width: 760px;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.7;
-    }
-
     .button {
       display: inline-flex;
       align-items: center;
@@ -222,36 +214,6 @@
       font-family: "Source Serif 4", serif;
       font-size: clamp(24px, 3vw, 34px);
       line-height: 1.05;
-    }
-
-    .section-copy {
-      margin: 0;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.7;
-      max-width: 760px;
-    }
-
-    .refresh-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(145, 170, 210, 0.26);
-      color: var(--muted);
-      font-size: 13px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .refresh-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: #16a34a;
-      box-shadow: 0 0 0 6px rgba(22, 163, 74, 0.12);
     }
 
     .language-tabs {
@@ -670,7 +632,6 @@
             <h1 class="title">Task 1 Submission</h1>
           </div>
         </div>
-        <p class="summary">Submission entry point for released Task 1 languages. Participants can submit runs, download public dev sets, and inspect live leaderboards from one page.</p>
       </div>
       <a href="./" class="button secondary">Back To Official Site</a>
     </div>
@@ -691,11 +652,6 @@
         <div class="dev-header">
           <div>
             <h2 class="section-title">Development Leaderboards</h2>
-            <p class="section-copy">Choose a language tab to access the public dev set, submit a run, and inspect the live leaderboard without leaving this page.</p>
-          </div>
-          <div class="refresh-pill">
-            <span class="refresh-dot"></span>
-            Auto-refresh every 30s
           </div>
         </div>
 
@@ -795,7 +751,6 @@
     const leaderboardCache = {};
     let currentStage = "dev";
     let currentLanguage = "arabic";
-    let refreshHandle = null;
 
     function formatPercent(value) {
       const number = Number(value || 0) * 100;
@@ -1063,17 +1018,6 @@
       loadLeaderboard(language);
     }
 
-    function startAutoRefresh() {
-      if (refreshHandle) {
-        clearInterval(refreshHandle);
-      }
-      refreshHandle = setInterval(() => {
-        if (currentStage === "dev") {
-          loadLeaderboard(currentLanguage, true);
-        }
-      }, 30000);
-    }
-
     document.querySelectorAll(".stage-tab").forEach((button) => {
       button.addEventListener("click", () => {
         setStage(button.dataset.stage);
@@ -1090,7 +1034,6 @@
     renderLanguagePanel("hindi");
     setStage("dev");
     setLanguage("arabic");
-    startAutoRefresh();
   </script>
 </body>
 </html>
