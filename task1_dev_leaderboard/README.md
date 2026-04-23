@@ -7,6 +7,7 @@ The goal is to make it easy to:
 - register one or more prediction files from local model runs
 - compute overall and subgroup accuracy
 - export a lightweight local leaderboard
+- deploy the Task 1 portal either locally or on Hugging Face Spaces
 
 ## Current Scope
 
@@ -143,6 +144,11 @@ There is also a lightweight web app with:
 - leaderboard page
 - upload API that immediately reruns evaluation
 
+The portal now supports two storage modes:
+
+- `local`: keep submissions, gold, and leaderboard files on the local filesystem
+- `hf_dataset`: keep organizer-private state in a private Hugging Face dataset repo while serving the public web app from a Hugging Face Space
+
 Start it from the repo root:
 
 ```bash
@@ -165,6 +171,70 @@ Current behavior:
 - re-submitting from the same team replaces the previous file
 - the leaderboard is refreshed immediately after a successful upload
 - the leaderboard page polls the latest results automatically
+
+### Hugging Face Storage Mode
+
+Set these environment variables before starting the app:
+
+```bash
+export TASK1_STORAGE_BACKEND=hf_dataset
+export TASK1_HF_REPO_ID=<org-or-user>/<private-dataset-repo>
+export HF_TOKEN=<write-token>
+```
+
+Recommended layout:
+
+- public Hugging Face Space for the web app
+- private Hugging Face dataset repo for:
+  - organizer gold file
+  - participant submissions
+  - leaderboard outputs
+
+The public dev set and submission template remain in the app repo. The private gold file does not.
+
+### Bootstrap The Private HF Dataset Repo
+
+Create and initialize the organizer-private dataset repo:
+
+```bash
+python task1_dev_leaderboard/bootstrap_hf_backend.py \
+  --repo-id <org-or-user>/<private-dataset-repo>
+```
+
+By default the dataset repo is created as private. This is the recommended setting.
+
+### Prepare A Standalone HF Space Repo
+
+Generate a clean Space folder that contains only the files needed by the portal:
+
+```bash
+python task1_dev_leaderboard/prepare_hf_space.py
+```
+
+This creates:
+
+```bash
+task1_dev_leaderboard_hf_space/
+```
+
+That folder contains:
+
+- a Docker Space `README.md`
+- a `Dockerfile`
+- a minimal `requirements.txt`
+- the public `task1_dev_leaderboard` app package
+
+Push that generated folder to a new Hugging Face Space repo.
+
+### Hugging Face Space Runtime Notes
+
+- use a `Docker Space`
+- set the Space secret `HF_TOKEN`
+- set the Space variables:
+  - `TASK1_STORAGE_BACKEND=hf_dataset`
+  - `TASK1_HF_REPO_ID=<org-or-user>/<private-dataset-repo>`
+- the app runs fine on free CPU hardware
+- the private dataset repo should remain private because it stores gold labels and submissions
 
 ## Supported Input Formats
 

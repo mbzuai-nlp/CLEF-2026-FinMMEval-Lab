@@ -115,6 +115,51 @@ def build_markdown_table(rows: list[dict], columns: list[tuple[str, str]]) -> st
     return "\n".join([header, separator] + body)
 
 
+def write_empty_outputs(out_dir: Path) -> None:
+    write_csv(
+        out_dir / "leaderboard_overall.csv",
+        [],
+        [
+            "rank",
+            "model_name",
+            "submission_file",
+            "accuracy",
+            "correct",
+            "total",
+            "coverage",
+            "answered_accuracy",
+            "answered",
+            "missing_ids",
+            "unknown_ids",
+            "duplicate_ids",
+            "valid_submission",
+        ],
+    )
+    write_csv(
+        out_dir / "leaderboard_by_source.csv",
+        [],
+        ["model_name", "source", "accuracy", "correct", "total", "coverage", "answered_accuracy", "answered"],
+    )
+    write_csv(
+        out_dir / "per_item_results.csv",
+        [],
+        ["model_name", "id", "source", "gold_answer", "pred_answer", "answered", "is_correct"],
+    )
+    readme = [
+        "# Task 1 Dev Leaderboard",
+        "",
+        "No submissions yet.",
+        "",
+        "## Files",
+        "",
+        "- `leaderboard_overall.csv`: overall leaderboard",
+        "- `leaderboard_by_source.csv`: breakdown by source split",
+        "- `per_item_results.csv`: organizer-side per-item scoring results",
+        "",
+    ]
+    (out_dir / "README.md").write_text("\n".join(readme), encoding="utf-8")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate Task 1 dev submissions.")
     parser.add_argument("--gold-file", required=True, help="Private gold JSONL path.")
@@ -143,7 +188,9 @@ def main() -> None:
     )
 
     if not submission_files:
-        raise ValueError(f"No .json or .jsonl submissions found in {submissions_dir}")
+        write_empty_outputs(out_dir)
+        print(f"Wrote evaluation outputs to: {out_dir}")
+        return
 
     for path in submission_files:
         model_name = path.stem

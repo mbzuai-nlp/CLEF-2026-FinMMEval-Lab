@@ -5,8 +5,8 @@ from __future__ import annotations
 
 import csv
 import hashlib
-import io
 import json
+import os
 import re
 import subprocess
 import sys
@@ -19,16 +19,24 @@ from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
+from task1_dev_leaderboard.storage_backend import PortalStorage
+
 
 APP_ROOT = Path(__file__).resolve().parent
 WEB_ROOT = APP_ROOT / "web"
-SUBMISSIONS_DIR = APP_ROOT / "submissions"
-OUTPUT_DIR = APP_ROOT / "outputs" / "accounting_clef_dev"
-GOLD_FILE = APP_ROOT / "private" / "accounting_clef_100_gold.jsonl"
 DEVSET_FILE = APP_ROOT / "dev_sets" / "accounting_clef_100_public.jsonl"
 TEMPLATE_FILE = APP_ROOT / "dev_sets" / "accounting_clef_100_submission_template.json"
-REGISTRY_FILE = SUBMISSIONS_DIR / "_registry.json"
 EVALUATOR = APP_ROOT / "evaluate_submissions.py"
+STORAGE = PortalStorage(APP_ROOT)
+SUBMISSIONS_DIR = STORAGE.submissions_dir
+OUTPUT_DIR = STORAGE.outputs_dir
+GOLD_FILE = STORAGE.gold_file
+REGISTRY_FILE = STORAGE.registry_file
+WATCH_STATUS_FILE = STORAGE.watch_status_file
+OFFICIAL_SITE_URL = os.getenv(
+    "TASK1_OFFICIAL_SITE_URL",
+    "https://mbzuai-nlp.github.io/CLEF-2026-FinMMEval-Lab/",
+)
 
 SUBMISSION_EXTENSIONS = {".json", ".jsonl"}
 SUBMISSION_LOCK = threading.Lock()
@@ -42,8 +50,7 @@ def utc_now_iso() -> str:
 
 
 def ensure_directories() -> None:
-    SUBMISSIONS_DIR.mkdir(parents=True, exist_ok=True)
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    STORAGE.ensure_local_dirs()
 
 
 def read_text_file(path: Path) -> str:
@@ -85,6 +92,10 @@ def load_registry() -> dict[str, dict]:
 
 def save_registry(registry: dict[str, dict]) -> None:
     save_json(REGISTRY_FILE, registry)
+
+
+def save_watch_status(payload: dict[str, Any]) -> None:
+    save_json(WATCH_STATUS_FILE, payload)
 
 
 def is_submission_file(path: Path) -> bool:
@@ -168,39 +179,41 @@ def normalize_rows(rows: list[dict[str, str]]) -> list[dict[str, Any]]:
 
 
 def current_leaderboard_payload() -> dict[str, Any]:
-    registry = load_registry()
-    overall = normalize_rows(load_csv_rows(OUTPUT_DIR / "leaderboard_overall.csv"))
-    by_source = normalize_rows(load_csv_rows(OUTPUT_DIR / "leaderboard_by_source.csv"))
-    status = load_json(OUTPUT_DIR / "watch_status.json", {})
+    with SUBMISSION_LOCK:
+        STORAGE.sync_remote_state()
+        registry = load_registry()
+        overall = normalize_rows(load_csv_rows(OUTPUT_DIR / "leaderboard_overall.csv"))
+        by_source = normalize_rows(load_csv_rows(OUTPUT_DIR / "leaderboard_by_source.csv"))
+        status = load_json(WATCH_STATUS_FILE, {})
 
-    for row in overall:
-        slug = row.get("model_name", "")
-        row["display_name"] = registry.get(slug, {}).get("display_name", slug)
-        row["uploaded_at"] = registry.get(slug, {}).get("uploaded_at")
-        row["original_filename"] = registry.get(slug, {}).get("original_filename")
+        for row in overall:
+            slug = row.get("model_name", "")
+            row["display_name"] = registry.get(slug, {}).get("display_name", slug)
+            row["uploaded_at"] = registry.get(slug, {}).get("uploaded_at")
+            row["original_filename"] = registry.get(slug, {}).get("original_filename")
 
-    for row in by_source:
-        slug = row.get("model_name", "")
-        row["display_name"] = registry.get(slug, {}).get("display_name", slug)
+        for row in by_source:
+            slug = row.get("model_name", "")
+            row["display_name"] = registry.get(slug, {}).get("display_name", slug)
 
-    dataset_meta = {
-        "devset_file": str(DEVSET_FILE),
-        "template_file": str(TEMPLATE_FILE),
-        "submission_count": len(
-            [
-                path
-                for path in SUBMISSIONS_DIR.iterdir()
-                if is_submission_file(path)
-            ]
-        ),
-        "last_updated": status.get("last_run_at"),
-    }
-    return {"overall": overall, "by_source": by_source, "status": status, "dataset": dataset_meta}
+        dataset_meta = {
+            "devset_file": str(DEVSET_FILE),
+            "template_file": str(TEMPLATE_FILE),
+            "submission_count": len(
+                [
+                    path
+                    for path in SUBMISSIONS_DIR.iterdir()
+                    if is_submission_file(path)
+                ]
+            ),
+            "last_updated": status.get("last_run_at"),
+        }
+        return {"overall": overall, "by_source": by_source, "status": status, "dataset": dataset_meta}
 
 
 @app.on_event("startup")
 def startup_event() -> None:
-    ensure_directories()
+    STORAGE.startup_sync()
 
 
 @app.get("/", include_in_schema=False)
@@ -272,6 +285,10 @@ async def api_task1_submit(
     validate_submission_bytes(content, suffix)
 
     with SUBMISSION_LOCK:
+        STORAGE.sync_remote_state()
+        registry = load_registry()
+        previous_filename = registry.get(slug, {}).get("stored_filename")
+
         for existing in SUBMISSIONS_DIR.glob(f"{slug}.*"):
             if existing.is_file():
                 existing.unlink()
@@ -279,7 +296,6 @@ async def api_task1_submit(
         save_path = SUBMISSIONS_DIR / f"{slug}{suffix}"
         save_path.write_bytes(content)
 
-        registry = load_registry()
         registry[slug] = {
             "display_name": cleaned_team_name,
             "uploaded_at": utc_now_iso(),
@@ -287,8 +303,22 @@ async def api_task1_submit(
             "stored_filename": save_path.name,
         }
         save_registry(registry)
+        if previous_filename and previous_filename != save_path.name:
+            STORAGE.delete_remote_submission(previous_filename)
+        STORAGE.upload_submission(save_path)
+        STORAGE.upload_registry()
 
         result = run_evaluation()
+        status_payload = {
+            "backend": STORAGE.backend_name,
+            "last_run_at": utc_now_iso(),
+            "last_run_ok": result["ok"],
+            "returncode": result["returncode"],
+            "stdout": result["stdout"],
+            "stderr": result["stderr"],
+        }
+        save_watch_status(status_payload)
+        STORAGE.upload_outputs()
         if not result["ok"]:
             raise HTTPException(
                 status_code=500,
@@ -322,10 +352,13 @@ def health() -> JSONResponse:
         {
             "status": "ok",
             "time": utc_now_iso(),
+            "backend": STORAGE.backend_name,
+            "hf_repo_id": STORAGE.hf_repo_id or None,
             "devset_exists": DEVSET_FILE.exists(),
             "gold_exists": GOLD_FILE.exists(),
             "submission_dir": str(SUBMISSIONS_DIR),
             "output_dir": str(OUTPUT_DIR),
+            "official_site_url": OFFICIAL_SITE_URL,
         }
     )
 
