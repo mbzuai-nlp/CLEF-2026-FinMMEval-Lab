@@ -1,6 +1,6 @@
 # FinMMEval Lab @ CLEF 2026
 
-Multilingual and multimodal evaluation of financial AI systems. The lab spans three complementary tasks and emphasizes evidence-grounded outputs with calibrated confidence.
+Multilingual and multimodal evaluation of financial AI systems. The lab spans three complementary tasks and emphasizes evidence-grounded, task-appropriate outputs.
 
 ## Tasks
 - **Task 1 – Financial Exam Q&A:** Evaluates conceptual understanding and domain reasoning using multilingual, professional exam-style financial questions (e.g., CFA, CPA, EFPA, BBF). Performance is measured by accuracy.
@@ -8,8 +8,8 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 - **Task 3 – Financial Decision Making:** Assesses reasoning-to-action by generating Buy/Hold/Sell decisions and short rationales from textual and numerical market contexts (BTC, TSLA). Evaluated via profitability, stability, and risk metrics (e.g., Sharpe Ratio, Cumulative Return).
 
 ## What to Submit
-- Per-task prediction JSONL files with confidence scores.
-- Evidence trace or rationale aligned to task definitions.
+- Per-task predictions in the task-specific submission format. Task 1 and Task 2 do not require confidence scores.
+- Evidence trace or rationale only when required by the task definition.
 - System card (model design, data usage, risks) and reproducibility notes (seed, versions, hardware).
 
 ## How to Participate
