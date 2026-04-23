@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Task 1 Leaderboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/task1/dev/static/app.css" />
+</head>
+<body>
+  <div class="page-shell">
+    <div class="site-ribbon">
+      <span>FinMMEval Lab 2026 · CLEF Official Task 1 Dev Portal</span>
+      <a href="/">Main Site</a>
+    </div>
+    <header class="topbar compact-topbar">
+      <div class="brand-block">
+        <div class="brand-kicker">Live Ranking</div>
+        <h1>Task 1 Dev Leaderboard</h1>
+        <p>Official organizer-side ranking page for the released Task 1 accounting dev set. Results refresh automatically after each successful submission.</p>
+      </div>
+      <nav class="nav-links">
+        <a href="/">Official Site</a>
+        <a href="/task1/dev">Home</a>
+        <a href="/task1/dev/submit">Submit</a>
+      </nav>
+    </header>
+
+    <section class="info-strip">
+      <div class="info-item">
+        <span class="label">Submission Count</span>
+        <span id="meta-submissions" class="value">Loading...</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Last Refresh</span>
+        <span id="meta-updated" class="value">Loading...</span>
+      </div>
+      <div class="info-item">
+        <span class="label">Watcher Status</span>
+        <span id="meta-watch" class="value">On-demand refresh</span>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <h2>Overall Ranking</h2>
+        <button id="refresh-button" class="button button-secondary">Refresh Now</button>
+      </div>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Team</th>
+              <th>Accuracy</th>
+              <th>Correct / Total</th>
+              <th>Coverage</th>
+              <th>Valid</th>
+              <th>Uploaded At</th>
+            </tr>
+          </thead>
+          <tbody id="overall-body">
+            <tr><td colspan="7">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Source Breakdown</h2>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Team</th>
+              <th>Source</th>
+              <th>Accuracy</th>
+              <th>Correct / Total</th>
+              <th>Coverage</th>
+            </tr>
+          </thead>
+          <tbody id="source-body">
+            <tr><td colspan="5">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    function formatPercent(value) {
+      if (value === null || value === undefined || value === '') return '-';
+      return `${(Number(value) * 100).toFixed(2)}%`;
+    }
+
+    function renderOverall(rows) {
+      const body = document.getElementById('overall-body');
+      if (!rows.length) {
+        body.innerHTML = '<tr><td colspan="7">No submissions yet.</td></tr>';
+        return;
+      }
+      body.innerHTML = rows.map((row) => `
+        <tr>
+          <td>${row.rank}</td>
+          <td>${row.display_name ?? row.model_name}</td>
+          <td>${formatPercent(row.accuracy)}</td>
+          <td>${row.correct} / ${row.total}</td>
+          <td>${formatPercent(row.coverage)}</td>
+          <td>${row.valid_submission ? 'yes' : 'no'}</td>
+          <td>${row.uploaded_at ?? '-'}</td>
+        </tr>
+      `).join('');
+    }
+
+    function renderBySource(rows) {
+      const body = document.getElementById('source-body');
+      if (!rows.length) {
+        body.innerHTML = '<tr><td colspan="5">No source-level data yet.</td></tr>';
+        return;
+      }
+      body.innerHTML = rows.map((row) => `
+        <tr>
+          <td>${row.display_name ?? row.model_name}</td>
+          <td>${row.source}</td>
+          <td>${formatPercent(row.accuracy)}</td>
+          <td>${row.correct} / ${row.total}</td>
+          <td>${formatPercent(row.coverage)}</td>
+        </tr>
+      `).join('');
+    }
+
+    async function refreshLeaderboard() {
+      const response = await fetch('/api/task1/leaderboard');
+      if (!response.ok) return;
+      const payload = await response.json();
+      document.getElementById('meta-submissions').textContent = String(payload.dataset?.submission_count ?? 0);
+      document.getElementById('meta-updated').textContent = payload.dataset?.last_updated ?? 'Not evaluated yet';
+      document.getElementById('meta-watch').textContent = payload.status?.last_run_ok === false ? 'Last run failed' : 'Healthy';
+      renderOverall(payload.overall || []);
+      renderBySource(payload.by_source || []);
+    }
+
+    document.getElementById('refresh-button').addEventListener('click', refreshLeaderboard);
+    refreshLeaderboard();
+    setInterval(refreshLeaderboard, 5000);
+  </script>
+</body>
+</html>

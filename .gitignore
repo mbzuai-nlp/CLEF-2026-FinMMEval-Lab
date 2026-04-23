@@ -1,1 +1,8 @@
 archive/
+examples/__pycache__/
+task1_dev_leaderboard/__pycache__/
+task1_dev_leaderboard/outputs/
+task1_dev_leaderboard/private/
+task1_dev_leaderboard/submissions/*.json
+task1_dev_leaderboard/submissions/*.jsonl
+task1_dev_leaderboard/data/accounting_CLEF/

@@ -1,0 +1,28 @@
+{
+  "datasets": [
+    {
+      "key": "accounting_clef_ar",
+      "name": "Accounting CLEF",
+      "format": "mcq_parquet",
+      "path": "../data/accounting_CLEF/data/train-00000-of-00001.parquet",
+      "language": "ar",
+      "answer_field": "correct_answer",
+      "option_fields": {
+        "A": "choice_a",
+        "B": "choice_b",
+        "C": "choice_c",
+        "D": "choice_d",
+        "E": "choice_e"
+      },
+      "source": "HF dataset Raniahossam33/accounting_CLEF"
+    }
+  ],
+  "runs": [
+    {
+      "model_name": "replace_with_model_name",
+      "format": "task1_jsonl",
+      "path": "replace_with_prediction_file.jsonl",
+      "datasets": ["accounting_clef_ar"]
+    }
+  ]
+}

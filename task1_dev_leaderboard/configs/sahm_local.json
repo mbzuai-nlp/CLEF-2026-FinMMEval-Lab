@@ -1,0 +1,26 @@
+{
+  "datasets": [
+    {
+      "key": "sahm_fatwa_ar",
+      "name": "SAHM Fatwa MCQ",
+      "format": "mcq_jsonl",
+      "path": "../../../../SAHM_private/data/islamic_finance/fatwa/fatwa_mcq.jsonl",
+      "language": "ar",
+      "source": "SAHM private Islamic finance fatwa MCQ set"
+    }
+  ],
+  "runs": [
+    {
+      "model_name": "gpt_5",
+      "format": "per_item_mcq_csv",
+      "path": "../../../../SAHM_private/runs/gpt_5_mcq/per_item_mcq.csv",
+      "datasets": ["sahm_fatwa_ar"]
+    },
+    {
+      "model_name": "jais",
+      "format": "per_item_mcq_csv",
+      "path": "../../../../SAHM_private/runs/jais_mcq/per_item_mcq.csv",
+      "datasets": ["sahm_fatwa_ar"]
+    }
+  ]
+}
