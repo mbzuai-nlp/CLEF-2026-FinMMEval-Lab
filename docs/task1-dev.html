@@ -1,0 +1,343 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FinMMEval Task 1 Dev Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:wght@500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f8fb;
+      --panel: #ffffff;
+      --ink: #15253d;
+      --muted: #5f6f86;
+      --line: #dbe3ef;
+      --accent: #1d67d8;
+      --accent-soft: #eaf2ff;
+      --shadow: 0 18px 60px rgba(15, 35, 64, 0.08);
+      --radius: 22px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 30%, #f8fafc 100%);
+      color: var(--ink);
+      font-family: "Manrope", sans-serif;
+    }
+    a { color: inherit; text-decoration: none; }
+    .shell {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 28px 20px 56px;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .kicker {
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .hero {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(219, 227, 239, 0.9);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      padding: 32px;
+      margin-bottom: 26px;
+    }
+    .hero h1 {
+      margin: 0 0 10px;
+      font-family: "Source Serif 4", serif;
+      font-size: clamp(32px, 5vw, 48px);
+      line-height: 1.05;
+    }
+    .hero p {
+      margin: 0;
+      max-width: 760px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      gap: 22px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .tabs {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .tab-button {
+      border: 1px solid var(--line);
+      background: #f8fbff;
+      color: var(--ink);
+      border-radius: 16px;
+      padding: 16px;
+      cursor: pointer;
+      text-align: left;
+      transition: 0.2s ease;
+      font: inherit;
+    }
+    .tab-button:hover {
+      border-color: #b9c8df;
+      transform: translateY(-1px);
+    }
+    .tab-button.active {
+      background: var(--accent-soft);
+      border-color: #b8d1ff;
+    }
+    .tab-button strong {
+      display: block;
+      font-size: 16px;
+      margin-bottom: 4px;
+    }
+    .tab-button span {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .content {
+      padding: 26px;
+    }
+    .content.hidden {
+      display: none;
+    }
+    .content h2 {
+      margin: 0 0 8px;
+      font-size: 28px;
+      font-family: "Source Serif 4", serif;
+    }
+    .lede {
+      margin: 0 0 18px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 20px 0 22px;
+    }
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fbfdff;
+    }
+    .stat-label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+    .stat-value {
+      font-size: 22px;
+      font-weight: 800;
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 20px 0 24px;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 18px;
+      border-radius: 14px;
+      font-weight: 700;
+      transition: 0.2s ease;
+    }
+    .button.primary {
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 10px 24px rgba(29, 103, 216, 0.2);
+    }
+    .button.secondary {
+      background: white;
+      border: 1px solid var(--line);
+      color: var(--ink);
+    }
+    .button:hover { transform: translateY(-1px); }
+    .notes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .note {
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      background: #fcfdff;
+    }
+    .note h3 {
+      margin: 0 0 8px;
+      font-size: 15px;
+    }
+    .note p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+      font-size: 14px;
+    }
+    @media (max-width: 900px) {
+      .grid { grid-template-columns: 1fr; }
+      .stats, .notes { grid-template-columns: 1fr; }
+      .hero { padding: 24px; }
+      .content { padding: 22px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <div class="brand">
+        <div class="kicker">FinMMEval Lab 2026</div>
+        <strong>Task 1 Dev Hub</strong>
+      </div>
+      <a href="./" class="button secondary">Back To Official Site</a>
+    </div>
+
+    <section class="hero">
+      <h1>One Hub, Multiple Task 1 Dev Languages</h1>
+      <p>
+        This page is the unified entry point for Task 1 development leaderboards. Use the tabs to switch between currently released language-specific dev benchmarks, then open the submission portal or live leaderboard for the selected language.
+      </p>
+    </section>
+
+    <div class="grid">
+      <aside class="panel">
+        <div class="tabs">
+          <button class="tab-button active" data-tab="arabic">
+            <strong>Arabic</strong>
+            <span>Accounting MCQ dev benchmark with 100 public dev questions and 208 organizer-only hidden test questions.</span>
+          </button>
+          <button class="tab-button" data-tab="hindi">
+            <strong>Hindi</strong>
+            <span>Hindi finance MCQ dev benchmark with 100 public dev questions and 200 organizer-only hidden test questions.</span>
+          </button>
+        </div>
+      </aside>
+
+      <section class="panel">
+        <div id="tab-arabic" class="content">
+          <h2>Task 1 Arabic Dev Portal</h2>
+          <p class="lede">
+            Official organizer-maintained dev workflow for the Arabic Task 1 benchmark. The public split is participant-facing; the hidden test split remains organizer-only.
+          </p>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-label">Public Dev</div>
+              <div class="stat-value">100</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Hidden Test</div>
+              <div class="stat-value">208</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Answer Space</div>
+              <div class="stat-value">A-E</div>
+            </div>
+          </div>
+          <div class="actions">
+            <a class="button primary" href="https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/submit">Open Arabic Submission</a>
+            <a class="button secondary" href="https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/leaderboard">Open Arabic Leaderboard</a>
+            <a class="button secondary" href="https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/devset/download">Download Arabic Dev Set</a>
+          </div>
+          <div class="notes">
+            <div class="note">
+              <h3>Public Release</h3>
+              <p>The participant-facing JSONL dev set does not expose organizer-only metadata such as gold labels or source fields.</p>
+            </div>
+            <div class="note">
+              <h3>Submission Format</h3>
+              <p>Participants submit `.json` or `.jsonl` files using the per-item `id` and predicted answer letter.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="tab-hindi" class="content hidden">
+          <h2>Task 1 Hindi Dev Portal</h2>
+          <p class="lede">
+            Official organizer-maintained dev workflow for the Hindi Task 1 benchmark. The Hindi portal mirrors the Arabic flow but uses a separate Hindi public dev set and independent leaderboard state.
+          </p>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-label">Public Dev</div>
+              <div class="stat-value">100</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Hidden Test</div>
+              <div class="stat-value">200</div>
+            </div>
+            <div class="stat">
+              <div class="stat-label">Answer Space</div>
+              <div class="stat-value">A-D</div>
+            </div>
+          </div>
+          <div class="actions">
+            <a class="button primary" href="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/submit">Open Hindi Submission</a>
+            <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/leaderboard">Open Hindi Leaderboard</a>
+            <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/devset/download">Download Hindi Dev Set</a>
+          </div>
+          <div class="notes">
+            <div class="note">
+              <h3>Public Release</h3>
+              <p>The Hindi public dev set does not expose organizer-only metadata such as hidden labels or domain annotations.</p>
+            </div>
+            <div class="note">
+              <h3>Submission Format</h3>
+              <p>Participants submit `.json` or `.jsonl` files using the public `hindi-dev-*` identifiers and one answer letter per question.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.tab-button');
+    const contents = {
+      arabic: document.getElementById('tab-arabic'),
+      hindi: document.getElementById('tab-hindi'),
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = button.getAttribute('data-tab');
+        buttons.forEach((btn) => btn.classList.toggle('active', btn === button));
+        Object.entries(contents).forEach(([key, panel]) => {
+          panel.classList.toggle('hidden', key !== target);
+        });
+      });
+    });
+  </script>
+</body>
+</html>
