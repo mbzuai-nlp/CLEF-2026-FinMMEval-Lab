@@ -705,7 +705,7 @@
       arabic: {
         label: "Arabic",
         subtitle: "Accounting and auditing MCQ dev benchmark",
-        description: "Official organizer-maintained Arabic dev workflow. The public split is participant-facing, while the hidden test split remains private.",
+        description: "",
         devCount: 100,
         hiddenCount: 208,
         answerSpace: "4-5 choices",
@@ -727,7 +727,7 @@
       hindi: {
         label: "Hindi",
         subtitle: "Hindi finance MCQ dev benchmark",
-        description: "Official organizer-maintained Hindi dev workflow with a separate public split and an independent live leaderboard.",
+        description: "",
         devCount: 100,
         hiddenCount: 200,
         answerSpace: "4 choices",
@@ -880,7 +880,6 @@
           <div class="leaderboard-head">
             <div>
               <h3>${escapeHtml(config.label)} Live Leaderboard</h3>
-              <p>Rendered directly inside the hub from the public leaderboard API. Rankings update automatically without sending participants to a separate page.</p>
             </div>
             <div class="leaderboard-status">
               <div>Last updated</div>
@@ -938,9 +937,9 @@
                 <div class="metric">
                   <div class="metric-label">Mode</div>
                   <div class="metric-value">Live</div>
-                  <div class="metric-note">Leaderboard refreshes automatically from the hosted portal.</div>
                 </div>
               </div>
+              ${config.description ? `<p class="meta-copy">${escapeHtml(config.description)}</p>` : ""}
               <p class="tiny-note"><strong>Choice handling:</strong> ${escapeHtml(config.answerNote)}</p>
             </div>
 
