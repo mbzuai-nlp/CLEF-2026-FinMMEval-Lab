@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FinMMEval Task 1 Dev Hub</title>
+  <title>FinMMEval Task 1 Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:wght@500;600;700&display=swap" rel="stylesheet">
@@ -89,6 +89,12 @@
       flex-direction: column;
       gap: 10px;
     }
+    .stage-copy {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
     .tab-button {
       border: 1px solid var(--line);
       background: #f8fbff;
@@ -129,6 +135,32 @@
       margin: 0 0 8px;
       font-size: 28px;
       font-family: "Source Serif 4", serif;
+    }
+    .subtabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 22px;
+    }
+    .subtab-button {
+      border: 1px solid var(--line);
+      background: #f8fbff;
+      color: var(--ink);
+      border-radius: 999px;
+      padding: 10px 16px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      font: inherit;
+      font-weight: 700;
+    }
+    .subtab-button.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+      box-shadow: 0 10px 24px rgba(29, 103, 216, 0.16);
+    }
+    .subtab-panel.hidden {
+      display: none;
     }
     .lede {
       margin: 0 0 18px;
@@ -220,101 +252,123 @@
     <div class="topbar">
       <div class="brand">
         <div class="kicker">FinMMEval Lab 2026</div>
-        <strong>Task 1 Dev Hub</strong>
+        <strong>Task 1 Hub</strong>
       </div>
       <a href="./" class="button secondary">Back To Official Site</a>
     </div>
 
     <section class="hero">
-      <h1>One Hub, Multiple Task 1 Dev Languages</h1>
+      <h1>One Hub For Task 1 Dev And Test</h1>
       <p>
-        This page is the unified entry point for Task 1 development leaderboards. Use the tabs to switch between currently released language-specific dev benchmarks, then open the submission portal or live leaderboard for the selected language.
+        This page is the unified entry point for Task 1 benchmark access. Use the top-level tabs to switch between the currently available development leaderboards and the upcoming hidden test track.
       </p>
     </section>
 
     <div class="grid">
       <aside class="panel">
         <div class="tabs">
-          <button class="tab-button active" data-tab="arabic">
-            <strong>Arabic</strong>
-            <span>Accounting MCQ dev benchmark with 100 public dev questions and 208 organizer-only hidden test questions.</span>
+          <p class="stage-copy">Select the benchmark stage first. Language-specific dev resources appear in the main panel.</p>
+          <button class="tab-button active" data-stage="dev">
+            <strong>Dev</strong>
+            <span>Public development splits, submission portals, and live leaderboards for currently released languages.</span>
           </button>
-          <button class="tab-button" data-tab="hindi">
-            <strong>Hindi</strong>
-            <span>Hindi finance MCQ dev benchmark with 100 public dev questions and 200 organizer-only hidden test questions.</span>
+          <button class="tab-button" data-stage="test">
+            <strong>Test</strong>
+            <span>Official hidden test track for Task 1. Public details and submission instructions will be released later.</span>
           </button>
         </div>
       </aside>
 
       <section class="panel">
-        <div id="tab-arabic" class="content">
-          <h2>Task 1 Arabic Dev Portal</h2>
+        <div id="stage-dev" class="content">
+          <h2>Task 1 Development Leaderboards</h2>
           <p class="lede">
-            Official organizer-maintained dev workflow for the Arabic Task 1 benchmark. The public split is participant-facing; the hidden test split remains organizer-only.
+            The development track is live for multiple languages. Select a language tab below to open its participant-facing dev portal, leaderboard, and public benchmark release.
           </p>
-          <div class="stats">
-            <div class="stat">
-              <div class="stat-label">Public Dev</div>
-              <div class="stat-value">100</div>
+
+          <div class="subtabs">
+            <button class="subtab-button active" data-language="arabic">Arabic</button>
+            <button class="subtab-button" data-language="hindi">Hindi</button>
+          </div>
+
+          <div id="language-arabic" class="subtab-panel">
+            <div class="stats">
+              <div class="stat">
+                <div class="stat-label">Public Dev</div>
+                <div class="stat-value">100</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">Hidden Test</div>
+                <div class="stat-value">208</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">Answer Space</div>
+                <div class="stat-value">A-E</div>
+              </div>
             </div>
-            <div class="stat">
-              <div class="stat-label">Hidden Test</div>
-              <div class="stat-value">208</div>
+            <div class="actions">
+              <a class="button primary" href="https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/submit">Open Arabic Submission</a>
+              <a class="button secondary" href="https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/leaderboard">Open Arabic Leaderboard</a>
+              <a class="button secondary" href="https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/devset/download">Download Arabic Dev Set</a>
             </div>
-            <div class="stat">
-              <div class="stat-label">Answer Space</div>
-              <div class="stat-value">A-E</div>
+            <div class="notes">
+              <div class="note">
+                <h3>Public Release</h3>
+                <p>The participant-facing JSONL dev set does not expose organizer-only metadata such as gold labels or source fields.</p>
+              </div>
+              <div class="note">
+                <h3>Submission Format</h3>
+                <p>Participants submit `.json` or `.jsonl` files using the per-item `id` and predicted answer letter.</p>
+              </div>
             </div>
           </div>
-          <div class="actions">
-            <a class="button primary" href="https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/submit">Open Arabic Submission</a>
-            <a class="button secondary" href="https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/leaderboard">Open Arabic Leaderboard</a>
-            <a class="button secondary" href="https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/devset/download">Download Arabic Dev Set</a>
-          </div>
-          <div class="notes">
-            <div class="note">
-              <h3>Public Release</h3>
-              <p>The participant-facing JSONL dev set does not expose organizer-only metadata such as gold labels or source fields.</p>
+
+          <div id="language-hindi" class="subtab-panel hidden">
+            <div class="stats">
+              <div class="stat">
+                <div class="stat-label">Public Dev</div>
+                <div class="stat-value">100</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">Hidden Test</div>
+                <div class="stat-value">200</div>
+              </div>
+              <div class="stat">
+                <div class="stat-label">Answer Space</div>
+                <div class="stat-value">A-D</div>
+              </div>
             </div>
-            <div class="note">
-              <h3>Submission Format</h3>
-              <p>Participants submit `.json` or `.jsonl` files using the per-item `id` and predicted answer letter.</p>
+            <div class="actions">
+              <a class="button primary" href="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/submit">Open Hindi Submission</a>
+              <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/leaderboard">Open Hindi Leaderboard</a>
+              <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/devset/download">Download Hindi Dev Set</a>
+            </div>
+            <div class="notes">
+              <div class="note">
+                <h3>Public Release</h3>
+                <p>The Hindi public dev set does not expose organizer-only metadata such as hidden labels or domain annotations.</p>
+              </div>
+              <div class="note">
+                <h3>Submission Format</h3>
+                <p>Participants submit `.json` or `.jsonl` files using the public `hindi-dev-*` identifiers and one answer letter per question.</p>
+              </div>
             </div>
           </div>
         </div>
 
-        <div id="tab-hindi" class="content hidden">
-          <h2>Task 1 Hindi Dev Portal</h2>
+        <div id="stage-test" class="content hidden">
+          <h2>Task 1 Hidden Test Track</h2>
           <p class="lede">
-            Official organizer-maintained dev workflow for the Hindi Task 1 benchmark. The Hindi portal mirrors the Arabic flow but uses a separate Hindi public dev set and independent leaderboard state.
+            The hidden test track is not public yet. Final release timing, submission instructions, and language coverage will be announced on the official site.
           </p>
-          <div class="stats">
-            <div class="stat">
-              <div class="stat-label">Public Dev</div>
-              <div class="stat-value">100</div>
-            </div>
-            <div class="stat">
-              <div class="stat-label">Hidden Test</div>
-              <div class="stat-value">200</div>
-            </div>
-            <div class="stat">
-              <div class="stat-label">Answer Space</div>
-              <div class="stat-value">A-D</div>
-            </div>
-          </div>
-          <div class="actions">
-            <a class="button primary" href="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/submit">Open Hindi Submission</a>
-            <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/leaderboard">Open Hindi Leaderboard</a>
-            <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/devset/download">Download Hindi Dev Set</a>
-          </div>
           <div class="notes">
             <div class="note">
-              <h3>Public Release</h3>
-              <p>The Hindi public dev set does not expose organizer-only metadata such as hidden labels or domain annotations.</p>
+              <h3>Stay Tuned</h3>
+              <p>Task 1 hidden test access and submission details are still being finalized. Please continue using the development leaderboards until the official test release is announced.</p>
             </div>
             <div class="note">
-              <h3>Submission Format</h3>
-              <p>Participants submit `.json` or `.jsonl` files using the public `hindi-dev-*` identifiers and one answer letter per question.</p>
+              <h3>Current Status</h3>
+              <p>Organizer-only hidden test sets already exist internally, but they are not participant-facing and are intentionally not exposed on this page.</p>
             </div>
           </div>
         </div>
@@ -323,17 +377,32 @@
   </div>
 
   <script>
-    const buttons = document.querySelectorAll('.tab-button');
-    const contents = {
-      arabic: document.getElementById('tab-arabic'),
-      hindi: document.getElementById('tab-hindi'),
+    const stageButtons = document.querySelectorAll('.tab-button');
+    const stagePanels = {
+      dev: document.getElementById('stage-dev'),
+      test: document.getElementById('stage-test'),
+    };
+    const languageButtons = document.querySelectorAll('.subtab-button');
+    const languagePanels = {
+      arabic: document.getElementById('language-arabic'),
+      hindi: document.getElementById('language-hindi'),
     };
 
-    buttons.forEach((button) => {
+    stageButtons.forEach((button) => {
       button.addEventListener('click', () => {
-        const target = button.getAttribute('data-tab');
-        buttons.forEach((btn) => btn.classList.toggle('active', btn === button));
-        Object.entries(contents).forEach(([key, panel]) => {
+        const target = button.getAttribute('data-stage');
+        stageButtons.forEach((btn) => btn.classList.toggle('active', btn === button));
+        Object.entries(stagePanels).forEach(([key, panel]) => {
+          panel.classList.toggle('hidden', key !== target);
+        });
+      });
+    });
+
+    languageButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const target = button.getAttribute('data-language');
+        languageButtons.forEach((btn) => btn.classList.toggle('active', btn === button));
+        Object.entries(languagePanels).forEach(([key, panel]) => {
           panel.classList.toggle('hidden', key !== target);
         });
       });
