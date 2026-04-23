@@ -713,16 +713,6 @@
         submitUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/submit",
         downloadUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/devset/download",
         leaderboardApi: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/leaderboard",
-        notes: [
-          {
-            title: "Public Release",
-            body: "The participant-facing JSONL dev set does not expose organizer-only metadata such as gold labels or source fields.",
-          },
-          {
-            title: "Submission Format",
-            body: "Participants submit .json or .jsonl files using the released item ids and one predicted answer letter per question.",
-          },
-        ],
       },
       hindi: {
         label: "Hindi",
@@ -735,16 +725,6 @@
         submitUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/submit",
         downloadUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/devset/download",
         leaderboardApi: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/leaderboard",
-        notes: [
-          {
-            title: "Public Release",
-            body: "The Hindi public dev set does not expose organizer-only metadata such as hidden labels or domain annotations.",
-          },
-          {
-            title: "Submission Format",
-            body: "Participants submit .json or .jsonl files using the public hindi-dev ids and one answer letter per question.",
-          },
-        ],
       },
     };
 
@@ -950,12 +930,12 @@
               </div>
             </div>
 
-            ${config.notes.map((note) => `
-              <div class="card pad">
-                <h3 class="meta-title">${escapeHtml(note.title)}</h3>
-                <p class="meta-copy">${escapeHtml(note.body)}</p>
-              </div>
-            `).join("")}
+            <div class="card pad">
+              <h3 class="meta-title">How to participate</h3>
+              <p class="meta-copy">1. Download the public dev set.</p>
+              <p class="meta-copy">2. Answer the questions with one option letter per item.</p>
+              <p class="meta-copy">3. Submit a prediction <code>jsonl</code> file through the submission page.</p>
+            </div>
           </div>
 
           <div>${renderLeaderboardCard(language, cachedState)}</div>
