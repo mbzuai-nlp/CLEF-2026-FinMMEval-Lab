@@ -51,27 +51,6 @@
       letter-spacing: 0.12em;
       text-transform: uppercase;
     }
-    .hero {
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(219, 227, 239, 0.9);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-      padding: 32px;
-      margin-bottom: 26px;
-    }
-    .hero h1 {
-      margin: 0 0 10px;
-      font-family: "Source Serif 4", serif;
-      font-size: clamp(32px, 5vw, 48px);
-      line-height: 1.05;
-    }
-    .hero p {
-      margin: 0;
-      max-width: 760px;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1.7;
-    }
     .grid {
       display: grid;
       grid-template-columns: 280px minmax(0, 1fr);
@@ -276,7 +255,6 @@
     @media (max-width: 900px) {
       .grid { grid-template-columns: 1fr; }
       .stats, .notes { grid-template-columns: 1fr; }
-      .hero { padding: 24px; }
       .content { padding: 22px; }
       .leaderboard-frame { min-height: 680px; }
     }
@@ -291,14 +269,6 @@
       </div>
       <a href="./" class="button secondary">Back To Official Site</a>
     </div>
-
-    <section class="hero">
-      <h1>One Hub For Task 1 Dev And Test</h1>
-      <p>
-        This page is the unified entry point for Task 1 benchmark access. Use the top-level tabs to switch between the currently available development leaderboards and the upcoming hidden test track.
-      </p>
-    </section>
-
     <div class="grid">
       <aside class="panel">
         <div class="tabs">
