@@ -8,6 +8,7 @@ The tool is intentionally lightweight:
 
 Current built-in formats:
 - Dataset: `mcq_jsonl`
+- Dataset: `mcq_csv`
 - Predictions: `per_item_mcq_csv`, `task1_jsonl`
 """
 
@@ -54,6 +55,11 @@ def load_parquet_records(path: Path) -> List[dict]:
     return pd.read_parquet(path).to_dict(orient="records")
 
 
+def load_csv_records(path: Path) -> List[dict]:
+    with path.open("r", encoding="utf-8", newline="") as f:
+        return list(csv.DictReader(f))
+
+
 def resolve_path(config_dir: Path, raw_path: str) -> Path:
     path = Path(raw_path)
     if path.is_absolute():
@@ -75,6 +81,8 @@ def load_dataset(dataset_cfg: dict, config_dir: Path) -> List[dict]:
     path = resolve_path(config_dir, dataset_cfg["path"])
     if dataset_format == "mcq_jsonl":
         rows = load_jsonl(path)
+    elif dataset_format == "mcq_csv":
+        rows = load_csv_records(path)
     elif dataset_format == "mcq_parquet":
         rows = load_parquet_records(path)
     else:

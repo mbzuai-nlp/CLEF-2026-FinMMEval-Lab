@@ -12,7 +12,7 @@ APP_ROOT = Path(__file__).resolve().parent
 PROJECT_ROOT = APP_ROOT.parent
 
 SPACE_README = """---
-title: FinMMEval Task 1 Arabic Dev Portal
+title: __SPACE_TITLE__
 emoji: 🧮
 colorFrom: blue
 colorTo: indigo
@@ -21,9 +21,9 @@ app_port: 7860
 pinned: false
 ---
 
-# FinMMEval Task 1 Arabic Dev Portal
+# __SPACE_TITLE__
 
-This Space hosts the official Task 1 Arabic dev submission portal and live leaderboard.
+This Space hosts the official __SPACE_TITLE__ submission portal and live leaderboard.
 
 Required Space secrets:
 
@@ -34,6 +34,15 @@ Required Space variables:
 - `TASK1_STORAGE_BACKEND=hf_dataset`
 - `TASK1_HF_REPO_ID=<org-or-user>/<private-dataset-repo>`
 - `TASK1_OFFICIAL_SITE_URL=https://mbzuai-nlp.github.io/CLEF-2026-FinMMEval-Lab/`
+- `TASK1_DEVSET_FILENAME=<public-devset-jsonl>`
+- `TASK1_TEMPLATE_FILENAME=<submission-template-json>`
+- `TASK1_GOLD_FILENAME=<private-gold-jsonl>`
+- `TASK1_OUTPUT_SUBDIR=<leaderboard-output-subdir>`
+- `TASK1_PORTAL_VARIANT=<Arabic/Hindi/...>`
+- `TASK1_PORTAL_TITLE=<full portal title>`
+- `TASK1_PORTAL_SUBMISSION_TITLE=<submission page title>`
+- `TASK1_PORTAL_LEADERBOARD_TITLE=<leaderboard page title>`
+- `TASK1_PORTAL_DATASET_LABEL=<dataset label shown on homepage>`
 """
 
 DOCKERFILE = """FROM python:3.11-slim
@@ -84,6 +93,11 @@ def parse_args() -> argparse.Namespace:
         default=str(PROJECT_ROOT / "task1_dev_leaderboard_hf_space"),
         help="Output directory for the generated Space repo.",
     )
+    parser.add_argument(
+        "--space-title",
+        default="FinMMEval Task 1 Arabic Dev Portal",
+        help="Title written into the generated Space README metadata.",
+    )
     return parser.parse_args()
 
 
@@ -101,7 +115,8 @@ def main() -> None:
     for dirname in PACKAGE_DIRS:
         shutil.copytree(APP_ROOT / dirname, out_package_dir / dirname)
 
-    (out_dir / "README.md").write_text(SPACE_README, encoding="utf-8")
+    readme = SPACE_README.replace("__SPACE_TITLE__", args.space_title)
+    (out_dir / "README.md").write_text(readme, encoding="utf-8")
     (out_dir / "Dockerfile").write_text(DOCKERFILE, encoding="utf-8")
     (out_dir / "requirements.txt").write_text(REQUIREMENTS, encoding="utf-8")
 

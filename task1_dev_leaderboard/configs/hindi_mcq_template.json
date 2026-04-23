@@ -1,0 +1,30 @@
+{
+  "datasets": [
+    {
+      "key": "hindi_mcq_hi",
+      "name": "Hindi Finance MCQ",
+      "format": "mcq_csv",
+      "path": "/home/zhuohanx/Projects/hindi_mcq_dataset_FINAL_1.csv",
+      "language": "hi",
+      "id_field": "id",
+      "question_field": "question_hi",
+      "answer_field": "correct_answer",
+      "category_field": "domain_clean",
+      "option_fields": {
+        "A": "option_a_hi",
+        "B": "option_b_hi",
+        "C": "option_c_hi",
+        "D": "option_d_hi"
+      },
+      "source": "Hindi Task 1 MCQ CSV"
+    }
+  ],
+  "runs": [
+    {
+      "model_name": "replace_with_model_name",
+      "format": "task1_jsonl",
+      "path": "replace_with_prediction_file.jsonl",
+      "datasets": ["hindi_mcq_hi"]
+    }
+  ]
+}

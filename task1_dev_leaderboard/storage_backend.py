@@ -12,9 +12,6 @@ from huggingface_hub.utils import HfHubHTTPError
 
 
 HF_REPO_TYPE = "dataset"
-GOLD_REMOTE_PATH = "private/accounting_clef_100_gold.jsonl"
-REGISTRY_REMOTE_PATH = "submissions/_registry.json"
-OUTPUTS_REMOTE_DIR = "outputs/accounting_clef_dev"
 
 
 class PortalStorage:
@@ -25,10 +22,24 @@ class PortalStorage:
         self.mode = os.getenv("TASK1_STORAGE_BACKEND", "local").strip().lower() or "local"
         default_runtime_root = self.app_root if self.mode == "local" else Path("/tmp/task1_dev_leaderboard_runtime")
         self.runtime_root = Path(os.getenv("TASK1_RUNTIME_ROOT", str(default_runtime_root))).resolve()
+        self.gold_filename = os.getenv("TASK1_GOLD_FILENAME", "accounting_clef_100_gold.jsonl").strip()
+        self.output_subdir = os.getenv("TASK1_OUTPUT_SUBDIR", "accounting_clef_dev").strip() or "accounting_clef_dev"
+        self.hf_gold_remote_path = os.getenv(
+            "TASK1_HF_GOLD_REMOTE_PATH",
+            f"private/{self.gold_filename}",
+        ).strip()
+        self.hf_registry_remote_path = os.getenv(
+            "TASK1_HF_REGISTRY_REMOTE_PATH",
+            "submissions/_registry.json",
+        ).strip()
+        self.hf_outputs_remote_dir = os.getenv(
+            "TASK1_HF_OUTPUT_REMOTE_DIR",
+            f"outputs/{self.output_subdir}",
+        ).strip()
         self.private_dir = self.runtime_root / "private"
         self.submissions_dir = self.runtime_root / "submissions"
-        self.outputs_dir = self.runtime_root / "outputs" / "accounting_clef_dev"
-        self.gold_file = self.private_dir / "accounting_clef_100_gold.jsonl"
+        self.outputs_dir = self.runtime_root / "outputs" / self.output_subdir
+        self.gold_file = self.private_dir / self.gold_filename
         self.registry_file = self.submissions_dir / "_registry.json"
         self.watch_status_file = self.outputs_dir / "watch_status.json"
         self.hf_repo_id = os.getenv("TASK1_HF_REPO_ID", "").strip()
@@ -66,9 +77,9 @@ class PortalStorage:
             repo_type=HF_REPO_TYPE,
             local_dir=str(self.runtime_root),
             allow_patterns=[
-                GOLD_REMOTE_PATH,
+                self.hf_gold_remote_path,
                 "submissions/*",
-                f"{OUTPUTS_REMOTE_DIR}/*",
+                f"{self.hf_outputs_remote_dir}/*",
             ],
             token=self.hf_token,
         )
@@ -95,7 +106,7 @@ class PortalStorage:
     def upload_registry(self) -> None:
         if self.mode != "hf_dataset":
             return
-        self._upload_file(self.registry_file, REGISTRY_REMOTE_PATH)
+        self._upload_file(self.registry_file, self.hf_registry_remote_path)
 
     def upload_outputs(self) -> None:
         if self.mode != "hf_dataset":
@@ -104,7 +115,7 @@ class PortalStorage:
             repo_id=self.hf_repo_id,
             repo_type=HF_REPO_TYPE,
             folder_path=str(self.outputs_dir),
-            path_in_repo=OUTPUTS_REMOTE_DIR,
+            path_in_repo=self.hf_outputs_remote_dir,
         )
 
     def _upload_file(self, local_path: Path, path_in_repo: str) -> None:

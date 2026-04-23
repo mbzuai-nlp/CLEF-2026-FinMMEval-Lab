@@ -10,14 +10,20 @@ from pathlib import Path
 
 from huggingface_hub import HfApi
 
-from task1_dev_leaderboard.storage_backend import GOLD_REMOTE_PATH, OUTPUTS_REMOTE_DIR, REGISTRY_REMOTE_PATH
+from task1_dev_leaderboard.storage_backend import PortalStorage
 
 
 APP_ROOT = Path(__file__).resolve().parent
-LOCAL_GOLD_FILE = APP_ROOT / "private" / "accounting_clef_100_gold.jsonl"
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Initialize HF dataset storage for Task 1 portal.")
     parser.add_argument("--repo-id", required=True, help="Dataset repo id, e.g. org/task1-dev-storage")
+    parser.add_argument(
+        "--gold-file",
+        default=None,
+        help="Local gold JSONL path. Defaults to task1_dev_leaderboard/private/<TASK1_GOLD_FILENAME>.",
+    )
     parser.add_argument(
         "--token",
         default=None,
@@ -34,6 +40,8 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     token = args.token
+    storage = PortalStorage(APP_ROOT)
+    local_gold_file = Path(args.gold_file).resolve() if args.gold_file else (APP_ROOT / "private" / storage.gold_filename)
     api = HfApi(token=token)
     api.create_repo(
         repo_id=args.repo_id,
@@ -46,12 +54,12 @@ def main() -> None:
         root = Path(tmpdir)
         private_dir = root / "private"
         submissions_dir = root / "submissions"
-        outputs_dir = root / "outputs" / "accounting_clef_dev"
+        outputs_dir = root / "outputs" / storage.output_subdir
         private_dir.mkdir(parents=True, exist_ok=True)
         submissions_dir.mkdir(parents=True, exist_ok=True)
         outputs_dir.mkdir(parents=True, exist_ok=True)
 
-        (private_dir / LOCAL_GOLD_FILE.name).write_bytes(LOCAL_GOLD_FILE.read_bytes())
+        (private_dir / local_gold_file.name).write_bytes(local_gold_file.read_bytes())
         (submissions_dir / "_registry.json").write_text("{}", encoding="utf-8")
 
         leaderboard_fields = [
@@ -98,20 +106,20 @@ def main() -> None:
         api.upload_file(
             repo_id=args.repo_id,
             repo_type="dataset",
-            path_in_repo=GOLD_REMOTE_PATH,
-            path_or_fileobj=str(private_dir / LOCAL_GOLD_FILE.name),
+            path_in_repo=storage.hf_gold_remote_path,
+            path_or_fileobj=str(private_dir / local_gold_file.name),
         )
         api.upload_file(
             repo_id=args.repo_id,
             repo_type="dataset",
-            path_in_repo=REGISTRY_REMOTE_PATH,
+            path_in_repo=storage.hf_registry_remote_path,
             path_or_fileobj=str(submissions_dir / "_registry.json"),
         )
         api.upload_folder(
             repo_id=args.repo_id,
             repo_type="dataset",
             folder_path=str(outputs_dir),
-            path_in_repo=OUTPUTS_REMOTE_DIR,
+            path_in_repo=storage.hf_outputs_remote_dir,
         )
 
     print(f"Bootstrapped HF dataset storage repo: {args.repo_id}")

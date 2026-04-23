@@ -24,8 +24,11 @@ from task1_dev_leaderboard.storage_backend import PortalStorage
 
 APP_ROOT = Path(__file__).resolve().parent
 WEB_ROOT = APP_ROOT / "web"
-DEVSET_FILE = APP_ROOT / "dev_sets" / "accounting_clef_100_public.jsonl"
-TEMPLATE_FILE = APP_ROOT / "dev_sets" / "accounting_clef_100_submission_template.json"
+DEVSET_FILE = APP_ROOT / "dev_sets" / os.getenv("TASK1_DEVSET_FILENAME", "accounting_clef_100_public.jsonl")
+TEMPLATE_FILE = APP_ROOT / "dev_sets" / os.getenv(
+    "TASK1_TEMPLATE_FILENAME",
+    "accounting_clef_100_submission_template.json",
+)
 EVALUATOR = APP_ROOT / "evaluate_submissions.py"
 STORAGE = PortalStorage(APP_ROOT)
 SUBMISSIONS_DIR = STORAGE.submissions_dir
@@ -37,6 +40,20 @@ OFFICIAL_SITE_URL = os.getenv(
     "TASK1_OFFICIAL_SITE_URL",
     "https://mbzuai-nlp.github.io/CLEF-2026-FinMMEval-Lab/",
 )
+PORTAL_VARIANT = os.getenv("TASK1_PORTAL_VARIANT", "Arabic").strip() or "Arabic"
+PORTAL_TITLE = os.getenv("TASK1_PORTAL_TITLE", f"Task 1 {PORTAL_VARIANT} Dev Portal").strip()
+PORTAL_SUBMISSION_TITLE = os.getenv(
+    "TASK1_PORTAL_SUBMISSION_TITLE",
+    f"{PORTAL_VARIANT} Dev Submission Portal",
+).strip()
+PORTAL_LEADERBOARD_TITLE = os.getenv(
+    "TASK1_PORTAL_LEADERBOARD_TITLE",
+    f"Task 1 {PORTAL_VARIANT} Dev Leaderboard",
+).strip()
+PORTAL_DATASET_LABEL = os.getenv(
+    "TASK1_PORTAL_DATASET_LABEL",
+    f"{PORTAL_VARIANT} Task 1 Dev Set",
+).strip()
 
 SUBMISSION_EXTENSIONS = {".json", ".jsonl"}
 SUBMISSION_LOCK = threading.Lock()
@@ -55,6 +72,21 @@ def ensure_directories() -> None:
 
 def read_text_file(path: Path) -> str:
     return path.read_text(encoding="utf-8")
+
+
+def render_page(path: Path) -> str:
+    content = read_text_file(path)
+    replacements = {
+        "__OFFICIAL_SITE_URL__": OFFICIAL_SITE_URL,
+        "__PORTAL_TITLE__": PORTAL_TITLE,
+        "__PORTAL_SUBMISSION_TITLE__": PORTAL_SUBMISSION_TITLE,
+        "__PORTAL_LEADERBOARD_TITLE__": PORTAL_LEADERBOARD_TITLE,
+        "__PORTAL_VARIANT__": PORTAL_VARIANT,
+        "__PORTAL_DATASET_LABEL__": PORTAL_DATASET_LABEL,
+    }
+    for old, new in replacements.items():
+        content = content.replace(old, new)
+    return content
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -223,17 +255,17 @@ def root() -> RedirectResponse:
 
 @app.get("/task1/dev", response_class=HTMLResponse, include_in_schema=False)
 def task1_dev_home() -> HTMLResponse:
-    return HTMLResponse(read_text_file(WEB_ROOT / "index.html"))
+    return HTMLResponse(render_page(WEB_ROOT / "index.html"))
 
 
 @app.get("/task1/dev/submit", response_class=HTMLResponse, include_in_schema=False)
 def task1_dev_submit_page() -> HTMLResponse:
-    return HTMLResponse(read_text_file(WEB_ROOT / "submit.html"))
+    return HTMLResponse(render_page(WEB_ROOT / "submit.html"))
 
 
 @app.get("/task1/dev/leaderboard", response_class=HTMLResponse, include_in_schema=False)
 def task1_dev_leaderboard_page() -> HTMLResponse:
-    return HTMLResponse(read_text_file(WEB_ROOT / "leaderboard.html"))
+    return HTMLResponse(render_page(WEB_ROOT / "leaderboard.html"))
 
 
 @app.get("/api/task1/dev/meta")

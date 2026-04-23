@@ -1,0 +1,24 @@
+{
+  "dataset_key": "hindi_mcq_hi",
+  "input_format": "csv",
+  "input_path": "/home/zhuohanx/Projects/hindi_mcq_dataset_FINAL_1.csv",
+  "dev_size": 100,
+  "seed": 2026,
+  "id_field": "id",
+  "question_field": "question_hi",
+  "answer_field": "correct_answer",
+  "option_fields": {
+    "A": "option_a_hi",
+    "B": "option_b_hi",
+    "C": "option_c_hi",
+    "D": "option_d_hi"
+  },
+  "meta_fields": ["domain_clean"],
+  "stratify_fields": ["domain_clean"],
+  "dev_prefix": "hindi-dev",
+  "test_prefix": "hindi-test",
+  "public_out": "dev_sets/hindi_mcq_100_public.jsonl",
+  "template_out": "dev_sets/hindi_mcq_100_submission_template.json",
+  "dev_gold_out": "private/hindi_mcq_100_gold.jsonl",
+  "hidden_test_out": "private/hindi_mcq_hidden_test.jsonl"
+}
