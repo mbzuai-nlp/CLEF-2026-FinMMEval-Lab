@@ -6,442 +6,1091 @@
   <title>FinMMEval Task 1 Hub</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f7f8fb;
-      --panel: #ffffff;
-      --ink: #15253d;
-      --muted: #5f6f86;
-      --line: #dbe3ef;
-      --accent: #1d67d8;
-      --accent-soft: #eaf2ff;
-      --shadow: 0 18px 60px rgba(15, 35, 64, 0.08);
-      --radius: 22px;
+      --bg: #edf3ff;
+      --ink: #162845;
+      --muted: #64748f;
+      --panel: rgba(255, 255, 255, 0.86);
+      --panel-strong: #ffffff;
+      --line: rgba(145, 170, 210, 0.3);
+      --accent: #1f63d8;
+      --accent-deep: #123b84;
+      --accent-soft: rgba(31, 99, 216, 0.1);
+      --success-soft: rgba(21, 128, 61, 0.12);
+      --shadow: 0 24px 70px rgba(16, 38, 74, 0.09);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
     }
+
     * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       margin: 0;
-      background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 30%, #f8fafc 100%);
+      min-height: 100vh;
       color: var(--ink);
       font-family: "Manrope", sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(70, 121, 214, 0.18), transparent 36%),
+        radial-gradient(circle at top right, rgba(27, 120, 180, 0.14), transparent 34%),
+        linear-gradient(180deg, #e9f1ff 0%, #f4f8ff 36%, #f8fbff 100%);
     }
-    a { color: inherit; text-decoration: none; }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
     .shell {
-      max-width: 1080px;
+      max-width: 1240px;
       margin: 0 auto;
       padding: 28px 20px 56px;
     }
+
     .topbar {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 28px;
+      gap: 18px;
+      margin-bottom: 18px;
     }
+
     .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #1f63d8 0%, #123b84 100%);
+      color: #fff;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      box-shadow: 0 14px 26px rgba(18, 59, 132, 0.25);
+    }
+
+    .brand-copy {
       display: flex;
       flex-direction: column;
       gap: 4px;
     }
+
     .kicker {
-      color: var(--accent);
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
-      letter-spacing: 0.12em;
       text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
     }
-    .grid {
-      display: grid;
-      grid-template-columns: 280px minmax(0, 1fr);
-      gap: 22px;
-    }
-    .panel {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-    }
-    .tabs {
-      padding: 18px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .stage-copy {
-      margin: 0 0 8px;
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-    .tab-button {
-      border: 1px solid var(--line);
-      background: #f8fbff;
-      color: var(--ink);
-      border-radius: 16px;
-      padding: 16px;
-      cursor: pointer;
-      text-align: left;
-      transition: 0.2s ease;
-      font: inherit;
-    }
-    .tab-button:hover {
-      border-color: #b9c8df;
-      transform: translateY(-1px);
-    }
-    .tab-button.active {
-      background: var(--accent-soft);
-      border-color: #b8d1ff;
-    }
-    .tab-button strong {
-      display: block;
-      font-size: 16px;
-      margin-bottom: 4px;
-    }
-    .tab-button span {
-      display: block;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .content {
-      padding: 26px;
-    }
-    .content.hidden {
-      display: none;
-    }
-    .content h2 {
-      margin: 0 0 8px;
-      font-size: 28px;
+
+    .title {
       font-family: "Source Serif 4", serif;
+      font-size: clamp(28px, 5vw, 44px);
+      line-height: 1;
+      margin: 0;
     }
-    .subtabs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 18px 0 22px;
-    }
-    .subtab-button {
-      border: 1px solid var(--line);
-      background: #f8fbff;
-      color: var(--ink);
-      border-radius: 999px;
-      padding: 10px 16px;
-      cursor: pointer;
-      transition: 0.2s ease;
-      font: inherit;
-      font-weight: 700;
-    }
-    .subtab-button.active {
-      background: var(--accent);
-      color: white;
-      border-color: var(--accent);
-      box-shadow: 0 10px 24px rgba(29, 103, 216, 0.16);
-    }
-    .subtab-panel.hidden {
-      display: none;
-    }
-    .lede {
-      margin: 0 0 18px;
+
+    .summary {
+      margin: 6px 0 0;
+      max-width: 760px;
       color: var(--muted);
+      font-size: 15px;
       line-height: 1.7;
     }
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin: 20px 0 22px;
-    }
-    .stat {
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 16px;
-      background: #fbfdff;
-    }
-    .stat-label {
-      color: var(--muted);
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      font-weight: 800;
-      margin-bottom: 8px;
-    }
-    .stat-value {
-      font-size: 22px;
-      font-weight: 800;
-    }
-    .actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin: 20px 0 24px;
-    }
+
     .button {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 48px;
+      min-height: 46px;
       padding: 0 18px;
-      border-radius: 14px;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-size: 14px;
       font-weight: 700;
-      transition: 0.2s ease;
+      transition: 0.18s ease;
     }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
     .button.primary {
-      background: var(--accent);
+      background: linear-gradient(135deg, #1f63d8 0%, #2150b8 100%);
       color: white;
-      box-shadow: 0 10px 24px rgba(29, 103, 216, 0.2);
+      box-shadow: 0 14px 30px rgba(31, 99, 216, 0.22);
     }
+
     .button.secondary {
-      background: white;
-      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.82);
+      border-color: rgba(145, 170, 210, 0.36);
       color: var(--ink);
     }
-    .button:hover { transform: translateY(-1px); }
-    .embed-block {
-      margin: 24px 0 0;
+
+    .frame {
+      margin-top: 22px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+      overflow: hidden;
     }
-    .embed-header {
+
+    .stage-tabs {
       display: flex;
-      align-items: center;
+      gap: 10px;
+      padding: 18px;
+      border-bottom: 1px solid rgba(145, 170, 210, 0.24);
+      background: rgba(255, 255, 255, 0.42);
+    }
+
+    .stage-tab,
+    .language-tab {
+      border: 1px solid rgba(145, 170, 210, 0.28);
+      background: rgba(255, 255, 255, 0.7);
+      color: var(--ink);
+      cursor: pointer;
+      transition: 0.18s ease;
+      font: inherit;
+    }
+
+    .stage-tab {
+      min-width: 150px;
+      padding: 14px 18px;
+      border-radius: 18px;
+      text-align: left;
+    }
+
+    .stage-tab strong,
+    .language-tab strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 3px;
+    }
+
+    .stage-tab span {
+      display: block;
+      font-size: 12px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .stage-tab.active,
+    .language-tab.active {
+      background: linear-gradient(135deg, #1f63d8 0%, #1a4aa8 100%);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 16px 28px rgba(31, 99, 216, 0.2);
+    }
+
+    .stage-tab.active span,
+    .language-tab.active span {
+      color: rgba(255, 255, 255, 0.82);
+    }
+
+    .stage-panel {
+      display: none;
+      padding: 22px;
+    }
+
+    .stage-panel.active {
+      display: block;
+    }
+
+    .dev-header {
+      display: flex;
+      align-items: end;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
+      gap: 18px;
+      margin-bottom: 18px;
     }
-    .embed-header h3 {
+
+    .section-title {
+      margin: 0 0 8px;
+      font-family: "Source Serif 4", serif;
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.05;
+    }
+
+    .section-copy {
       margin: 0;
-      font-size: 18px;
-    }
-    .embed-header p {
-      margin: 4px 0 0;
       color: var(--muted);
       font-size: 14px;
-      line-height: 1.6;
+      line-height: 1.7;
+      max-width: 760px;
     }
-    .embed-shell {
-      border: 1px solid var(--line);
-      border-radius: 20px;
-      background: #f8fbff;
-      padding: 10px;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+    .refresh-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(145, 170, 210, 0.26);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      white-space: nowrap;
     }
-    .leaderboard-frame {
-      width: 100%;
-      min-height: 760px;
-      border: 0;
-      border-radius: 14px;
-      background: white;
+
+    .refresh-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #16a34a;
+      box-shadow: 0 0 0 6px rgba(22, 163, 74, 0.12);
     }
-    .notes {
+
+    .language-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .language-tab {
+      border-radius: 999px;
+      padding: 12px 18px;
+      text-align: left;
+    }
+
+    .language-tab span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .language-panel {
+      display: none;
+    }
+
+    .language-panel.active {
+      display: block;
+    }
+
+    .dev-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: 300px minmax(0, 1fr);
+      gap: 18px;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
       gap: 14px;
     }
-    .note {
-      border: 1px solid var(--line);
+
+    .card {
+      background: var(--panel-strong);
+      border: 1px solid rgba(145, 170, 210, 0.25);
+      border-radius: var(--radius-md);
+      box-shadow: 0 12px 30px rgba(16, 38, 74, 0.05);
+    }
+
+    .card.pad {
+      padding: 18px;
+    }
+
+    .meta-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .language-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-deep);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .meta-title {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.2;
+    }
+
+    .meta-copy {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      border-radius: 16px;
+      padding: 14px;
+      background: #f8fbff;
+      border: 1px solid rgba(145, 170, 210, 0.22);
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: var(--muted);
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .metric-value {
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .metric-note {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .actions-grid {
+      display: grid;
+      gap: 10px;
+    }
+
+    .tiny-note {
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    .tiny-note strong {
+      color: var(--ink);
+    }
+
+    .leaderboard-card {
+      overflow: hidden;
+    }
+
+    .leaderboard-head {
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 20px 20px 12px;
+      border-bottom: 1px solid rgba(145, 170, 210, 0.18);
+    }
+
+    .leaderboard-head h3 {
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .leaderboard-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.7;
+      max-width: 620px;
+    }
+
+    .leaderboard-status {
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+      white-space: nowrap;
+    }
+
+    .leaderboard-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding: 16px 20px 0;
+    }
+
+    .summary-card {
+      border-radius: 16px;
+      padding: 14px 16px;
+      background: linear-gradient(180deg, #f7faff 0%, #ffffff 100%);
+      border: 1px solid rgba(145, 170, 210, 0.22);
+    }
+
+    .summary-card strong {
+      display: block;
+      font-size: 28px;
+      line-height: 1;
+      margin-top: 8px;
+    }
+
+    .summary-card span {
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .table-shell {
+      padding: 16px 20px 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th,
+    td {
+      padding: 14px 12px;
+      text-align: left;
+      border-bottom: 1px solid rgba(145, 170, 210, 0.18);
+      font-size: 14px;
+      vertical-align: middle;
+    }
+
+    th {
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    tbody tr:hover {
+      background: rgba(31, 99, 216, 0.04);
+    }
+
+    .rank-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 34px;
+      padding: 0 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent-deep);
+      font-weight: 800;
+    }
+
+    .team-name {
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .team-file {
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--muted);
+      word-break: break-all;
+    }
+
+    .score {
+      font-weight: 800;
+      color: var(--accent-deep);
+    }
+
+    .empty-state,
+    .error-state,
+    .loading-state {
+      display: grid;
+      place-items: center;
+      min-height: 280px;
+      border-radius: 18px;
+      border: 1px dashed rgba(145, 170, 210, 0.38);
+      background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+      padding: 28px;
+      text-align: center;
+    }
+
+    .empty-state strong,
+    .error-state strong,
+    .loading-state strong {
+      display: block;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .empty-state p,
+    .error-state p,
+    .loading-state p {
+      margin: 0;
+      max-width: 540px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .test-shell {
+      padding: 10px 0 4px;
+    }
+
+    .test-card {
+      padding: 24px;
+      background:
+        linear-gradient(135deg, rgba(31, 99, 216, 0.1), rgba(31, 99, 216, 0.03)),
+        #ffffff;
+    }
+
+    .test-card h2 {
+      margin: 0 0 10px;
+      font-family: "Source Serif 4", serif;
+      font-size: clamp(26px, 4vw, 36px);
+    }
+
+    .test-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.8;
+      max-width: 760px;
+    }
+
+    .test-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 20px;
+    }
+
+    .test-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 10px 14px;
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(145, 170, 210, 0.28);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .info-box {
       border-radius: 18px;
       padding: 16px;
-      background: #fcfdff;
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid rgba(145, 170, 210, 0.24);
     }
-    .note h3 {
+
+    .info-box h3 {
       margin: 0 0 8px;
       font-size: 15px;
     }
-    .note p {
+
+    .info-box p {
       margin: 0;
-      color: var(--muted);
-      line-height: 1.6;
       font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
     }
-    @media (max-width: 900px) {
-      .grid { grid-template-columns: 1fr; }
-      .stats, .notes { grid-template-columns: 1fr; }
-      .content { padding: 22px; }
-      .leaderboard-frame { min-height: 680px; }
+
+    @media (max-width: 1040px) {
+      .dev-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .leaderboard-summary,
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .shell {
+        padding-left: 14px;
+        padding-right: 14px;
+      }
+
+      .topbar,
+      .dev-header {
+        flex-direction: column;
+        align-items: start;
+      }
+
+      .stage-tabs {
+        flex-direction: column;
+      }
+
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .leaderboard-head,
+      .leaderboard-status {
+        text-align: left;
+      }
+
+      th:nth-child(5),
+      td:nth-child(5),
+      th:nth-child(6),
+      td:nth-child(6) {
+        display: none;
+      }
     }
   </style>
 </head>
 <body>
   <div class="shell">
     <div class="topbar">
-      <div class="brand">
-        <div class="kicker">FinMMEval Lab 2026</div>
-        <strong>Task 1 Hub</strong>
+      <div>
+        <div class="brand">
+          <div class="brand-mark">T1</div>
+          <div class="brand-copy">
+            <div class="kicker">FinMMEval Lab 2026</div>
+            <h1 class="title">Task 1 Hub</h1>
+          </div>
+        </div>
+        <p class="summary">Development leaderboards for released Task 1 languages live here. Hidden test information will appear in the same hub once the official test track opens.</p>
       </div>
       <a href="./" class="button secondary">Back To Official Site</a>
     </div>
-    <div class="grid">
-      <aside class="panel">
-        <div class="tabs">
-          <p class="stage-copy">Select the benchmark stage first. Language-specific dev resources appear in the main panel.</p>
-          <button class="tab-button active" data-stage="dev">
-            <strong>Dev</strong>
-            <span>Public development splits, submission portals, and live leaderboards for currently released languages.</span>
+
+    <section class="frame">
+      <div class="stage-tabs">
+        <button class="stage-tab active" data-stage="dev">
+          <strong>Dev</strong>
+          <span>Live submissions, public dev sets, and real-time rankings.</span>
+        </button>
+        <button class="stage-tab" data-stage="test">
+          <strong>Test</strong>
+          <span>Hidden test release status and upcoming submission instructions.</span>
+        </button>
+      </div>
+
+      <div class="stage-panel active" id="stage-dev">
+        <div class="dev-header">
+          <div>
+            <h2 class="section-title">Development Leaderboards</h2>
+            <p class="section-copy">Choose a language tab to access the public dev set, submit a run, and inspect the live leaderboard without leaving this page.</p>
+          </div>
+          <div class="refresh-pill">
+            <span class="refresh-dot"></span>
+            Auto-refresh every 30s
+          </div>
+        </div>
+
+        <div class="language-tabs">
+          <button class="language-tab active" data-language="arabic">
+            <strong>Arabic</strong>
+            <span>Accounting and auditing MCQ benchmark</span>
           </button>
-          <button class="tab-button" data-stage="test">
-            <strong>Test</strong>
-            <span>Official hidden test track for Task 1. Public details and submission instructions will be released later.</span>
+          <button class="language-tab" data-language="hindi">
+            <strong>Hindi</strong>
+            <span>Hindi finance MCQ benchmark</span>
           </button>
         </div>
-      </aside>
 
-      <section class="panel">
-        <div id="stage-dev" class="content">
-          <h2>Task 1 Development Leaderboards</h2>
-          <p class="lede">
-            The development track is live for multiple languages. Select a language tab below to open its participant-facing dev portal, leaderboard, and public benchmark release.
-          </p>
+        <div class="language-panel active" id="panel-arabic"></div>
+        <div class="language-panel" id="panel-hindi"></div>
+      </div>
 
-          <div class="subtabs">
-            <button class="subtab-button active" data-language="arabic">Arabic</button>
-            <button class="subtab-button" data-language="hindi">Hindi</button>
-          </div>
-
-          <div id="language-arabic" class="subtab-panel">
-            <div class="stats">
-              <div class="stat">
-                <div class="stat-label">Public Dev</div>
-                <div class="stat-value">100</div>
-              </div>
-              <div class="stat">
-                <div class="stat-label">Hidden Test</div>
-                <div class="stat-value">208</div>
-              </div>
-              <div class="stat">
-                <div class="stat-label">Answer Space</div>
-                <div class="stat-value">A-E</div>
-              </div>
+      <div class="stage-panel" id="stage-test">
+        <div class="test-shell">
+          <div class="card test-card">
+            <h2>Task 1 Hidden Test</h2>
+            <p>The hidden test track is not public yet. Official release timing, access rules, and evaluation instructions will be published here once the organizer-facing test workflow is ready for participants.</p>
+            <div class="test-tags">
+              <div class="test-tag">Organizer-only test sets already prepared internally</div>
+              <div class="test-tag">Submission instructions pending release</div>
+              <div class="test-tag">Public announcement will appear on the official site</div>
             </div>
-            <div class="actions">
-              <a class="button primary" href="https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/submit">Open Arabic Submission</a>
-              <a class="button secondary" href="https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/devset/download">Download Arabic Dev Set</a>
-            </div>
-            <div class="notes">
-              <div class="note">
-                <h3>Public Release</h3>
-                <p>The participant-facing JSONL dev set does not expose organizer-only metadata such as gold labels or source fields.</p>
+            <div class="info-grid">
+              <div class="info-box">
+                <h3>Current Status</h3>
+                <p>The public hub currently exposes only development leaderboards. Hidden test materials remain private by design.</p>
               </div>
-              <div class="note">
-                <h3>Submission Format</h3>
-                <p>Participants submit `.json` or `.jsonl` files using the per-item `id` and predicted answer letter.</p>
+              <div class="info-box">
+                <h3>What Changes Later</h3>
+                <p>This area will be updated with test submission instructions, release windows, and any language-specific test access notes.</p>
               </div>
-            </div>
-            <div class="embed-block">
-              <div class="embed-header">
-                <div>
-                  <h3>Arabic Live Leaderboard</h3>
-                  <p>The leaderboard is embedded here so participants can check the current ranking without leaving the Task 1 hub.</p>
-                </div>
-              </div>
-              <div class="embed-shell">
-                <iframe
-                  class="leaderboard-frame"
-                  loading="lazy"
-                  src="https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/leaderboard"
-                  title="Arabic Task 1 live leaderboard"
-                ></iframe>
-              </div>
-            </div>
-          </div>
-
-          <div id="language-hindi" class="subtab-panel hidden">
-            <div class="stats">
-              <div class="stat">
-                <div class="stat-label">Public Dev</div>
-                <div class="stat-value">100</div>
-              </div>
-              <div class="stat">
-                <div class="stat-label">Hidden Test</div>
-                <div class="stat-value">200</div>
-              </div>
-              <div class="stat">
-                <div class="stat-label">Answer Space</div>
-                <div class="stat-value">A-D</div>
-              </div>
-            </div>
-            <div class="actions">
-              <a class="button primary" href="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/submit">Open Hindi Submission</a>
-              <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/devset/download">Download Hindi Dev Set</a>
-            </div>
-            <div class="notes">
-              <div class="note">
-                <h3>Public Release</h3>
-                <p>The Hindi public dev set does not expose organizer-only metadata such as hidden labels or domain annotations.</p>
-              </div>
-              <div class="note">
-                <h3>Submission Format</h3>
-                <p>Participants submit `.json` or `.jsonl` files using the public `hindi-dev-*` identifiers and one answer letter per question.</p>
-              </div>
-            </div>
-            <div class="embed-block">
-              <div class="embed-header">
-                <div>
-                  <h3>Hindi Live Leaderboard</h3>
-                  <p>The leaderboard is embedded here so participants can check the current ranking without leaving the Task 1 hub.</p>
-                </div>
-              </div>
-              <div class="embed-shell">
-                <iframe
-                  class="leaderboard-frame"
-                  loading="lazy"
-                  src="https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/leaderboard"
-                  title="Hindi Task 1 live leaderboard"
-                ></iframe>
+              <div class="info-box">
+                <h3>What To Use Now</h3>
+                <p>Participants should continue validating systems on the released development benchmarks until the hidden test track is announced.</p>
               </div>
             </div>
           </div>
         </div>
-
-        <div id="stage-test" class="content hidden">
-          <h2>Task 1 Hidden Test Track</h2>
-          <p class="lede">
-            The hidden test track is not public yet. Final release timing, submission instructions, and language coverage will be announced on the official site.
-          </p>
-          <div class="notes">
-            <div class="note">
-              <h3>Stay Tuned</h3>
-              <p>Task 1 hidden test access and submission details are still being finalized. Please continue using the development leaderboards until the official test release is announced.</p>
-            </div>
-            <div class="note">
-              <h3>Current Status</h3>
-              <p>Organizer-only hidden test sets already exist internally, but they are not participant-facing and are intentionally not exposed on this page.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
+      </div>
+    </section>
   </div>
 
   <script>
-    const stageButtons = document.querySelectorAll('.tab-button');
-    const stagePanels = {
-      dev: document.getElementById('stage-dev'),
-      test: document.getElementById('stage-test'),
-    };
-    const languageButtons = document.querySelectorAll('.subtab-button');
-    const languagePanels = {
-      arabic: document.getElementById('language-arabic'),
-      hindi: document.getElementById('language-hindi'),
+    const LANGUAGE_CONFIG = {
+      arabic: {
+        label: "Arabic",
+        subtitle: "Accounting and auditing MCQ dev benchmark",
+        description: "Official organizer-maintained Arabic dev workflow. The public split is participant-facing, while the hidden test split remains private.",
+        devCount: 100,
+        hiddenCount: 208,
+        answerSpace: "4-5 choices",
+        answerNote: "This benchmark mixes 4-option and 5-option questions. Participants should always answer using the options shown in each item.",
+        submitUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/submit",
+        downloadUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/devset/download",
+        leaderboardApi: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/leaderboard",
+        notes: [
+          {
+            title: "Public Release",
+            body: "The participant-facing JSONL dev set does not expose organizer-only metadata such as gold labels or source fields.",
+          },
+          {
+            title: "Submission Format",
+            body: "Participants submit .json or .jsonl files using the released item ids and one predicted answer letter per question.",
+          },
+        ],
+      },
+      hindi: {
+        label: "Hindi",
+        subtitle: "Hindi finance MCQ dev benchmark",
+        description: "Official organizer-maintained Hindi dev workflow with a separate public split and an independent live leaderboard.",
+        devCount: 100,
+        hiddenCount: 200,
+        answerSpace: "4 choices",
+        answerNote: "All released Hindi dev questions use four answer choices.",
+        submitUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/submit",
+        downloadUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/devset/download",
+        leaderboardApi: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/leaderboard",
+        notes: [
+          {
+            title: "Public Release",
+            body: "The Hindi public dev set does not expose organizer-only metadata such as hidden labels or domain annotations.",
+          },
+          {
+            title: "Submission Format",
+            body: "Participants submit .json or .jsonl files using the public hindi-dev ids and one answer letter per question.",
+          },
+        ],
+      },
     };
 
-    stageButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const target = button.getAttribute('data-stage');
-        stageButtons.forEach((btn) => btn.classList.toggle('active', btn === button));
-        Object.entries(stagePanels).forEach(([key, panel]) => {
-          panel.classList.toggle('hidden', key !== target);
+    const leaderboardCache = {};
+    let currentStage = "dev";
+    let currentLanguage = "arabic";
+    let refreshHandle = null;
+
+    function formatPercent(value) {
+      const number = Number(value || 0) * 100;
+      return `${number.toFixed(2)}%`;
+    }
+
+    function formatTimestamp(value) {
+      if (!value) {
+        return "Not available";
+      }
+      const date = new Date(value);
+      if (Number.isNaN(date.getTime())) {
+        return value;
+      }
+      return date.toLocaleString();
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
+    }
+
+    function renderTableRows(rows) {
+      return rows.map((row) => {
+        const uploadedAt = row.uploaded_at ? formatTimestamp(row.uploaded_at) : "Unknown";
+        return `
+          <tr>
+            <td><span class="rank-badge">#${escapeHtml(row.rank)}</span></td>
+            <td>
+              <div class="team-name">${escapeHtml(row.display_name || row.model_name)}</div>
+              <div class="team-file">${escapeHtml(row.original_filename || row.submission_file || "")}</div>
+            </td>
+            <td class="score">${formatPercent(row.accuracy)}</td>
+            <td>${escapeHtml(row.correct)}/${escapeHtml(row.total)}</td>
+            <td>${formatPercent(row.coverage)}</td>
+            <td>${escapeHtml(uploadedAt)}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderLeaderboardCard(language, state) {
+      const config = LANGUAGE_CONFIG[language];
+
+      if (state.status === "loading") {
+        return `
+          <div class="card leaderboard-card">
+            <div class="leaderboard-head">
+              <div>
+                <h3>${escapeHtml(config.label)} Live Leaderboard</h3>
+                <p>Fetching the latest leaderboard data directly from the public portal API.</p>
+              </div>
+            </div>
+            <div class="table-shell">
+              <div class="loading-state">
+                <div>
+                  <strong>Loading leaderboard</strong>
+                  <p>The hub is requesting the latest ranking data for the ${escapeHtml(config.label)} benchmark.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      if (state.status === "error") {
+        return `
+          <div class="card leaderboard-card">
+            <div class="leaderboard-head">
+              <div>
+                <h3>${escapeHtml(config.label)} Live Leaderboard</h3>
+                <p>The leaderboard could not be loaded from the public API.</p>
+              </div>
+            </div>
+            <div class="table-shell">
+              <div class="error-state">
+                <div>
+                  <strong>Leaderboard unavailable</strong>
+                  <p>${escapeHtml(state.message || "The public leaderboard API did not respond as expected. Please try again shortly.")}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      const payload = state.payload || {};
+      const overall = Array.isArray(payload.overall) ? payload.overall : [];
+      const dataset = payload.dataset || {};
+      const topAccuracy = overall.length ? formatPercent(overall[0].accuracy) : "0.00%";
+      const submissions = dataset.submission_count ?? overall.length;
+      const lastUpdated = formatTimestamp(dataset.last_updated);
+
+      let tableMarkup = `
+        <div class="empty-state">
+          <div>
+            <strong>No submissions yet</strong>
+            <p>The ${escapeHtml(config.label)} dev leaderboard is live, but no participant submissions have been recorded yet.</p>
+          </div>
+        </div>
+      `;
+
+      if (overall.length) {
+        tableMarkup = `
+          <table>
+            <thead>
+              <tr>
+                <th>Rank</th>
+                <th>Team</th>
+                <th>Accuracy</th>
+                <th>Correct</th>
+                <th>Coverage</th>
+                <th>Updated</th>
+              </tr>
+            </thead>
+            <tbody>${renderTableRows(overall)}</tbody>
+          </table>
+        `;
+      }
+
+      return `
+        <div class="card leaderboard-card">
+          <div class="leaderboard-head">
+            <div>
+              <h3>${escapeHtml(config.label)} Live Leaderboard</h3>
+              <p>Rendered directly inside the hub from the public leaderboard API. Rankings update automatically without sending participants to a separate page.</p>
+            </div>
+            <div class="leaderboard-status">
+              <div>Last updated</div>
+              <strong>${escapeHtml(lastUpdated)}</strong>
+            </div>
+          </div>
+          <div class="leaderboard-summary">
+            <div class="summary-card">
+              <span>Submissions</span>
+              <strong>${escapeHtml(submissions)}</strong>
+            </div>
+            <div class="summary-card">
+              <span>Top Accuracy</span>
+              <strong>${escapeHtml(topAccuracy)}</strong>
+            </div>
+            <div class="summary-card">
+              <span>Leaderboard State</span>
+              <strong>${overall.length ? "Live" : "Empty"}</strong>
+            </div>
+          </div>
+          <div class="table-shell">${tableMarkup}</div>
+        </div>
+      `;
+    }
+
+    function renderLanguagePanel(language) {
+      const config = LANGUAGE_CONFIG[language];
+      const target = document.getElementById(`panel-${language}`);
+      const cachedState = leaderboardCache[language] || {status: "loading"};
+
+      target.innerHTML = `
+        <div class="dev-grid">
+          <div class="stack">
+            <div class="card pad">
+              <div class="meta-head">
+                <div>
+                  <div class="language-label">${escapeHtml(config.label)} Dev</div>
+                  <h3 class="meta-title">${escapeHtml(config.subtitle)}</h3>
+                  <p class="meta-copy">${escapeHtml(config.description)}</p>
+                </div>
+              </div>
+              <div class="metric-grid">
+                <div class="metric">
+                  <div class="metric-label">Public Dev</div>
+                  <div class="metric-value">${escapeHtml(config.devCount)}</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">Hidden Test</div>
+                  <div class="metric-value">${escapeHtml(config.hiddenCount)}</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">Answer Space</div>
+                  <div class="metric-value">${escapeHtml(config.answerSpace)}</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">Mode</div>
+                  <div class="metric-value">Live</div>
+                  <div class="metric-note">Leaderboard refreshes automatically from the hosted portal.</div>
+                </div>
+              </div>
+              <p class="tiny-note"><strong>Choice handling:</strong> ${escapeHtml(config.answerNote)}</p>
+            </div>
+
+            <div class="card pad">
+              <div class="actions-grid">
+                <a class="button primary" href="${escapeHtml(config.submitUrl)}">Open ${escapeHtml(config.label)} Submission</a>
+                <a class="button secondary" href="${escapeHtml(config.downloadUrl)}">Download ${escapeHtml(config.label)} Dev Set</a>
+              </div>
+            </div>
+
+            ${config.notes.map((note) => `
+              <div class="card pad">
+                <h3 class="meta-title">${escapeHtml(note.title)}</h3>
+                <p class="meta-copy">${escapeHtml(note.body)}</p>
+              </div>
+            `).join("")}
+          </div>
+
+          <div>${renderLeaderboardCard(language, cachedState)}</div>
+        </div>
+      `;
+    }
+
+    async function loadLeaderboard(language, force = false) {
+      if (!force && leaderboardCache[language] && leaderboardCache[language].status === "ready") {
+        return;
+      }
+
+      leaderboardCache[language] = {status: "loading"};
+      if (language === currentLanguage && currentStage === "dev") {
+        renderLanguagePanel(language);
+      }
+
+      try {
+        const response = await fetch(LANGUAGE_CONFIG[language].leaderboardApi, {
+          mode: "cors",
+          credentials: "omit",
         });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const payload = await response.json();
+        leaderboardCache[language] = {status: "ready", payload};
+      } catch (error) {
+        leaderboardCache[language] = {
+          status: "error",
+          message: error instanceof Error ? error.message : "Unknown error",
+        };
+      }
+
+      if (language === currentLanguage && currentStage === "dev") {
+        renderLanguagePanel(language);
+      }
+    }
+
+    function setStage(stage) {
+      currentStage = stage;
+      document.querySelectorAll(".stage-tab").forEach((button) => {
+        button.classList.toggle("active", button.dataset.stage === stage);
+      });
+      document.querySelectorAll(".stage-panel").forEach((panel) => {
+        panel.classList.toggle("active", panel.id === `stage-${stage}`);
+      });
+    }
+
+    function setLanguage(language) {
+      currentLanguage = language;
+      document.querySelectorAll(".language-tab").forEach((button) => {
+        button.classList.toggle("active", button.dataset.language === language);
+      });
+      document.querySelectorAll(".language-panel").forEach((panel) => {
+        panel.classList.toggle("active", panel.id === `panel-${language}`);
+      });
+      renderLanguagePanel(language);
+      loadLeaderboard(language);
+    }
+
+    function startAutoRefresh() {
+      if (refreshHandle) {
+        clearInterval(refreshHandle);
+      }
+      refreshHandle = setInterval(() => {
+        if (currentStage === "dev") {
+          loadLeaderboard(currentLanguage, true);
+        }
+      }, 30000);
+    }
+
+    document.querySelectorAll(".stage-tab").forEach((button) => {
+      button.addEventListener("click", () => {
+        setStage(button.dataset.stage);
       });
     });
 
-    languageButtons.forEach((button) => {
-      button.addEventListener('click', () => {
-        const target = button.getAttribute('data-language');
-        languageButtons.forEach((btn) => btn.classList.toggle('active', btn === button));
-        Object.entries(languagePanels).forEach(([key, panel]) => {
-          panel.classList.toggle('hidden', key !== target);
-        });
+    document.querySelectorAll(".language-tab").forEach((button) => {
+      button.addEventListener("click", () => {
+        setLanguage(button.dataset.language);
       });
     });
+
+    renderLanguagePanel("arabic");
+    renderLanguagePanel("hindi");
+    setStage("dev");
+    setLanguage("arabic");
+    startAutoRefresh();
   </script>
 </body>
 </html>
