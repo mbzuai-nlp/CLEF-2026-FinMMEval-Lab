@@ -119,7 +119,6 @@ def main() -> None:
                 "question": row["question"],
                 "options": options,
                 "num_choices": len(options),
-                "source": row["source"],
             }
         )
         private_rows.append(

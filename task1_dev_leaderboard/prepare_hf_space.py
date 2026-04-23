@@ -12,7 +12,7 @@ APP_ROOT = Path(__file__).resolve().parent
 PROJECT_ROOT = APP_ROOT.parent
 
 SPACE_README = """---
-title: FinMMEval Task 1 Dev Portal
+title: FinMMEval Task 1 Arabic Dev Portal
 emoji: 🧮
 colorFrom: blue
 colorTo: indigo
@@ -21,9 +21,9 @@ app_port: 7860
 pinned: false
 ---
 
-# FinMMEval Task 1 Dev Portal
+# FinMMEval Task 1 Arabic Dev Portal
 
-This Space hosts the official Task 1 dev submission portal and live leaderboard.
+This Space hosts the official Task 1 Arabic dev submission portal and live leaderboard.
 
 Required Space secrets:
 
