@@ -550,39 +550,12 @@
       color: var(--ink);
     }
 
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .info-box {
-      border-radius: 18px;
-      padding: 16px;
-      background: rgba(255, 255, 255, 0.82);
-      border: 1px solid rgba(145, 170, 210, 0.24);
-    }
-
-    .info-box h3 {
-      margin: 0 0 8px;
-      font-size: 15px;
-    }
-
-    .info-box p {
-      margin: 0;
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
     @media (max-width: 1040px) {
       .dev-grid {
         grid-template-columns: 1fr;
       }
 
-      .leaderboard-summary,
-      .info-grid {
+      .leaderboard-summary {
         grid-template-columns: 1fr;
       }
     }
@@ -674,25 +647,11 @@
         <div class="test-shell">
           <div class="card test-card">
             <h2>Task 1 Hidden Test</h2>
-            <p>The hidden test track is not public yet. Official release timing, access rules, and evaluation instructions will be published here once the organizer-facing test workflow is ready for participants.</p>
+            <p>Stay tuned.</p>
             <div class="test-tags">
               <div class="test-tag">Organizer-only test sets already prepared internally</div>
               <div class="test-tag">Submission instructions pending release</div>
               <div class="test-tag">Public announcement will appear on the official site</div>
-            </div>
-            <div class="info-grid">
-              <div class="info-box">
-                <h3>Current Status</h3>
-                <p>The public hub currently exposes only development leaderboards. Hidden test materials remain private by design.</p>
-              </div>
-              <div class="info-box">
-                <h3>What Changes Later</h3>
-                <p>This area will be updated with test submission instructions, release windows, and any language-specific test access notes.</p>
-              </div>
-              <div class="info-box">
-                <h3>What To Use Now</h3>
-                <p>Participants should continue validating systems on the released development benchmarks until the hidden test track is announced.</p>
-              </div>
             </div>
           </div>
         </div>
@@ -712,6 +671,7 @@
         answerNote: "This benchmark mixes 4-option and 5-option questions. Participants should always answer using the options shown in each item.",
         submitUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/submit",
         downloadUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/devset/download",
+        templateUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/template/download",
         leaderboardApi: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/leaderboard",
       },
       hindi: {
@@ -724,6 +684,7 @@
         answerNote: "All released Hindi dev questions use four answer choices.",
         submitUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/submit",
         downloadUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/devset/download",
+        templateUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/template/download",
         leaderboardApi: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/leaderboard",
       },
     };
@@ -745,7 +706,16 @@
       if (Number.isNaN(date.getTime())) {
         return value;
       }
-      return date.toLocaleString();
+      return `${date.toLocaleString("en-US", {
+        timeZone: "UTC",
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hour12: false,
+      })} UTC`;
     }
 
     function escapeHtml(value) {
@@ -898,7 +868,6 @@
                 <div>
                   <div class="language-label">${escapeHtml(config.label)} Dev</div>
                   <h3 class="meta-title">${escapeHtml(config.subtitle)}</h3>
-                  <p class="meta-copy">${escapeHtml(config.description)}</p>
                 </div>
               </div>
               <div class="metric-grid">
@@ -927,14 +896,15 @@
               <div class="actions-grid">
                 <a class="button primary" href="${escapeHtml(config.submitUrl)}">Open ${escapeHtml(config.label)} Submission</a>
                 <a class="button secondary" href="${escapeHtml(config.downloadUrl)}">Download ${escapeHtml(config.label)} Dev Set</a>
+                <a class="button secondary" href="${escapeHtml(config.templateUrl)}">Download ${escapeHtml(config.label)} Template</a>
               </div>
             </div>
 
             <div class="card pad">
               <h3 class="meta-title">How to participate</h3>
-              <p class="meta-copy">1. Download the public dev set.</p>
+              <p class="meta-copy">1. Download the public dev set and the submission template.</p>
               <p class="meta-copy">2. Answer the questions with one option letter per item.</p>
-              <p class="meta-copy">3. Submit a prediction <code>jsonl</code> file through the submission page.</p>
+              <p class="meta-copy">3. Submit the completed <code>jsonl</code> file through the submission page.</p>
             </div>
           </div>
 
