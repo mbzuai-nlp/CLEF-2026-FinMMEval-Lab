@@ -637,10 +637,20 @@
             <strong>Hindi</strong>
             <span>Hindi finance MCQ benchmark</span>
           </button>
+          <button class="language-tab" data-language="english">
+            <strong>English</strong>
+            <span>CFA/CPA single-choice MCQ benchmark</span>
+          </button>
+          <button class="language-tab" data-language="chinese">
+            <strong>Chinese</strong>
+            <span>CFA/CPA single-choice MCQ benchmark</span>
+          </button>
         </div>
 
         <div class="language-panel active" id="panel-arabic"></div>
         <div class="language-panel" id="panel-hindi"></div>
+        <div class="language-panel" id="panel-english"></div>
+        <div class="language-panel" id="panel-chinese"></div>
       </div>
 
       <div class="stage-panel" id="stage-test">
@@ -686,6 +696,32 @@
         downloadUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/devset/download",
         templateUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/template/download",
         leaderboardApi: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/leaderboard",
+      },
+      english: {
+        label: "English",
+        subtitle: "CFA/CPA single-choice MCQ dev benchmark",
+        description: "",
+        devCount: 100,
+        hiddenCount: 356,
+        answerSpace: "2-4 choices",
+        answerNote: "The released English dev set contains single-choice questions only. Each item should be answered using one option letter from the choices shown.",
+        submitUrl: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/task1/dev/submit",
+        downloadUrl: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/api/task1/devset/download",
+        templateUrl: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/api/task1/template/download",
+        leaderboardApi: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/api/task1/leaderboard",
+      },
+      chinese: {
+        label: "Chinese",
+        subtitle: "CFA/CPA single-choice MCQ dev benchmark",
+        description: "",
+        devCount: 100,
+        hiddenCount: 47,
+        answerSpace: "3-4 choices",
+        answerNote: "The released Chinese dev set contains single-choice questions only. Each item should be answered using one option letter from the choices shown.",
+        submitUrl: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/task1/dev/submit",
+        downloadUrl: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/api/task1/devset/download",
+        templateUrl: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/api/task1/template/download",
+        leaderboardApi: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/api/task1/leaderboard",
       },
     };
 

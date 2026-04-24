@@ -6,4 +6,5 @@ task1_dev_leaderboard/private/
 task1_dev_leaderboard/submissions/*.json
 task1_dev_leaderboard/submissions/*.jsonl
 task1_dev_leaderboard/data/accounting_CLEF/
+task1_dev_leaderboard/data/finmmeval_cfa_cpa/
 task1_dev_leaderboard_hf_space/
