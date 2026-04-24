@@ -40,6 +40,22 @@ This writes:
   --num-train-epochs 2
 ```
 
+Official organizer baseline configuration used for the current public Task 1 leaderboards:
+
+- Base model: `Qwen/Qwen2.5-3B-Instruct`
+- Fine-tuning: LoRA
+- Precision: `bf16`
+- Epochs: `2`
+- Training source: only the official public FinMMEval Hugging Face collection
+- Excluded data: all organizer-held Task 1 leaderboard dev sets and all hidden test sets
+
+Current public-dev results for this run:
+
+- Arabic: `68.00%`
+- Hindi: `45.00%`
+- English: `96.00%`
+- Chinese: `94.00%`
+
 For a short smoke test:
 
 ```bash

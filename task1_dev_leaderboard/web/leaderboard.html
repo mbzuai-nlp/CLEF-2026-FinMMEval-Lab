@@ -76,23 +76,45 @@
       return `${(Number(value) * 100).toFixed(2)}%`;
     }
 
+    function baselineTypeLabel(row) {
+      const name = String(row.display_name || row.model_name || '').toLowerCase();
+      const baselineMatchers = [
+        'random baseline',
+        'always a',
+        'round robin',
+        'llm zero-shot',
+        'qwen2.5-3b official public',
+        'qwen2-5-3b official public',
+      ];
+      return baselineMatchers.some((token) => name.includes(token)) ? 'Baseline' : 'Participant';
+    }
+
     function renderOverall(rows) {
       const body = document.getElementById('overall-body');
       if (!rows.length) {
         body.innerHTML = '<tr><td colspan="7">No submissions yet.</td></tr>';
         return;
       }
-      body.innerHTML = rows.map((row) => `
-        <tr>
+      body.innerHTML = rows.map((row) => {
+        const typeLabel = baselineTypeLabel(row);
+        const isBaseline = typeLabel === 'Baseline';
+        return `
+        <tr class="${isBaseline ? 'baseline-row' : ''}">
           <td>${row.rank}</td>
-          <td>${row.display_name ?? row.model_name}</td>
+          <td>
+            <div class="team-name-cell">${row.display_name ?? row.model_name}</div>
+            <div class="team-meta">
+              <span class="team-pill ${isBaseline ? 'baseline' : 'participant'}">${typeLabel}</span>
+            </div>
+          </td>
           <td>${formatPercent(row.accuracy)}</td>
           <td>${row.correct} / ${row.total}</td>
           <td>${formatPercent(row.coverage)}</td>
           <td>${row.valid_submission ? 'yes' : 'no'}</td>
           <td>${row.uploaded_at ?? '-'}</td>
         </tr>
-      `).join('');
+      `;
+      }).join('');
     }
 
     async function refreshLeaderboard() {
