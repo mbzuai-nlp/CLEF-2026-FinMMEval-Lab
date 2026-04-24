@@ -662,15 +662,7 @@
         </div>
 
         <div class="language-tabs">
-          <button class="language-tab active" data-language="arabic">
-            <strong>Arabic</strong>
-            <span>Accounting and auditing MCQ benchmark</span>
-          </button>
-          <button class="language-tab" data-language="hindi">
-            <strong>Hindi</strong>
-            <span>Hindi finance MCQ benchmark</span>
-          </button>
-          <button class="language-tab" data-language="english">
+          <button class="language-tab active" data-language="english">
             <strong>English</strong>
             <span>CFA/CPA single-choice MCQ benchmark</span>
           </button>
@@ -678,12 +670,20 @@
             <strong>Chinese</strong>
             <span>CFA/CPA single-choice MCQ benchmark</span>
           </button>
+          <button class="language-tab" data-language="arabic">
+            <strong>Arabic</strong>
+            <span>Accounting and auditing MCQ benchmark</span>
+          </button>
+          <button class="language-tab" data-language="hindi">
+            <strong>Hindi</strong>
+            <span>Hindi finance MCQ benchmark</span>
+          </button>
         </div>
 
-        <div class="language-panel active" id="panel-arabic"></div>
-        <div class="language-panel" id="panel-hindi"></div>
-        <div class="language-panel" id="panel-english"></div>
+        <div class="language-panel active" id="panel-english"></div>
         <div class="language-panel" id="panel-chinese"></div>
+        <div class="language-panel" id="panel-arabic"></div>
+        <div class="language-panel" id="panel-hindi"></div>
       </div>
 
       <div class="stage-panel" id="stage-test">
@@ -704,32 +704,6 @@
 
   <script>
     const LANGUAGE_CONFIG = {
-      arabic: {
-        label: "Arabic",
-        subtitle: "Accounting and auditing MCQ dev benchmark",
-        description: "",
-        devCount: 100,
-        hiddenCount: 208,
-        answerSpace: "4-5 choices",
-        answerNote: "This benchmark mixes 4-option and 5-option questions. Participants should always answer using the options shown in each item.",
-        submitUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/submit",
-        downloadUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/devset/download",
-        templateUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/template/download",
-        leaderboardApi: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/leaderboard",
-      },
-      hindi: {
-        label: "Hindi",
-        subtitle: "Hindi finance MCQ dev benchmark",
-        description: "",
-        devCount: 100,
-        hiddenCount: 200,
-        answerSpace: "4 choices",
-        answerNote: "All released Hindi dev questions use four answer choices.",
-        submitUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/submit",
-        downloadUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/devset/download",
-        templateUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/template/download",
-        leaderboardApi: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/leaderboard",
-      },
       english: {
         label: "English",
         subtitle: "CFA/CPA single-choice MCQ dev benchmark",
@@ -758,6 +732,32 @@
         templateUrl: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/api/task1/template/download",
         leaderboardApi: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/api/task1/leaderboard",
       },
+      arabic: {
+        label: "Arabic",
+        subtitle: "Accounting and auditing MCQ dev benchmark",
+        description: "",
+        devCount: 100,
+        hiddenCount: 208,
+        answerSpace: "4-5 choices",
+        answerNote: "This benchmark mixes 4-option and 5-option questions. Participants should always answer using the options shown in each item.",
+        submitUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/submit",
+        downloadUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/devset/download",
+        templateUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/template/download",
+        leaderboardApi: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/leaderboard",
+      },
+      hindi: {
+        label: "Hindi",
+        subtitle: "Hindi finance MCQ dev benchmark",
+        description: "",
+        devCount: 100,
+        hiddenCount: 200,
+        answerSpace: "4 choices",
+        answerNote: "All released Hindi dev questions use four answer choices.",
+        submitUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/task1/dev/submit",
+        downloadUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/devset/download",
+        templateUrl: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/template/download",
+        leaderboardApi: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/leaderboard",
+      },
     };
 
     LANGUAGE_CONFIG.arabic.baselineAccuracy = "68.00%";
@@ -784,7 +784,7 @@
 
     const leaderboardCache = {};
     let currentStage = "dev";
-    let currentLanguage = "arabic";
+    let currentLanguage = "english";
 
     function formatPercent(value) {
       const number = Number(value || 0) * 100;
@@ -1006,11 +1006,12 @@
             </div>
 
             <div class="card pad">
-              <h3 class="meta-title">Official baseline</h3>
-              <p class="meta-copy"><strong>Model:</strong> Qwen/Qwen2.5-3B-Instruct with LoRA fine-tuning.</p>
-              <p class="meta-copy"><strong>Training data:</strong> only the official public FinMMEval Hugging Face collection.</p>
-              <p class="meta-copy"><strong>Setup:</strong> one multilingual 3B model, 2 training epochs, bf16, no leaderboard dev or hidden test data mixed into training.</p>
-              <p class="meta-copy"><strong>Current dev score:</strong> ${escapeHtml(config.baselineAccuracy)} on the released public dev set.</p>
+              <h3 class="meta-title">Baseline guide</h3>
+              <p class="meta-copy"><strong>Random Baseline:</strong> samples one valid option uniformly from the choices shown for each question.</p>
+              <p class="meta-copy"><strong>Always A:</strong> always predicts option A.</p>
+              <p class="meta-copy"><strong>Round Robin:</strong> cycles through the available option letters in order across the dev set.</p>
+              <p class="meta-copy"><strong>LLM Zero-shot:</strong> prompts a general LLM directly without task-specific fine-tuning.</p>
+              <p class="meta-copy"><strong>Qwen2.5-3B Official Public:</strong> LoRA-tuned on the official public FinMMEval collection only; current dev score is ${escapeHtml(config.baselineAccuracy)}.</p>
             </div>
           </div>
 
@@ -1085,10 +1086,12 @@
       });
     });
 
+    renderLanguagePanel("english");
+    renderLanguagePanel("chinese");
     renderLanguagePanel("arabic");
     renderLanguagePanel("hindi");
     setStage("dev");
-    setLanguage("arabic");
+    setLanguage("english");
   </script>
 </body>
 </html>

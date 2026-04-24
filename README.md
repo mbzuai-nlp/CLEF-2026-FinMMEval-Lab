@@ -37,14 +37,16 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 
 ## Task 1 Official Baselines
 - Organizer baselines are rendered separately from participant submissions on the Task 1 public dev leaderboards.
-- The current stronger organizer baseline uses `Qwen/Qwen2.5-3B-Instruct` with LoRA fine-tuning.
-- This baseline is trained only on the official public FinMMEval Hugging Face collection. It does not use the released Task 1 leaderboard dev sets or any hidden test data.
+- `Random Baseline`: samples one valid answer option uniformly for each question.
+- `Always A`: always predicts option `A`.
+- `Round Robin`: cycles through the available option letters in order.
+- `LLM Zero-shot`: prompts a general LLM directly without task-specific fine-tuning.
+- `Qwen2.5-3B Official Public`: `Qwen/Qwen2.5-3B-Instruct` with LoRA fine-tuning, trained only on the official public FinMMEval Hugging Face collection. It does not use the released Task 1 leaderboard dev sets or any hidden test data.
 - Current public-dev baseline scores:
-  - Arabic: `68.00%`
-  - Hindi: `45.00%`
   - English: `96.00%`
   - Chinese: `94.00%`
-- Simpler organizer reference baselines such as random and rule-based runs are also shown on the leaderboards for context.
+  - Arabic: `68.00%`
+  - Hindi: `45.00%`
 
 ## Awards
 - 🏆 Best Paper Award: USD 500
