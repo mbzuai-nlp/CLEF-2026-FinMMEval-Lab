@@ -812,18 +812,6 @@
               </div>
             </div>
 
-            <div class="mt-4 rounded-lg border border-gray-200 bg-white p-4">
-              <h4 class="font-bold text-ink mb-2">Official Baselines</h4>
-              <p class="text-ink-soft text-sm">
-                Organizer baselines are marked separately from participant entries on the Task 1 public dev leaderboards.
-              </p>
-              <p class="text-ink-soft text-sm mt-2">
-                <span class="font-semibold text-ink">Random Baseline</span> samples one valid option per question, <span class="font-semibold text-ink">Always A</span> always predicts A, and <span class="font-semibold text-ink">Round Robin</span> cycles through option letters.
-              </p>
-              <p class="text-ink-soft text-sm mt-2">
-                <span class="font-semibold text-ink">LLM Zero-shot</span> is a prompt-only reference, while <span class="font-semibold text-ink">Qwen2.5-3B Official Public</span> is LoRA-tuned only on the official public FinMMEval collection, without using leaderboard dev or hidden test data.
-              </p>
-            </div>
           </div>
         </div>
         
@@ -1500,11 +1488,6 @@
           <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">
             <h3 class="font-bold text-ink mb-2">Can we train on the official public Hugging Face collection for Task 1?</h3>
             <p class="text-ink-soft text-sm">Yes. The FinMMEval Hugging Face collection is the official public data release. Participants may use the released Task 1 datasets for training and may reorganize or re-split them as needed. The original split names on dataset cards do not restrict participant usage. However, the separate Task 1 dev leaderboard sets are organizer-held evaluation data and should not be used for training.</p>
-          </div>
-
-          <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">
-            <h3 class="font-bold text-ink mb-2">How are organizer baselines on the Task 1 leaderboard trained?</h3>
-            <p class="text-ink-soft text-sm">Organizer baselines are trained only on the official public FinMMEval collection. They do not use the released Task 1 leaderboard dev sets or any hidden test data. Baseline rows are marked separately from participant submissions on the leaderboard pages.</p>
           </div>
 
           <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">

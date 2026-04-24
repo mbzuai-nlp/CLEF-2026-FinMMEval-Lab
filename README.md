@@ -35,15 +35,6 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 - See each dataset card in the collection for licenses and format details.
 - Task 3 historical data for backtesting, validation, and training: https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026
 
-## Task 1 Official Baselines
-- Organizer baselines are rendered separately from participant submissions on the Task 1 public dev leaderboards.
-- `Random Baseline`: samples one valid answer option uniformly for each question.
-- `Always A`: always predicts option `A`.
-- `Round Robin`: cycles through the available option letters in order.
-- `LLM Zero-shot`: prompts a general LLM directly without task-specific fine-tuning.
-- `Qwen2.5-3B Official Public`: `Qwen/Qwen2.5-3B-Instruct` with LoRA fine-tuning, trained only on the official public FinMMEval Hugging Face collection. It does not use the released Task 1 leaderboard dev sets or any hidden test data.
-- English and Chinese dev leaderboards are currently being refreshed.
-
 ## Awards
 - 🏆 Best Paper Award: USD 500
 - 🥈 Outstanding Paper Award ×3: USD 300 each

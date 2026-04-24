@@ -462,40 +462,6 @@
       color: var(--ink);
     }
 
-    .team-meta {
-      margin-top: 6px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .team-pill {
-      display: inline-flex;
-      align-items: center;
-      border-radius: 999px;
-      padding: 4px 10px;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      background: rgba(145, 170, 210, 0.16);
-      color: var(--muted);
-    }
-
-    .team-pill.baseline {
-      background: rgba(217, 119, 6, 0.12);
-      color: #9a3412;
-    }
-
-    .team-pill.participant {
-      background: rgba(31, 99, 216, 0.12);
-      color: var(--accent-deep);
-    }
-
-    tbody tr.baseline-row {
-      background: linear-gradient(180deg, rgba(245, 158, 11, 0.08), rgba(245, 158, 11, 0.02));
-    }
-
     .score {
       font-weight: 800;
       color: var(--accent-deep);
@@ -762,22 +728,8 @@
       },
     };
 
-    function baselineTypeLabel(row) {
-      const name = String(row.display_name || row.model_name || "").toLowerCase();
-      const baselineMatchers = [
-        "random baseline",
-        "always a",
-        "round robin",
-        "llm zero-shot",
-        "qwen2.5-3b official public",
-        "qwen2-5-3b official public",
-      ];
-      return baselineMatchers.some((token) => name.includes(token)) ? "Baseline" : "Participant";
-    }
-
-    function normalizedDisplayName(row, isBaseline) {
+    function normalizedDisplayName(row) {
       const rawName = String(row.display_name || row.model_name || "");
-      if (!isBaseline) return rawName;
       return rawName.replace(/\s+(Arabic|Hindi|English|Chinese)\s*$/i, "").trim();
     }
 
@@ -822,17 +774,12 @@
     function renderTableRows(rows) {
       return rows.map((row) => {
         const uploadedAt = row.uploaded_at ? formatTimestamp(row.uploaded_at) : "Unknown";
-        const typeLabel = baselineTypeLabel(row);
-        const isBaseline = typeLabel === "Baseline";
-        const displayName = normalizedDisplayName(row, isBaseline);
+        const displayName = normalizedDisplayName(row);
         return `
-          <tr class="${isBaseline ? "baseline-row" : ""}">
+          <tr>
             <td><span class="rank-badge">#${escapeHtml(row.rank)}</span></td>
             <td>
               <div class="team-name">${escapeHtml(displayName)}</div>
-              <div class="team-meta">
-                <span class="team-pill ${isBaseline ? "baseline" : "participant"}">${escapeHtml(typeLabel)}</span>
-              </div>
             </td>
             <td class="score">${formatPercent(row.accuracy)}</td>
             <td>${escapeHtml(row.correct)}/${escapeHtml(row.total)}</td>
@@ -1023,14 +970,6 @@
               <p class="meta-copy">3. Answer the questions with one option letter per item and submit the completed <code>jsonl</code> file through the submission page.</p>
             </div>
 
-            <div class="card pad">
-              <h3 class="meta-title">Baseline guide</h3>
-              <p class="meta-copy"><strong>Random Baseline:</strong> samples one valid option uniformly from the choices shown for each question.</p>
-              <p class="meta-copy"><strong>Always A:</strong> always predicts option A.</p>
-              <p class="meta-copy"><strong>Round Robin:</strong> cycles through the available option letters in order across the dev set.</p>
-              <p class="meta-copy"><strong>LLM Zero-shot:</strong> prompts a general LLM directly without task-specific fine-tuning.</p>
-              <p class="meta-copy"><strong>Qwen2.5-3B Official Public:</strong> LoRA-tuned on the official public FinMMEval collection only.</p>
-            </div>
           </div>
 
           <div>${renderLeaderboardCard(language, cachedState)}</div>
