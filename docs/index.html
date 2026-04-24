@@ -738,7 +738,7 @@
     <section id="tasks" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
       <div class="academic-section p-8">
         <h2 class="text-3xl font-bold text-ink academic-heading mb-6">Tasks</h2>
-        <p class="text-ink-muted mb-8">Choose one or more tasks. Follow the task-specific submission format; Task 1 and Task 2 do not require confidence scores.</p>
+        <p class="text-ink-muted mb-8">Choose one or more tasks. Follow the task-specific submission format; Task 1 and Task 2 do not require confidence scores. For Task 1 and Task 2, dataset expansion and/or real-time retrieval during inference are allowed, but these must be clearly disclosed in the submitted system paper.</p>
         
         <!-- Tab Navigation -->
         <div class="flex flex-wrap border-b border-gray-200 mb-8">
@@ -777,6 +777,13 @@
               <h4 class="font-bold text-ink mb-2">Evaluation</h4>
               <p class="text-ink-soft text-sm">
                 Models are required to output the correct answer label. Performance is measured by accuracy, defined as the proportion of correctly identified options in the test set.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-lg p-4 mt-4">
+              <h4 class="font-bold text-ink mb-2">Submission Policy</h4>
+              <p class="text-ink-soft text-sm">
+                For Task 1, dataset expansion and/or real-time retrieval during inference are allowed. Please clearly disclose any such components, together with the overall inference setup, in your submitted system paper.
               </p>
             </div>
 
@@ -836,6 +843,13 @@
               <h4 class="font-bold text-ink mb-2">Evaluation</h4>
               <p class="text-ink-soft text-sm">
                 Models must produce concise, evidence-grounded textual answers (≤100 words). Performance is evaluated using ROUGE-1 as the primary metric, measuring unigram overlap with expert references.
+              </p>
+            </div>
+
+            <div class="bg-gray-50 rounded-lg p-4 mt-4">
+              <h4 class="font-bold text-ink mb-2">Submission Policy</h4>
+              <p class="text-ink-soft text-sm">
+                For Task 2, dataset expansion and/or real-time retrieval during inference are allowed. Please clearly disclose any such components, together with the overall inference setup, in your submitted system paper.
               </p>
             </div>
           </div>
@@ -1055,7 +1069,7 @@
     <section id="awards" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
       <div class="academic-section p-8">
         <h2 class="text-3xl font-bold text-ink academic-heading mb-6">Awards</h2>
-        <p class="text-ink-muted mb-8">Top submissions will be recognized with monetary awards.</p>
+        <p class="text-ink-muted mb-8">Awards will consider both leaderboard performance and the quality of the submitted system paper.</p>
 
         <div class="grid md:grid-cols-3 gap-6">
           <div class="glass-card rounded-xl p-6 border border-gray-200 shadow-subtle">
@@ -1066,7 +1080,7 @@
                 <div class="text-2xl font-bold text-ink">USD 500</div>
               </div>
             </div>
-            <p class="text-ink-soft text-sm">Single award for the top-ranked submission and paper.</p>
+            <p class="text-ink-soft text-sm">Single award based on overall excellence, considering both leaderboard performance and paper quality.</p>
           </div>
 
           <div class="glass-card rounded-xl p-6 border border-gray-200 shadow-subtle">
@@ -1077,7 +1091,7 @@
                 <div class="text-2xl font-bold text-ink">USD 300 each (x3)</div>
               </div>
             </div>
-            <p class="text-ink-soft text-sm">Three awards recognizing strong submissions and writing.</p>
+            <p class="text-ink-soft text-sm">Three awards recognizing strong systems, clear methodology, and high-quality papers.</p>
           </div>
 
           <div class="glass-card rounded-xl p-6 border border-gray-200 shadow-subtle">
@@ -1088,7 +1102,7 @@
                 <div class="text-2xl font-bold text-ink">USD 200 each (x2)</div>
               </div>
             </div>
-            <p class="text-ink-soft text-sm">Two awards to celebrate promising approaches.</p>
+            <p class="text-ink-soft text-sm">Two awards highlighting promising approaches and well-documented submissions.</p>
           </div>
         </div>
       </div>
@@ -1156,6 +1170,12 @@
                   ✓
                 </div>
                 <span class="text-ink-soft">System Card (architecture, data usage, risks)</span>
+              </li>
+              <li class="flex items-start space-x-3">
+                <div class="w-5 h-5 bg-green-100 text-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  ✓
+                </div>
+                <span class="text-ink-soft">For Task 1/2, clearly disclose any dataset expansion or real-time retrieval used during inference</span>
               </li>
               <li class="flex items-start space-x-3">
                 <div class="w-5 h-5 bg-green-100 text-green-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
@@ -1447,6 +1467,11 @@
           <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">
             <h3 class="font-bold text-ink mb-2">Are ensembles allowed?</h3>
             <p class="text-ink-soft text-sm">Yes, but disclose all components in the system card.</p>
+          </div>
+
+          <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">
+            <h3 class="font-bold text-ink mb-2">Can we use dataset expansion or real-time retrieval for Task 1 or Task 2?</h3>
+            <p class="text-ink-soft text-sm">Yes. For Task 1 and Task 2, dataset expansion and/or real-time retrieval during inference are allowed, but they must be clearly and fully disclosed in the submitted system paper.</p>
           </div>
 
           <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">
