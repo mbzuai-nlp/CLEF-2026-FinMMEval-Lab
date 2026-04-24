@@ -29,7 +29,10 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 
 ## Training Data (Released)
 - Download the training collection on Hugging Face (released 2025-12-15): https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026
-- Contains training splits for all three tasks (exam Q&A, multilingual Q&A, and trading decision making). See each dataset card in the collection for licenses and format details.
+- This collection is the official public data release for the lab. Participants may use the released datasets as training resources for their systems, including reorganizing or re-splitting them as needed for model development.
+- The original split names shown on individual dataset cards do not restrict participant usage.
+- Task 1 dev leaderboards are based on separate organizer-held evaluation sets. Those released leaderboard dev sets are for validation only and should not be used for training. The remaining hidden test sets are reserved for final evaluation.
+- See each dataset card in the collection for licenses and format details.
 - Task 3 historical data for backtesting, validation, and training: https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026
 
 ## Awards

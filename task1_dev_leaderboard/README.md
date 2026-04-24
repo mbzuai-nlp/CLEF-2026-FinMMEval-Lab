@@ -2,6 +2,11 @@
 
 Local tooling for a Task 1 style development leaderboard.
 
+Important policy note:
+- The FinMMEval Hugging Face collection is the official public data release for Task 1. Participants may use those released datasets for training and may reorganize or re-split them as needed.
+- The dev sets served by this leaderboard are separate organizer-held evaluation data. They are intended for validation only and should not be added back into training.
+- The remaining hidden test sets are reserved for final evaluation.
+
 The goal is to make it easy to:
 - register one or more MCQ datasets
 - register one or more prediction files from local model runs

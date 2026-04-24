@@ -305,7 +305,12 @@ def main() -> None:
         collect_classification(load_parquets(dataset_dirs["flare_es"]), args.validation_mod, "flare_es", "spanish")
     )
     normalized_rows.extend(
-        collect_classification(load_parquets(dataset_dirs["plutus"]), args.validation_mod, "plutus", "greek")
+        collect_classification(
+            load_parquets(dataset_dirs["plutus"]),
+            args.validation_mod,
+            "plutus",
+            "greek",
+        )
     )
 
     normalized_rows.sort(key=lambda row: (row["language"], row["source"], row["id"]))

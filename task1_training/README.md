@@ -6,14 +6,20 @@ This directory contains a lightweight training pipeline for a public-data-only T
 - QLoRA / LoRA
 - only public datasets from the FinMMEval collection
 
+Policy note:
+
+- The FinMMEval Hugging Face collection is the official public data release for Task 1.
+- The original split names on dataset cards do not restrict participant usage; the released collection may be reorganized or re-split for training.
+- The separate Task 1 leaderboard dev sets are organizer-held evaluation data and should not be mixed back into training.
+
 Recommended environment on this machine:
 
-- Python: `/home/zhuohanx/.conda/envs/defame/bin/python`
+- Python: `/home/zhuohanx/.conda/envs/finance/bin/python`
 
 ## 1. Prepare public training data
 
 ```bash
-/home/zhuohanx/.conda/envs/defame/bin/python task1_training/prepare_public_task1_data.py
+/home/zhuohanx/.conda/envs/finance/bin/python task1_training/prepare_public_task1_data.py
 ```
 
 This writes:
@@ -24,7 +30,7 @@ This writes:
 ## 2. Train a Qwen2.5-3B LoRA baseline
 
 ```bash
-/home/zhuohanx/.conda/envs/defame/bin/python task1_training/train_qwen_lora.py \
+/home/zhuohanx/.conda/envs/finance/bin/python task1_training/train_qwen_lora.py \
   --train-file task1_training/artifacts/public_task1_train.jsonl \
   --output-dir task1_training/artifacts/qwen25_3b_task1_lora \
   --model-name Qwen/Qwen2.5-3B-Instruct \
@@ -37,7 +43,7 @@ This writes:
 For a short smoke test:
 
 ```bash
-/home/zhuohanx/.conda/envs/defame/bin/python task1_training/train_qwen_lora.py \
+/home/zhuohanx/.conda/envs/finance/bin/python task1_training/train_qwen_lora.py \
   --train-file task1_training/artifacts/public_task1_train.jsonl \
   --output-dir task1_training/artifacts/qwen25_3b_task1_lora_smoke \
   --model-name Qwen/Qwen2.5-3B-Instruct \
@@ -52,7 +58,7 @@ For a short smoke test:
 ## 3. Generate leaderboard submissions
 
 ```bash
-/home/zhuohanx/.conda/envs/defame/bin/python task1_training/predict_qwen_lora.py \
+/home/zhuohanx/.conda/envs/finance/bin/python task1_training/predict_qwen_lora.py \
   --devset task1_dev_leaderboard/dev_sets/english_cfa_cpa_100_public.jsonl \
   --adapter-dir task1_training/artifacts/qwen25_3b_task1_lora/final_adapter \
   --output task1_training/artifacts/english_qwen25_3b_predictions.jsonl

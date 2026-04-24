@@ -479,7 +479,7 @@
                       <span class="text-ink-muted text-sm">Updated: 23 April 2026</span>
                     </div>
                     <h2 class="text-3xl sm:text-4xl font-bold text-ink leading-tight">Task 1 dev leaderboard ready</h2>
-                    <p class="text-ink-muted leading-relaxed max-w-3xl">The Task 1 submission hub is live. Participants can switch between Arabic, Hindi, English, and Chinese from one page, download the public dev sets, submit runs, and inspect the live leaderboard directly inside the hub.</p>
+                    <p class="text-ink-muted leading-relaxed max-w-3xl">The Task 1 submission hub is live. Participants can switch between Arabic, Hindi, English, and Chinese from one page, download the public dev sets, submit runs, and inspect the live leaderboard directly inside the hub. These public dev leaderboards are separate from the official Hugging Face training collection.</p>
                     <div class="grid md:grid-cols-2 gap-4">
                       <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle">
                         <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">1</div>
@@ -509,7 +509,7 @@
                       <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(400px 300px at 30% 20%, rgba(37,99,235,0.08), transparent);"></div>
                       <div class="relative space-y-3 h-full flex flex-col justify-center">
                         <div class="text-xs uppercase tracking-wide text-accent-700 font-semibold">Open Submission</div>
-                        <div class="text-sm text-ink-soft">Use the Task 1 submission hub to switch languages, download the public dev sets, and submit your runs.</div>
+                        <div class="text-sm text-ink-soft">Use the Task 1 submission hub to validate on the released dev leaderboards and keep training separate from those evaluation sets.</div>
                         <a href="task1-dev.html" class="inline-flex items-center justify-center rounded-xl bg-accent-600 hover:bg-accent-700 px-4 py-2 font-semibold text-white w-full text-center shadow-subtle">Open Task 1 Submission</a>
                         <p class="text-[13px] text-ink-muted">Current languages: Arabic, Hindi, English, and Chinese.</p>
                       </div>
@@ -629,8 +629,8 @@
                       <span class="data-pill">Training Data Released</span>
                       <span class="text-ink-muted text-sm">Released: 15 December 2025</span>
                     </div>
-                    <h2 class="text-3xl sm:text-4xl font-bold text-ink">Ready-to-use splits for all tasks</h2>
-                    <p class="text-ink-muted leading-relaxed max-w-3xl">Get calibrated training splits for exam-style Q&amp;A, multilingual financial reasoning, and trading decision-making. Each dataset card includes format, licensing, and citation guidance.</p>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-ink">Official Public Data For All Tasks</h2>
+                    <p class="text-ink-muted leading-relaxed max-w-3xl">Use the released Hugging Face collection as the official public data source for model development. Participants may reorganize or re-split the released datasets as needed. Each dataset card includes format, licensing, and citation guidance.</p>
                     <div class="grid md:grid-cols-2 gap-4">
                       <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle">
                         <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">1</div>
@@ -660,9 +660,9 @@
                       <div class="absolute inset-0 pointer-events-none" style="background: radial-gradient(400px 300px at 30% 20%, rgba(37,99,235,0.08), transparent);"></div>
                       <div class="relative space-y-3 h-full flex flex-col justify-center">
                         <div class="text-xs uppercase tracking-wide text-accent-700 font-semibold">New</div>
-                        <div class="text-sm text-ink-soft">Browse the Hugging Face collection to download splits and review licensing.</div>
+                        <div class="text-sm text-ink-soft">Browse the Hugging Face collection to download the official public data release and review licensing.</div>
                         <a href="https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center rounded-xl bg-accent-600 hover:bg-accent-700 px-4 py-2 font-semibold text-white w-full text-center shadow-subtle">Open Collection</a>
-                        <p class="text-[13px] text-ink-muted">Check each dataset card for citation, licensing, and format details.</p>
+                        <p class="text-[13px] text-ink-muted">Participants may use these released datasets for training even if original dataset cards use train, validation, or test split names.</p>
                       </div>
                     </div>
                   </div>
@@ -772,6 +772,13 @@
                 <li><span class="font-semibold">BBF (Hindi):</span> 500-1000 exam-style financial multiple-choice questions covering over 30 domains.</li>
               </ul>
             </div>
+
+            <div class="bg-gray-50 rounded-lg p-4 mb-4">
+              <h4 class="font-bold text-ink mb-2">Official Data Usage</h4>
+              <p class="text-ink-soft text-sm">
+                The FinMMEval Hugging Face collection is the official public data release for Task 1. Participants may use the released datasets for training and may reorganize or re-split them as needed. The original split names on dataset cards do not restrict participant usage.
+              </p>
+            </div>
             
             <div class="bg-gray-50 rounded-lg p-4">
               <h4 class="font-bold text-ink mb-2">Evaluation</h4>
@@ -785,6 +792,9 @@
               <p class="text-ink-soft text-sm">
                 For Task 1, dataset expansion and/or real-time retrieval during inference are allowed. Please clearly disclose any such components, together with the overall inference setup, in your submitted system paper.
               </p>
+              <p class="text-ink-soft text-sm mt-2">
+                The released Task 1 dev leaderboards use separate organizer-held evaluation data. Those public dev sets are for validation only and should not be used for training. The remaining hidden test sets are reserved for final evaluation.
+              </p>
             </div>
 
             <div class="mt-4 rounded-lg border border-accent-200 bg-accent-50 p-4">
@@ -792,7 +802,7 @@
                 <div>
                   <h4 class="font-bold text-ink mb-1">Task 1 Submission</h4>
                   <p class="text-ink-soft text-sm">
-                    A unified Task 1 submission hub is available for released language-specific dev benchmarks. Participants can switch languages from one page, then submit runs and inspect live leaderboards without leaving the hub.
+                    A unified Task 1 submission hub is available for released language-specific dev benchmarks. These public dev leaderboards are validation tracks only and are separate from the official public training collection.
                   </p>
                 </div>
                 <div class="flex flex-col sm:flex-row gap-3">
@@ -1151,7 +1161,7 @@
                 </a>
               </div>
               <p class="text-ink-soft text-sm mt-4">
-                The Task 1 submission hub consolidates released language-specific dev portals in one place. Arabic, Hindi, English, and Chinese are currently available.
+                The Task 1 submission hub consolidates released language-specific dev portals in one place. These public dev leaderboards are separate from the official public training collection. Arabic, Hindi, English, and Chinese are currently available.
               </p>
             </div>
           </div>
@@ -1472,6 +1482,11 @@
           <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">
             <h3 class="font-bold text-ink mb-2">Can we use dataset expansion or real-time retrieval for Task 1 or Task 2?</h3>
             <p class="text-ink-soft text-sm">Yes. For Task 1 and Task 2, dataset expansion and/or real-time retrieval during inference are allowed, but they must be clearly and fully disclosed in the submitted system paper.</p>
+          </div>
+
+          <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">
+            <h3 class="font-bold text-ink mb-2">Can we train on the official public Hugging Face collection for Task 1?</h3>
+            <p class="text-ink-soft text-sm">Yes. The FinMMEval Hugging Face collection is the official public data release. Participants may use the released Task 1 datasets for training and may reorganize or re-split them as needed. The original split names on dataset cards do not restrict participant usage. However, the separate Task 1 dev leaderboard sets are organizer-held evaluation data and should not be used for training.</p>
           </div>
 
           <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">

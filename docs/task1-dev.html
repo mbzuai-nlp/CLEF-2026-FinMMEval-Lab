@@ -628,6 +628,12 @@
           </div>
         </div>
 
+        <div class="card pad" style="margin-bottom: 20px;">
+          <h3 class="meta-title">Official data usage</h3>
+          <p class="meta-copy">The FinMMEval Hugging Face collection is the official public data release for Task 1. Participants may use those released datasets for training and may reorganize or re-split them as needed.</p>
+          <p class="meta-copy">The language-specific dev sets on this page are separate organizer-held evaluation data. They are intended for validation on the live leaderboard and should not be added back into training. The remaining hidden test sets are reserved for final evaluation.</p>
+        </div>
+
         <div class="language-tabs">
           <button class="language-tab active" data-language="arabic">
             <strong>Arabic</strong>
@@ -703,7 +709,7 @@
         description: "",
         devCount: 100,
         hiddenCount: 356,
-        answerSpace: "2-4 choices",
+        answerSpace: "3-4 choices",
         answerNote: "The released English dev set contains single-choice questions only. Each item should be answered using one option letter from the choices shown.",
         submitUrl: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/task1/dev/submit",
         downloadUrl: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/api/task1/devset/download",
@@ -938,9 +944,9 @@
 
             <div class="card pad">
               <h3 class="meta-title">How to participate</h3>
-              <p class="meta-copy">1. Download the public dev set and the submission template.</p>
-              <p class="meta-copy">2. Answer the questions with one option letter per item.</p>
-              <p class="meta-copy">3. Submit the completed <code>jsonl</code> file through the submission page.</p>
+              <p class="meta-copy">1. Train on the official public FinMMEval collection as needed.</p>
+              <p class="meta-copy">2. Download the public dev set and the submission template for this leaderboard.</p>
+              <p class="meta-copy">3. Answer the questions with one option letter per item and submit the completed <code>jsonl</code> file through the submission page.</p>
             </div>
           </div>
 
