@@ -49,13 +49,6 @@ Official organizer baseline configuration used for the current public Task 1 lea
 - Training source: only the official public FinMMEval Hugging Face collection
 - Excluded data: all organizer-held Task 1 leaderboard dev sets and all hidden test sets
 
-Current public-dev results for this run:
-
-- Arabic: `68.00%`
-- Hindi: `45.00%`
-- English: `96.00%`
-- Chinese: `94.00%`
-
 For a short smoke test:
 
 ```bash

@@ -42,11 +42,7 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 - `Round Robin`: cycles through the available option letters in order.
 - `LLM Zero-shot`: prompts a general LLM directly without task-specific fine-tuning.
 - `Qwen2.5-3B Official Public`: `Qwen/Qwen2.5-3B-Instruct` with LoRA fine-tuning, trained only on the official public FinMMEval Hugging Face collection. It does not use the released Task 1 leaderboard dev sets or any hidden test data.
-- Current public-dev baseline scores:
-  - English: `96.00%`
-  - Chinese: `94.00%`
-  - Arabic: `68.00%`
-  - Hindi: `45.00%`
+- English and Chinese dev leaderboards are currently being refreshed.
 
 ## Awards
 - 🏆 Best Paper Award: USD 500

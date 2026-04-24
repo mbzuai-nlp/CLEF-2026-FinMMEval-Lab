@@ -1,7 +1,7 @@
 {
   "dataset_key": "accounting_clef_ar",
   "input_format": "parquet",
-  "input_path": "../data/accounting_CLEF/data/train-00000-of-00001.parquet",
+  "input_path": "../data/accounting_CLEF/filtered/arabic_nonoverlap.parquet",
   "dev_size": 100,
   "seed": 2026,
   "id_field": "id",

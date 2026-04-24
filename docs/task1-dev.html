@@ -705,6 +705,7 @@
   <script>
     const LANGUAGE_CONFIG = {
       english: {
+        status: "paused",
         label: "English",
         subtitle: "CFA/CPA single-choice MCQ dev benchmark",
         description: "",
@@ -712,13 +713,14 @@
         hiddenCount: 356,
         answerSpace: "3-4 choices",
         answerNote: "The released English dev set contains single-choice questions only. Each item should be answered using one option letter from the choices shown.",
-        baselineAccuracy: "96.00%",
+        pausedNote: "The English Task 1 dev leaderboard is being refreshed. Stay tuned.",
         submitUrl: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/task1/dev/submit",
         downloadUrl: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/api/task1/devset/download",
         templateUrl: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/api/task1/template/download",
         leaderboardApi: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/api/task1/leaderboard",
       },
       chinese: {
+        status: "paused",
         label: "Chinese",
         subtitle: "CFA/CPA single-choice MCQ dev benchmark",
         description: "",
@@ -726,7 +728,7 @@
         hiddenCount: 47,
         answerSpace: "3-4 choices",
         answerNote: "The released Chinese dev set contains single-choice questions only. Each item should be answered using one option letter from the choices shown.",
-        baselineAccuracy: "94.00%",
+        pausedNote: "The Chinese Task 1 dev leaderboard is being refreshed. Stay tuned.",
         submitUrl: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/task1/dev/submit",
         downloadUrl: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/api/task1/devset/download",
         templateUrl: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/api/task1/template/download",
@@ -759,9 +761,6 @@
         leaderboardApi: "https://mbzuai-finmmeval-task1-hindi-dev-portal.hf.space/api/task1/leaderboard",
       },
     };
-
-    LANGUAGE_CONFIG.arabic.baselineAccuracy = "68.00%";
-    LANGUAGE_CONFIG.hindi.baselineAccuracy = "45.00%";
 
     function baselineTypeLabel(row) {
       const name = String(row.display_name || row.model_name || "").toLowerCase();
@@ -958,6 +957,25 @@
       const target = document.getElementById(`panel-${language}`);
       const cachedState = leaderboardCache[language] || {status: "loading"};
 
+      if (config.status === "paused") {
+        target.innerHTML = `
+          <div class="dev-grid">
+            <div class="stack">
+              <div class="card pad">
+                <div class="meta-head">
+                  <div>
+                    <div class="language-label">${escapeHtml(config.label)} Dev</div>
+                    <h3 class="meta-title">${escapeHtml(config.subtitle)}</h3>
+                  </div>
+                </div>
+                <p class="meta-copy">${escapeHtml(config.pausedNote || "Stay tuned.")}</p>
+              </div>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
       target.innerHTML = `
         <div class="dev-grid">
           <div class="stack">
@@ -1011,7 +1029,7 @@
               <p class="meta-copy"><strong>Always A:</strong> always predicts option A.</p>
               <p class="meta-copy"><strong>Round Robin:</strong> cycles through the available option letters in order across the dev set.</p>
               <p class="meta-copy"><strong>LLM Zero-shot:</strong> prompts a general LLM directly without task-specific fine-tuning.</p>
-              <p class="meta-copy"><strong>Qwen2.5-3B Official Public:</strong> LoRA-tuned on the official public FinMMEval collection only; current dev score is ${escapeHtml(config.baselineAccuracy)}.</p>
+              <p class="meta-copy"><strong>Qwen2.5-3B Official Public:</strong> LoRA-tuned on the official public FinMMEval collection only.</p>
             </div>
           </div>
 
@@ -1021,6 +1039,9 @@
     }
 
     async function loadLeaderboard(language, force = false) {
+      if (LANGUAGE_CONFIG[language].status === "paused") {
+        return;
+      }
       if (!force && leaderboardCache[language] && leaderboardCache[language].status === "ready") {
         return;
       }
