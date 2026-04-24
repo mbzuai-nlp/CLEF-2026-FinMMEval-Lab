@@ -492,13 +492,6 @@
       color: var(--accent-deep);
     }
 
-    .team-file {
-      margin-top: 4px;
-      font-size: 12px;
-      color: var(--muted);
-      word-break: break-all;
-    }
-
     tbody tr.baseline-row {
       background: linear-gradient(180deg, rgba(245, 158, 11, 0.08), rgba(245, 158, 11, 0.02));
     }
@@ -783,6 +776,12 @@
       return baselineMatchers.some((token) => name.includes(token)) ? "Baseline" : "Participant";
     }
 
+    function normalizedDisplayName(row, isBaseline) {
+      const rawName = String(row.display_name || row.model_name || "");
+      if (!isBaseline) return rawName;
+      return rawName.replace(/\s+(Arabic|Hindi|English|Chinese)\s*$/i, "").trim();
+    }
+
     const leaderboardCache = {};
     let currentStage = "dev";
     let currentLanguage = "arabic";
@@ -826,15 +825,15 @@
         const uploadedAt = row.uploaded_at ? formatTimestamp(row.uploaded_at) : "Unknown";
         const typeLabel = baselineTypeLabel(row);
         const isBaseline = typeLabel === "Baseline";
+        const displayName = normalizedDisplayName(row, isBaseline);
         return `
           <tr class="${isBaseline ? "baseline-row" : ""}">
             <td><span class="rank-badge">#${escapeHtml(row.rank)}</span></td>
             <td>
-              <div class="team-name">${escapeHtml(row.display_name || row.model_name)}</div>
+              <div class="team-name">${escapeHtml(displayName)}</div>
               <div class="team-meta">
                 <span class="team-pill ${isBaseline ? "baseline" : "participant"}">${escapeHtml(typeLabel)}</span>
               </div>
-              <div class="team-file">${escapeHtml(row.original_filename || row.submission_file || "")}</div>
             </td>
             <td class="score">${formatPercent(row.accuracy)}</td>
             <td>${escapeHtml(row.correct)}/${escapeHtml(row.total)}</td>
@@ -1011,7 +1010,7 @@
               <p class="meta-copy"><strong>Model:</strong> Qwen/Qwen2.5-3B-Instruct with LoRA fine-tuning.</p>
               <p class="meta-copy"><strong>Training data:</strong> only the official public FinMMEval Hugging Face collection.</p>
               <p class="meta-copy"><strong>Setup:</strong> one multilingual 3B model, 2 training epochs, bf16, no leaderboard dev or hidden test data mixed into training.</p>
-              <p class="meta-copy"><strong>Current ${escapeHtml(config.label)} dev score:</strong> ${escapeHtml(config.baselineAccuracy)} on the released public dev set.</p>
+              <p class="meta-copy"><strong>Current dev score:</strong> ${escapeHtml(config.baselineAccuracy)} on the released public dev set.</p>
             </div>
           </div>
 

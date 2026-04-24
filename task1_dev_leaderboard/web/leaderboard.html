@@ -89,6 +89,12 @@
       return baselineMatchers.some((token) => name.includes(token)) ? 'Baseline' : 'Participant';
     }
 
+    function normalizedDisplayName(row, isBaseline) {
+      const rawName = String(row.display_name || row.model_name || '');
+      if (!isBaseline) return rawName;
+      return rawName.replace(/\s+(Arabic|Hindi|English|Chinese)\s*$/i, '').trim();
+    }
+
     function renderOverall(rows) {
       const body = document.getElementById('overall-body');
       if (!rows.length) {
@@ -98,11 +104,12 @@
       body.innerHTML = rows.map((row) => {
         const typeLabel = baselineTypeLabel(row);
         const isBaseline = typeLabel === 'Baseline';
+        const displayName = normalizedDisplayName(row, isBaseline);
         return `
         <tr class="${isBaseline ? 'baseline-row' : ''}">
           <td>${row.rank}</td>
           <td>
-            <div class="team-name-cell">${row.display_name ?? row.model_name}</div>
+            <div class="team-name-cell">${displayName}</div>
             <div class="team-meta">
               <span class="team-pill ${isBaseline ? 'baseline' : 'participant'}">${typeLabel}</span>
             </div>
