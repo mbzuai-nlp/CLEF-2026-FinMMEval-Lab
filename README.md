@@ -33,6 +33,7 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 - This collection is the official public data release for the lab. Participants may use the released datasets as training resources for their systems, including reorganizing or re-splitting them as needed for model development.
 - The original split names shown on individual dataset cards do not restrict participant usage.
 - Task 1 dev leaderboards are based on separate organizer-held evaluation sets. Those released leaderboard dev sets are for validation only and should not be used for training. The remaining hidden test sets are reserved for final evaluation.
+- Task 1 leaderboard rows marked as baselines are organizer sanity checks: Random, Always A, Round Robin, and Qwen2.5-0.5B-Instruct zero-shot.
 - See each dataset card in the collection for licenses and format details.
 - Task 3 historical data for backtesting, validation, and training: https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026
 

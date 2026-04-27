@@ -664,16 +664,17 @@
           <p class="meta-copy">The FinMMEval Hugging Face collection is the official public data release for Task 1. Participants may use those released datasets for training and may reorganize or re-split them as needed.</p>
           <p class="meta-copy">The language-specific dev sets on this page are separate organizer-held evaluation data. They are intended for validation on the live leaderboard and should not be added back into training. The remaining hidden test sets are reserved for final evaluation.</p>
           <p class="meta-copy">At present, we do not enforce a hard submission cap for Task 1 dev leaderboards. Participants may submit multiple times as needed, but should avoid unnecessary rapid resubmission.</p>
+          <p class="meta-copy">Rows marked as <strong>Baseline</strong> are organizer sanity checks: Random, Always A, Round Robin, and Qwen2.5-0.5B-Instruct zero-shot.</p>
         </div>
 
         <div class="language-tabs">
           <button class="language-tab active" data-language="english">
             <strong>English</strong>
-            <span>CFA/CPA single-choice MCQ benchmark</span>
+            <span>FinExam single-choice MCQ benchmark</span>
           </button>
           <button class="language-tab" data-language="chinese">
             <strong>Chinese</strong>
-            <span>CFA/CPA single-choice MCQ benchmark</span>
+            <span>FinExam single-choice MCQ benchmark</span>
           </button>
           <button class="language-tab" data-language="arabic">
             <strong>Arabic</strong>
@@ -710,30 +711,26 @@
   <script>
     const LANGUAGE_CONFIG = {
       english: {
-        status: "paused",
         label: "English",
-        subtitle: "CFA/CPA single-choice MCQ dev benchmark",
+        subtitle: "FinExam single-choice MCQ dev benchmark",
         description: "",
         devCount: 100,
-        hiddenCount: 356,
-        answerSpace: "3-4 choices",
-        answerNote: "The released English dev set contains single-choice questions only. Each item should be answered using one option letter from the choices shown.",
-        pausedNote: "The English Task 1 dev leaderboard is being refreshed. Stay tuned.",
+        hiddenCount: 13,
+        answerSpace: "3-5 choices",
+        answerNote: "This benchmark mixes 3-option, 4-option, and 5-option questions. Participants should always answer using the options shown in each item.",
         submitUrl: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/task1/dev/submit",
         downloadUrl: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/api/task1/devset/download",
         templateUrl: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/api/task1/template/download",
         leaderboardApi: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/api/task1/leaderboard",
       },
       chinese: {
-        status: "paused",
         label: "Chinese",
-        subtitle: "CFA/CPA single-choice MCQ dev benchmark",
+        subtitle: "FinExam single-choice MCQ dev benchmark",
         description: "",
         devCount: 100,
-        hiddenCount: 47,
-        answerSpace: "3-4 choices",
-        answerNote: "The released Chinese dev set contains single-choice questions only. Each item should be answered using one option letter from the choices shown.",
-        pausedNote: "The Chinese Task 1 dev leaderboard is being refreshed. Stay tuned.",
+        hiddenCount: 14,
+        answerSpace: "3-5 choices",
+        answerNote: "This benchmark mixes 3-option, 4-option, and 5-option questions. Participants should always answer using the options shown in each item.",
         submitUrl: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/task1/dev/submit",
         downloadUrl: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/api/task1/devset/download",
         templateUrl: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/api/task1/template/download",

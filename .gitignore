@@ -6,8 +6,10 @@ task1_dev_leaderboard/private/
 task1_dev_leaderboard/submissions/*.json
 task1_dev_leaderboard/submissions/*.jsonl
 task1_dev_leaderboard/data/accounting_CLEF/
+task1_dev_leaderboard/data/finexam/
 task1_dev_leaderboard/data/finmmeval_cfa_cpa/
 task1_dev_leaderboard/data/public_train_sources/
 task1_training/cache/
 task1_training/artifacts/
 task1_dev_leaderboard_hf_space/
+task1_dev_leaderboard_hf_space_*/

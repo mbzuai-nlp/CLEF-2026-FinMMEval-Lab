@@ -1,0 +1,26 @@
+{
+  "dataset_key": "chinese_finexam",
+  "input_path": "../data/finexam/filtered/chinese_single_choice.parquet",
+  "input_format": "parquet",
+  "dev_prefix": "zh-dev",
+  "test_prefix": "zh-test",
+  "dev_size": 100,
+  "seed": 2026,
+  "id_field": "id",
+  "question_field": "question",
+  "answer_field": "correct_answer",
+  "option_fields": {
+    "A": "choice_a",
+    "B": "choice_b",
+    "C": "choice_c",
+    "D": "choice_d",
+    "E": "choice_e",
+    "F": "choice_f"
+  },
+  "meta_fields": [],
+  "stratify_fields": [],
+  "public_out": "dev_sets/chinese_finexam_100_public.jsonl",
+  "template_out": "dev_sets/chinese_finexam_100_submission_template.json",
+  "dev_gold_out": "private/chinese_finexam_100_gold.jsonl",
+  "hidden_test_out": "private/chinese_finexam_hidden_test.jsonl"
+}
