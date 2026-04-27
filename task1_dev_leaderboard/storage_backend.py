@@ -22,8 +22,8 @@ class PortalStorage:
         self.mode = os.getenv("TASK1_STORAGE_BACKEND", "local").strip().lower() or "local"
         default_runtime_root = self.app_root if self.mode == "local" else Path("/tmp/task1_dev_leaderboard_runtime")
         self.runtime_root = Path(os.getenv("TASK1_RUNTIME_ROOT", str(default_runtime_root))).resolve()
-        self.gold_filename = os.getenv("TASK1_GOLD_FILENAME", "accounting_clef_100_gold.jsonl").strip()
-        self.output_subdir = os.getenv("TASK1_OUTPUT_SUBDIR", "accounting_clef_dev").strip() or "accounting_clef_dev"
+        self.gold_filename = os.getenv("TASK1_GOLD_FILENAME", "hindi_mcq_100_gold.jsonl").strip()
+        self.output_subdir = os.getenv("TASK1_OUTPUT_SUBDIR", "hindi_mcq_dev").strip() or "hindi_mcq_dev"
         self.hf_gold_remote_path = os.getenv(
             "TASK1_HF_GOLD_REMOTE_PATH",
             f"private/{self.gold_filename}",

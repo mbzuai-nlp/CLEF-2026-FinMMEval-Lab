@@ -663,33 +663,22 @@
           <h3 class="meta-title">Official data usage</h3>
           <p class="meta-copy">The FinMMEval Hugging Face collection is the official public data release for Task 1. Participants may use those released datasets for training and may reorganize or re-split them as needed.</p>
           <p class="meta-copy">The language-specific dev sets on this page are separate organizer-held evaluation data. They are intended for validation on the live leaderboard and should not be added back into training. The remaining hidden test sets are reserved for final evaluation.</p>
+          <p class="meta-copy">English, Chinese, and Arabic dev leaderboards are temporarily hidden while we complete final data-pool review and split validation.</p>
           <p class="meta-copy">At present, we do not enforce a hard submission cap for Task 1 dev leaderboards. Participants may submit multiple times as needed, but should avoid unnecessary rapid resubmission.</p>
           <p class="meta-copy">Rows marked as <strong>Baseline</strong> are organizer sanity checks: Random, Always A, Round Robin, and Qwen2.5-0.5B-Instruct zero-shot.</p>
         </div>
 
         <div class="language-tabs">
-          <button class="language-tab active" data-language="english">
-            <strong>English</strong>
-            <span>FinExam single-choice MCQ benchmark</span>
-          </button>
-          <button class="language-tab" data-language="chinese">
-            <strong>Chinese</strong>
-            <span>FinExam single-choice MCQ benchmark</span>
-          </button>
-          <button class="language-tab" data-language="arabic">
-            <strong>Arabic</strong>
-            <span>Accounting and auditing MCQ benchmark</span>
-          </button>
-          <button class="language-tab" data-language="hindi">
+          <button class="language-tab active" data-language="hindi">
             <strong>Hindi</strong>
             <span>Hindi finance MCQ benchmark</span>
           </button>
         </div>
 
-        <div class="language-panel active" id="panel-english"></div>
+        <div class="language-panel" id="panel-english"></div>
         <div class="language-panel" id="panel-chinese"></div>
         <div class="language-panel" id="panel-arabic"></div>
-        <div class="language-panel" id="panel-hindi"></div>
+        <div class="language-panel active" id="panel-hindi"></div>
       </div>
 
       <div class="stage-panel" id="stage-test">
@@ -711,6 +700,7 @@
   <script>
     const LANGUAGE_CONFIG = {
       english: {
+        status: "paused",
         label: "English",
         subtitle: "FinExam single-choice MCQ dev benchmark",
         description: "",
@@ -718,12 +708,14 @@
         hiddenCount: 13,
         answerSpace: "3-5 choices",
         answerNote: "This benchmark mixes 3-option, 4-option, and 5-option questions. Participants should always answer using the options shown in each item.",
-        submitUrl: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/task1/dev/submit",
-        downloadUrl: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/api/task1/devset/download",
-        templateUrl: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/api/task1/template/download",
-        leaderboardApi: "https://mbzuai-finmmeval-task1-english-dev-portal.hf.space/api/task1/leaderboard",
+        pausedNote: "The English dev leaderboard is temporarily hidden while we complete final data-pool review and split validation.",
+        submitUrl: "",
+        downloadUrl: "",
+        templateUrl: "",
+        leaderboardApi: "",
       },
       chinese: {
+        status: "paused",
         label: "Chinese",
         subtitle: "FinExam single-choice MCQ dev benchmark",
         description: "",
@@ -731,12 +723,14 @@
         hiddenCount: 14,
         answerSpace: "3-5 choices",
         answerNote: "This benchmark mixes 3-option, 4-option, and 5-option questions. Participants should always answer using the options shown in each item.",
-        submitUrl: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/task1/dev/submit",
-        downloadUrl: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/api/task1/devset/download",
-        templateUrl: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/api/task1/template/download",
-        leaderboardApi: "https://mbzuai-finmmeval-task1-chinese-dev-portal.hf.space/api/task1/leaderboard",
+        pausedNote: "The Chinese dev leaderboard is temporarily hidden while we complete final data-pool review and split validation.",
+        submitUrl: "",
+        downloadUrl: "",
+        templateUrl: "",
+        leaderboardApi: "",
       },
       arabic: {
+        status: "paused",
         label: "Arabic",
         subtitle: "Accounting and auditing MCQ dev benchmark",
         description: "",
@@ -744,10 +738,11 @@
         hiddenCount: 208,
         answerSpace: "4-5 choices",
         answerNote: "This benchmark mixes 4-option and 5-option questions. Participants should always answer using the options shown in each item.",
-        submitUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/task1/dev/submit",
-        downloadUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/devset/download",
-        templateUrl: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/template/download",
-        leaderboardApi: "https://mbzuai-finmmeval-task1-dev-portal.hf.space/api/task1/leaderboard",
+        pausedNote: "The Arabic dev leaderboard is temporarily hidden while we complete final data-pool review and split validation.",
+        submitUrl: "",
+        downloadUrl: "",
+        templateUrl: "",
+        leaderboardApi: "",
       },
       hindi: {
         label: "Hindi",
@@ -783,7 +778,7 @@
 
     const leaderboardCache = {};
     let currentStage = "dev";
-    let currentLanguage = "english";
+    let currentLanguage = "hindi";
 
     function formatPercent(value) {
       const number = Number(value || 0) * 100;

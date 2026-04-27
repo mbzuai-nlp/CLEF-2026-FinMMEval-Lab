@@ -50,28 +50,21 @@ Main files:
 - `per_item_results.csv`
 - `README.md`
 
-## Accounting CLEF Dev Set
+## Released Dev Sets
 
-There is now a 100-item public dev set sampled from the private Hugging Face dataset `Raniahossam33/accounting_CLEF`.
+At present, only the Hindi Task 1 dev leaderboard is public. English, Chinese, and Arabic dev leaderboards are temporarily hidden while the organizer side completes final data-pool review and split validation.
 
 Public files:
-- `task1_dev_leaderboard/dev_sets/accounting_clef_100_public.jsonl`
-- `task1_dev_leaderboard/dev_sets/accounting_clef_100_submission_template.json`
+- `task1_dev_leaderboard/dev_sets/hindi_mcq_100_public.jsonl`
+- `task1_dev_leaderboard/dev_sets/hindi_mcq_100_submission_template.json`
 
 Organizer-private file:
-- `task1_dev_leaderboard/private/accounting_clef_100_gold.jsonl`
+- `task1_dev_leaderboard/private/hindi_mcq_100_gold.jsonl`
 
 Sampling policy:
 - deterministic
 - seed = `2026`
-- stratified by `source + correct_answer`
 - target size = `100`
-
-Create or refresh the sampled set:
-
-```bash
-python task1_dev_leaderboard/create_accounting_dev_set.py
-```
 
 ### Participant Submission Format
 
@@ -109,9 +102,9 @@ Run:
 
 ```bash
 python task1_dev_leaderboard/evaluate_submissions.py \
-  --gold-file task1_dev_leaderboard/private/accounting_clef_100_gold.jsonl \
+  --gold-file task1_dev_leaderboard/private/hindi_mcq_100_gold.jsonl \
   --submissions-dir task1_dev_leaderboard/submissions \
-  --out-dir task1_dev_leaderboard/outputs/accounting_clef_dev
+  --out-dir task1_dev_leaderboard/outputs/hindi_mcq_dev
 ```
 
 This writes:
@@ -127,9 +120,9 @@ If you want organizer-side near-real-time leaderboard refresh, run the watcher:
 
 ```bash
 python task1_dev_leaderboard/watch_submissions.py \
-  --gold-file task1_dev_leaderboard/private/accounting_clef_100_gold.jsonl \
+  --gold-file task1_dev_leaderboard/private/hindi_mcq_100_gold.jsonl \
   --submissions-dir task1_dev_leaderboard/submissions \
-  --out-dir task1_dev_leaderboard/outputs/accounting_clef_dev \
+  --out-dir task1_dev_leaderboard/outputs/hindi_mcq_dev \
   --run-on-start
 ```
 

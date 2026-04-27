@@ -13,3 +13,12 @@ task1_training/cache/
 task1_training/artifacts/
 task1_dev_leaderboard_hf_space/
 task1_dev_leaderboard_hf_space_*/
+task1_dev_leaderboard/dev_sets/accounting_clef_100_public.jsonl
+task1_dev_leaderboard/dev_sets/accounting_clef_100_submission_template.json
+task1_dev_leaderboard/dev_sets/english_*_100_public.jsonl
+task1_dev_leaderboard/dev_sets/english_*_100_submission_template.json
+task1_dev_leaderboard/dev_sets/chinese_*_100_public.jsonl
+task1_dev_leaderboard/dev_sets/chinese_*_100_submission_template.json
+task1_dev_leaderboard/baselines/*_arabic_submission.jsonl
+task1_dev_leaderboard/baselines/*_english_submission.jsonl
+task1_dev_leaderboard/baselines/*_chinese_submission.jsonl

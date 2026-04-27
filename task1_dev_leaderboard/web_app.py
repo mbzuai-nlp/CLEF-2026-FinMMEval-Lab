@@ -24,10 +24,10 @@ from task1_dev_leaderboard.storage_backend import PortalStorage
 
 APP_ROOT = Path(__file__).resolve().parent
 WEB_ROOT = APP_ROOT / "web"
-DEVSET_FILE = APP_ROOT / "dev_sets" / os.getenv("TASK1_DEVSET_FILENAME", "accounting_clef_100_public.jsonl")
+DEVSET_FILE = APP_ROOT / "dev_sets" / os.getenv("TASK1_DEVSET_FILENAME", "hindi_mcq_100_public.jsonl")
 TEMPLATE_FILE = APP_ROOT / "dev_sets" / os.getenv(
     "TASK1_TEMPLATE_FILENAME",
-    "accounting_clef_100_submission_template.json",
+    "hindi_mcq_100_submission_template.json",
 )
 EVALUATOR = APP_ROOT / "evaluate_submissions.py"
 STORAGE = PortalStorage(APP_ROOT)
