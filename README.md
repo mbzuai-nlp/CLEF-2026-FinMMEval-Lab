@@ -17,6 +17,7 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 - Task 3 endpoint submission (Agent Market Arena Google Form): https://huggingface.co/spaces/TheFinAI/Agent-Market-Arena
 - Updated Task 3 endpoint submission deadline: 05 May 2026
 - Full call, visuals, and timeline: https://mbzuai-nlp.github.io/CLEF-2026-FinMMEval-Lab/
+- At present, we do not enforce a hard submission cap per task. Participants may submit multiple times as needed, but should avoid unnecessary rapid resubmission.
 
 ## Task 3 Endpoint Example
 - A reference FastAPI endpoint implementation is available at `examples/simple_trading_api.py`.
