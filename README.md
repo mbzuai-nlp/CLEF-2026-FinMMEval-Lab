@@ -24,7 +24,9 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 - The example matches the documented Task 3 request/response format and returns `recommended_action` only.
 
 ## Task 3 Notes
-- Task 3 uses a longer endpoint-based evaluation workflow and submitted systems may be run over an extended period through late May 2026.
+- The Task 3 endpoint submission deadline is the deadline for submitting or updating an endpoint; it is not the end of the evaluation period.
+- Task 3 uses a longer endpoint-based evaluation workflow. Submitted systems will continue to be called daily after the endpoint submission deadline for an extended evaluation period, at least until the lab overview results are prepared.
+- The daily runner starts at 00:00 UTC. Teams do not need to keep endpoints online for the full day, but should start them shortly before 00:00 UTC and keep them available for several hours to allow for queued requests, retries, and temporary network delays.
 - Participants are encouraged to prepare their working notes early. The paper should primarily describe the system architecture, methodology, and experimental setup; results can be updated later if the evaluation status is stated clearly.
 - Awards are decided primarily based on paper quality, with leaderboard performance considered as supporting evidence.
 

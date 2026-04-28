@@ -901,6 +901,9 @@
               <p class="text-ink-soft text-sm mt-2">
                 At present, we do not enforce a hard submission cap for Task 3. Teams may update their submitted endpoint as needed before the endpoint submission deadline, but should avoid unnecessary rapid resubmission.
               </p>
+              <p class="text-ink-soft text-sm mt-2">
+                The endpoint submission deadline is the deadline for submitting or updating your endpoint. It is not the end of the Task 3 evaluation period.
+              </p>
             </div>
             
             <div class="bg-gray-50 rounded-lg p-4 mb-4">
@@ -918,6 +921,8 @@
               <ul class="text-ink-soft text-sm space-y-2 list-disc pl-5">
                 <li>Daily process starts at <span class="font-semibold">00:00 UTC</span>.</li>
                 <li>Requests are sent progressively after start time.</li>
+                <li>Submitted endpoints will continue to be called daily after the endpoint submission deadline for an extended evaluation period, at least until the lab overview results are prepared.</li>
+                <li>Teams do not need to keep endpoints online for the full day, but should start them shortly before <span class="font-semibold">00:00 UTC</span> and keep them available for several hours to allow for queued requests, retries, and temporary network delays.</li>
                 <li>Per-request timeout is <span class="font-semibold">3 minutes</span>.</li>
                 <li>If a request fails (timeout, server error, or invalid response), the action defaults to <span class="font-semibold">HOLD</span>.</li>
               </ul>
@@ -1528,7 +1533,8 @@
 
           <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">
             <h3 class="font-bold text-ink mb-2">How does the Task 3 timeline work?</h3>
-            <p class="text-ink-soft text-sm">The updated Task 3 endpoint submission deadline is 05 May 2026. Because Task 3 uses an endpoint-based evaluation workflow, submitted systems may be run over an extended period through late May 2026.</p>
+            <p class="text-ink-soft text-sm">The updated Task 3 endpoint submission deadline is 05 May 2026. This is the deadline for submitting or updating an endpoint, not the end of evaluation. Because Task 3 evaluates market decisions across multiple trading days, submitted endpoints will continue to be called daily for an extended evaluation period, at least until the lab overview results are prepared.</p>
+            <p class="text-ink-soft text-sm mt-2">The daily runner starts at 00:00 UTC. Teams do not need to keep endpoints online for the full day, but should start them shortly before 00:00 UTC and keep them available for several hours after the runner starts.</p>
           </div>
 
           <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">
