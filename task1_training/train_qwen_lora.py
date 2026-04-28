@@ -15,6 +15,7 @@ import torch
 from datasets import Dataset
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 from transformers import (
+    AutoConfig,
     AutoModelForCausalLM,
     AutoTokenizer,
     BitsAndBytesConfig,
@@ -22,6 +23,16 @@ from transformers import (
     TrainingArguments,
     set_seed,
 )
+
+try:
+    from transformers import FineGrainedFP8Config
+except ImportError:  # Older Transformers versions do not expose FP8 dequantization.
+    FineGrainedFP8Config = None
+
+try:
+    from transformers import Mistral3ForConditionalGeneration
+except ImportError:  # Older Transformers versions do not support Ministral 3.
+    Mistral3ForConditionalGeneration = None
 
 
 def parse_args() -> argparse.Namespace:
@@ -119,7 +130,10 @@ def main() -> None:
     if args.max_eval_examples:
         eval_dataset = eval_dataset.select(range(min(args.max_eval_examples, len(eval_dataset))))
 
-    tokenizer = AutoTokenizer.from_pretrained(args.model_name, use_fast=True)
+    tokenizer_kwargs = {}
+    if "ministral-3" in args.model_name.lower():
+        tokenizer_kwargs["fix_mistral_regex"] = True
+    tokenizer = AutoTokenizer.from_pretrained(args.model_name, use_fast=True, **tokenizer_kwargs)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
     tokenizer.padding_side = "right"
@@ -136,7 +150,22 @@ def main() -> None:
             bnb_4bit_use_double_quant=True,
         )
 
-    model = AutoModelForCausalLM.from_pretrained(
+    config = AutoConfig.from_pretrained(args.model_name)
+    model_cls = AutoModelForCausalLM
+    if getattr(config, "model_type", None) == "mistral3":
+        if Mistral3ForConditionalGeneration is None:
+            raise RuntimeError(
+                "This model requires a Transformers version with Mistral3ForConditionalGeneration."
+            )
+        model_cls = Mistral3ForConditionalGeneration
+        if quantization_config is None:
+            if FineGrainedFP8Config is None:
+                raise RuntimeError(
+                    "This FP8 Ministral 3 checkpoint requires FineGrainedFP8Config(dequantize=True)."
+                )
+            quantization_config = FineGrainedFP8Config(dequantize=True)
+
+    model = model_cls.from_pretrained(
         args.model_name,
         quantization_config=quantization_config,
         torch_dtype=torch.bfloat16 if args.bf16 else torch.float16,
@@ -189,14 +218,20 @@ def main() -> None:
 
     training_args = TrainingArguments(**training_kwargs)
 
-    trainer = Trainer(
+    trainer_kwargs = dict(
         model=model,
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=eval_dataset if len(eval_dataset) else None,
-        tokenizer=tokenizer,
         data_collator=SupervisedDataCollator(tokenizer),
     )
+    trainer_signature = inspect.signature(Trainer.__init__)
+    if "tokenizer" in trainer_signature.parameters:
+        trainer_kwargs["tokenizer"] = tokenizer
+    elif "processing_class" in trainer_signature.parameters:
+        trainer_kwargs["processing_class"] = tokenizer
+
+    trainer = Trainer(**trainer_kwargs)
 
     trainer.train()
     final_dir = output_dir / "final_adapter"
