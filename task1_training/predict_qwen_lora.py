@@ -129,8 +129,9 @@ def main() -> None:
         messages = [{"role": "user", "content": prompt}]
         text = tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
         inputs = tokenizer(text, return_tensors="pt").to(model.device)
+        max_length = inputs["input_ids"].shape[1] + args.max_new_tokens
         with torch.no_grad():
-            outputs = model.generate(**inputs, max_new_tokens=args.max_new_tokens, do_sample=False)
+            outputs = model.generate(**inputs, max_length=max_length, do_sample=False)
         generated = tokenizer.decode(outputs[0][inputs["input_ids"].shape[1]:], skip_special_tokens=True)
         prediction = parse_prediction(generated, {key.upper() for key in row["options"].keys()})
         predictions.append({"id": row["id"], "prediction": prediction})

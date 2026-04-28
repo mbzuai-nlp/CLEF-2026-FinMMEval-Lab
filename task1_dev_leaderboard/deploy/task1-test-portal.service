@@ -1,0 +1,19 @@
+[Unit]
+Description=FinMMEval Task 1 Test Portal
+After=network.target
+
+[Service]
+Type=simple
+User=zhuohanx
+Group=zhuohanx
+WorkingDirectory=/home/zhuohanx/Projects/mbzuai_nlp/CLEF-2026-FinMMEval-Lab
+Environment=PYTHONUNBUFFERED=1
+Environment=TASK1_PORTAL_MODE=test
+Environment=TASK1_STORAGE_BACKEND=hf_dataset
+EnvironmentFile=/etc/task1-test-portal.env
+ExecStart=/opt/miniconda3/bin/python3 -m uvicorn task1_dev_leaderboard.web_app:app --host 127.0.0.1 --port 8092
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

@@ -68,6 +68,26 @@ Copy the service template into `/etc/systemd/system/`:
 sudo cp task1_dev_leaderboard/deploy/task1-dev-portal.service /etc/systemd/system/task1-dev-portal.service
 ```
 
+For the final-test portal, use the dedicated test-mode template instead:
+
+```bash
+sudo cp task1_dev_leaderboard/deploy/task1-test-portal.service /etc/systemd/system/task1-test-portal.service
+```
+
+Create the final-test portal environment file on the server. Do not commit this file:
+
+```bash
+sudo install -m 600 /dev/null /etc/task1-test-portal.env
+sudoedit /etc/task1-test-portal.env
+```
+
+Required contents:
+
+```bash
+TASK1_HF_REPO_ID=<org-or-user>/<private-dataset-repo>
+HF_TOKEN=<write-token>
+```
+
 Edit these values before starting the service:
 
 - `User=`
@@ -86,12 +106,20 @@ sudo systemctl enable --now task1-dev-portal
 sudo systemctl status task1-dev-portal
 ```
 
+For the final-test portal, enable `task1-test-portal` instead and verify that it listens on `127.0.0.1:8092`.
+
 ### 4. Install The nginx Site
 
 Copy the nginx config:
 
 ```bash
 sudo cp task1_dev_leaderboard/deploy/task1-dev-portal.nginx.conf /etc/nginx/sites-available/task1-dev-portal
+```
+
+For the final-test portal:
+
+```bash
+sudo cp task1_dev_leaderboard/deploy/task1-test-portal.nginx.conf /etc/nginx/sites-available/task1-test-portal
 ```
 
 Edit the `server_name` in that file to your real domain, then enable it:
