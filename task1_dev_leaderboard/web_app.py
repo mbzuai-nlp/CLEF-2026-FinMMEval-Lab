@@ -40,7 +40,10 @@ OFFICIAL_SITE_URL = os.getenv(
     "TASK1_OFFICIAL_SITE_URL",
     "https://mbzuai-nlp.github.io/CLEF-2026-FinMMEval-Lab/",
 )
-PORTAL_VARIANT = os.getenv("TASK1_PORTAL_VARIANT", "Arabic").strip() or "Arabic"
+PORTAL_MODE = os.getenv("TASK1_PORTAL_MODE", "dev").strip().lower() or "dev"
+if PORTAL_MODE not in {"dev", "test"}:
+    raise RuntimeError("TASK1_PORTAL_MODE must be either dev or test.")
+PORTAL_VARIANT = os.getenv("TASK1_PORTAL_VARIANT", "Hindi").strip() or "Hindi"
 PORTAL_TITLE = os.getenv("TASK1_PORTAL_TITLE", f"Task 1 {PORTAL_VARIANT} Dev Portal").strip()
 PORTAL_SUBMISSION_TITLE = os.getenv(
     "TASK1_PORTAL_SUBMISSION_TITLE",
@@ -56,6 +59,7 @@ PORTAL_DATASET_LABEL = os.getenv(
 ).strip()
 
 SUBMISSION_EXTENSIONS = {".json", ".jsonl"}
+VALID_LETTERS = {"A", "B", "C", "D", "E", "F"}
 SUBMISSION_LOCK = threading.Lock()
 
 app = FastAPI(title="FinMMEval Task 1 Dev Portal", version="1.0.0")
@@ -134,7 +138,7 @@ def is_submission_file(path: Path) -> bool:
     return path.is_file() and path.suffix.lower() in SUBMISSION_EXTENSIONS and not path.name.startswith("_")
 
 
-def validate_submission_bytes(content: bytes, suffix: str) -> None:
+def parse_submission_rows(content: bytes, suffix: str) -> list[dict[str, Any]]:
     try:
         text = content.decode("utf-8")
     except UnicodeDecodeError as exc:
@@ -142,26 +146,112 @@ def validate_submission_bytes(content: bytes, suffix: str) -> None:
 
     if suffix == ".json":
         try:
-            json.loads(text)
+            payload = json.loads(text)
         except json.JSONDecodeError as exc:
             raise HTTPException(status_code=400, detail=f"Invalid JSON submission: {exc}") from exc
-        return
+        if isinstance(payload, list):
+            return [row for row in payload if isinstance(row, dict)]
+        if isinstance(payload, dict) and isinstance(payload.get("predictions"), list):
+            return [row for row in payload["predictions"] if isinstance(row, dict)]
+        if isinstance(payload, dict):
+            return [{"id": key, "prediction": value} for key, value in payload.items()]
+        raise HTTPException(status_code=400, detail="Unsupported JSON submission structure.")
 
     if suffix == ".jsonl":
+        rows = []
         for line_no, line in enumerate(text.splitlines(), start=1):
             line = line.strip()
             if not line:
                 continue
             try:
-                json.loads(line)
+                row = json.loads(line)
             except json.JSONDecodeError as exc:
                 raise HTTPException(
                     status_code=400,
                     detail=f"Invalid JSONL submission at line {line_no}: {exc}",
                 ) from exc
-        return
+            if not isinstance(row, dict):
+                raise HTTPException(status_code=400, detail=f"JSONL line {line_no} must be an object.")
+            rows.append(row)
+        return rows
 
     raise HTTPException(status_code=400, detail="Unsupported submission file type.")
+
+
+def validate_submission_bytes(content: bytes, suffix: str) -> None:
+    parse_submission_rows(content, suffix)
+
+
+def normalize_prediction(value: Any) -> str:
+    if value is None:
+        return ""
+    text = str(value).strip().upper()
+    return text if text in VALID_LETTERS else ""
+
+
+def extract_prediction(row: dict[str, Any]) -> tuple[str, str]:
+    for key in ("prediction", "pred_letter", "answer", "label"):
+        if key in row:
+            return str(row[key]).strip().upper(), normalize_prediction(row[key])
+    return "", ""
+
+
+def load_expected_ids(path: Path) -> set[str]:
+    if not path.exists():
+        raise HTTPException(status_code=500, detail="Gold/answer key file is not configured for validation.")
+    expected = set()
+    with path.open("r", encoding="utf-8") as f:
+        for line_no, line in enumerate(f, start=1):
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError as exc:
+                raise HTTPException(status_code=500, detail=f"Invalid organizer gold file at line {line_no}: {exc}") from exc
+            expected.add(str(row["id"]))
+    return expected
+
+
+def validate_submission_for_test_mode(content: bytes, suffix: str) -> dict[str, Any]:
+    rows = parse_submission_rows(content, suffix)
+    expected_ids = load_expected_ids(GOLD_FILE)
+    predictions: dict[str, str] = {}
+    duplicate_ids = 0
+    invalid_prediction_ids = []
+
+    for row in rows:
+        item_id = str(row.get("id", "")).strip()
+        if not item_id:
+            continue
+        raw_pred, pred = extract_prediction(row)
+        if item_id in predictions:
+            duplicate_ids += 1
+        predictions[item_id] = pred
+        if raw_pred and not pred:
+            invalid_prediction_ids.append(item_id)
+
+    submitted_ids = set(predictions)
+    unknown_ids = sorted(submitted_ids - expected_ids)
+    missing_ids = sorted(expected_ids - submitted_ids)
+    answered_ids = sorted(item_id for item_id in expected_ids if predictions.get(item_id))
+    total = len(expected_ids)
+    answered = len(answered_ids)
+    return {
+        "mode": "test",
+        "rows": len(rows),
+        "total": total,
+        "answered": answered,
+        "coverage": round(answered / total, 6) if total else 0.0,
+        "missing_ids": missing_ids,
+        "unknown_ids": unknown_ids,
+        "duplicate_ids": duplicate_ids,
+        "invalid_prediction_ids": sorted(set(invalid_prediction_ids)),
+        "invalid_prediction_count": len(set(invalid_prediction_ids)),
+        "valid_submission": int(
+            not missing_ids and not unknown_ids and not duplicate_ids and not invalid_prediction_ids
+        ),
+    }
 
 
 def run_evaluation() -> dict[str, Any]:
@@ -276,6 +366,8 @@ def api_task1_dev_meta() -> JSONResponse:
 
 @app.get("/api/task1/leaderboard")
 def api_task1_leaderboard() -> JSONResponse:
+    if PORTAL_MODE == "test":
+        raise HTTPException(status_code=404, detail="Leaderboard is disabled for test submissions before the deadline.")
     return JSONResponse(current_leaderboard_payload())
 
 
@@ -340,9 +432,30 @@ async def api_task1_submit(
         STORAGE.upload_submission(save_path)
         STORAGE.upload_registry()
 
+        if PORTAL_MODE == "test":
+            validation = validate_submission_for_test_mode(content, suffix)
+            status_payload = {
+                "backend": STORAGE.backend_name,
+                "mode": PORTAL_MODE,
+                "last_run_at": utc_now_iso(),
+                "last_run_ok": True,
+                "message": "Submission saved and format-validated. Scores are hidden until the deadline.",
+            }
+            save_watch_status(status_payload)
+            return JSONResponse(
+                {
+                    "message": "Submission received. Format and coverage were validated; scores are hidden until the deadline.",
+                    "team_slug": slug,
+                    "team_name": cleaned_team_name,
+                    "validation": validation,
+                    "last_updated": status_payload["last_run_at"],
+                }
+            )
+
         result = run_evaluation()
         status_payload = {
             "backend": STORAGE.backend_name,
+            "mode": PORTAL_MODE,
             "last_run_at": utc_now_iso(),
             "last_run_ok": result["ok"],
             "returncode": result["returncode"],
@@ -385,6 +498,7 @@ def health() -> JSONResponse:
             "status": "ok",
             "time": utc_now_iso(),
             "backend": STORAGE.backend_name,
+            "portal_mode": PORTAL_MODE,
             "hf_repo_id": STORAGE.hf_repo_id or None,
             "devset_exists": DEVSET_FILE.exists(),
             "gold_exists": GOLD_FILE.exists(),

@@ -89,17 +89,25 @@
         panel.innerHTML = `<h3>Submission Failed</h3><pre>${JSON.stringify(payload, null, 2)}</pre>`;
         return;
       }
-      const row = payload.leaderboard_row || {};
+      const row = payload.leaderboard_row || null;
+      const validation = payload.validation || {};
+      const scoreCells = row
+        ? `
+          <div><span>Rank</span><strong>${row.rank ?? '-'}</strong></div>
+          <div><span>Accuracy</span><strong>${row.accuracy ?? '-'}</strong></div>
+          <div><span>Coverage</span><strong>${row.coverage ?? '-'}</strong></div>`
+        : `
+          <div><span>Coverage</span><strong>${validation.coverage ?? '-'}</strong></div>
+          <div><span>Answered</span><strong>${validation.answered ?? '-'} / ${validation.total ?? '-'}</strong></div>
+          <div><span>Valid</span><strong>${validation.valid_submission ? 'yes' : 'no'}</strong></div>`;
       panel.innerHTML = `
         <h3>Submission Accepted</h3>
         <p>${payload.message}</p>
         <div class="result-grid">
           <div><span>Team</span><strong>${payload.team_name}</strong></div>
-          <div><span>Rank</span><strong>${row.rank ?? '-'}</strong></div>
-          <div><span>Accuracy</span><strong>${row.accuracy ?? '-'}</strong></div>
-          <div><span>Coverage</span><strong>${row.coverage ?? '-'}</strong></div>
+          ${scoreCells}
         </div>
-        <p class="helper-text">Validation: unknown IDs = ${payload.validation?.unknown_ids?.length ?? 0}, missing IDs = ${payload.validation?.missing_ids?.length ?? 0}</p>
+        <p class="helper-text">Validation: unknown IDs = ${validation.unknown_ids?.length ?? 0}, missing IDs = ${validation.missing_ids?.length ?? 0}, duplicate IDs = ${validation.duplicate_ids ?? 0}, invalid predictions = ${validation.invalid_prediction_count ?? 0}</p>
       `;
     }
 

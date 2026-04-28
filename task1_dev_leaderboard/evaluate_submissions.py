@@ -10,7 +10,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 
 
-VALID_LETTERS = {"A", "B", "C", "D", "E"}
+VALID_LETTERS = {"A", "B", "C", "D", "E", "F"}
 
 
 def is_submission_file(path: Path) -> bool:
