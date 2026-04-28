@@ -88,6 +88,25 @@ TASK1_HF_REPO_ID=<org-or-user>/<private-dataset-repo>
 HF_TOKEN=<write-token>
 ```
 
+To prevent arbitrary or duplicate team names, enable team submission codes. Store this file in the private dataset repo, not in the public Space repo:
+
+```json
+{
+  "TEAM-CODE-001": {
+    "team_slug": "official-team-slug",
+    "display_name": "Official Team Name"
+  }
+}
+```
+
+Default remote path:
+
+```text
+private/team_codes.json
+```
+
+When `private/team_codes.json` exists, or when `TASK1_REQUIRE_TEAM_CODE=1` is set, uploads must include a valid code. The portal then uses the organizer-provided `team_slug` and `display_name`, so participants cannot create extra leaderboard rows by changing the team name.
+
 Edit these values before starting the service:
 
 - `User=`

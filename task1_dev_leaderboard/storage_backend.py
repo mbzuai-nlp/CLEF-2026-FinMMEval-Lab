@@ -32,6 +32,11 @@ class PortalStorage:
             "TASK1_HF_REGISTRY_REMOTE_PATH",
             "submissions/_registry.json",
         ).strip()
+        self.team_codes_filename = os.getenv("TASK1_TEAM_CODES_FILENAME", "team_codes.json").strip()
+        self.hf_team_codes_remote_path = os.getenv(
+            "TASK1_HF_TEAM_CODES_REMOTE_PATH",
+            f"private/{self.team_codes_filename}",
+        ).strip()
         self.hf_outputs_remote_dir = os.getenv(
             "TASK1_HF_OUTPUT_REMOTE_DIR",
             f"outputs/{self.output_subdir}",
@@ -78,6 +83,7 @@ class PortalStorage:
             local_dir=str(self.runtime_root),
             allow_patterns=[
                 self.hf_gold_remote_path,
+                self.hf_team_codes_remote_path,
                 "submissions/*",
                 f"{self.hf_outputs_remote_dir}/*",
             ],

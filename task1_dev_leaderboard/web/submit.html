@@ -38,6 +38,11 @@
             <input type="text" id="team_name" name="team_name" placeholder="Example: MBZUAI Finance Lab" required />
           </label>
 
+          <label id="submission-code-field" class="hidden">
+            <span>Submission Code</span>
+            <input type="password" id="submission_code" name="submission_code" autocomplete="off" />
+          </label>
+
           <label>
             <span>Prediction File</span>
             <input type="file" id="prediction_file" name="prediction_file" accept=".json,.jsonl" required />
@@ -79,6 +84,17 @@
       const payload = await response.json();
       document.getElementById('submission-count').textContent = String(payload.submission_count ?? 0);
       document.getElementById('last-updated').textContent = payload.last_updated ?? 'Not evaluated yet';
+      const codeField = document.getElementById('submission-code-field');
+      const codeInput = document.getElementById('submission_code');
+      if (payload.requires_team_code) {
+        codeField.classList.remove('hidden');
+        codeInput.required = true;
+        document.getElementById('team_name').required = false;
+      } else {
+        codeField.classList.add('hidden');
+        codeInput.required = false;
+        document.getElementById('team_name').required = true;
+      }
     }
 
     function renderResult(payload, isError = false) {

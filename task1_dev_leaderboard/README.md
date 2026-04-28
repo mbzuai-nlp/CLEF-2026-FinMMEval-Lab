@@ -70,6 +70,8 @@ Sampling policy:
 
 Participants can submit either `.json` or `.jsonl`.
 
+For public deployments, organizers may require a private team submission code. When enabled, the code determines the canonical team slug and display name used on the leaderboard.
+
 Minimal per-item schema:
 
 ```json

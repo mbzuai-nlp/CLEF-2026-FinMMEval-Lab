@@ -57,6 +57,10 @@ PORTAL_DATASET_LABEL = os.getenv(
     "TASK1_PORTAL_DATASET_LABEL",
     f"{PORTAL_VARIANT} Task 1 Dev Set",
 ).strip()
+TEAM_CODES_FILE = Path(
+    os.getenv("TASK1_TEAM_CODES_FILE", str(STORAGE.private_dir / STORAGE.team_codes_filename))
+).resolve()
+REQUIRE_TEAM_CODE = os.getenv("TASK1_REQUIRE_TEAM_CODE", "").strip().lower() in {"1", "true", "yes", "on"}
 
 SUBMISSION_EXTENSIONS = {".json", ".jsonl"}
 VALID_LETTERS = {"A", "B", "C", "D", "E", "F"}
@@ -136,6 +140,59 @@ def save_watch_status(payload: dict[str, Any]) -> None:
 
 def is_submission_file(path: Path) -> bool:
     return path.is_file() and path.suffix.lower() in SUBMISSION_EXTENSIONS and not path.name.startswith("_")
+
+
+def normalize_team_code(value: str) -> str:
+    return value.strip()
+
+
+def load_team_codes() -> dict[str, dict[str, str]]:
+    if not TEAM_CODES_FILE.exists():
+        return {}
+    payload = load_json(TEAM_CODES_FILE, {})
+    if not isinstance(payload, dict):
+        raise HTTPException(status_code=500, detail="Team code file must be a JSON object.")
+
+    codes: dict[str, dict[str, str]] = {}
+    for raw_code, raw_team in payload.items():
+        code = normalize_team_code(str(raw_code))
+        if not code:
+            continue
+        if isinstance(raw_team, str):
+            display_name = raw_team.strip()
+            slug = team_slug(display_name)
+        elif isinstance(raw_team, dict):
+            display_name = str(raw_team.get("display_name") or raw_team.get("team_name") or "").strip()
+            slug = str(raw_team.get("team_slug") or raw_team.get("slug") or "").strip()
+            if not slug and display_name:
+                slug = team_slug(display_name)
+        else:
+            continue
+        if not display_name or not slug:
+            raise HTTPException(status_code=500, detail=f"Invalid team code entry for code: {code}")
+        codes[code] = {"display_name": display_name, "team_slug": slugify(slug) or team_slug(display_name)}
+    return codes
+
+
+def team_code_required() -> bool:
+    return REQUIRE_TEAM_CODE or TEAM_CODES_FILE.exists()
+
+
+def resolve_team_identity(team_name: str, submission_code: str | None) -> tuple[str, str]:
+    cleaned_team_name = team_name.strip()
+    codes = load_team_codes()
+    if team_code_required():
+        code = normalize_team_code(submission_code or "")
+        if not code:
+            raise HTTPException(status_code=403, detail="A team submission code is required.")
+        team = codes.get(code)
+        if team is None:
+            raise HTTPException(status_code=403, detail="Invalid team submission code.")
+        return team["team_slug"], team["display_name"]
+
+    if not cleaned_team_name:
+        raise HTTPException(status_code=400, detail="Team name is required.")
+    return team_slug(cleaned_team_name), cleaned_team_name
 
 
 def parse_submission_rows(content: bytes, suffix: str) -> list[dict[str, Any]]:
@@ -321,6 +378,7 @@ def current_leaderboard_payload() -> dict[str, Any]:
         dataset_meta = {
             "devset_file": str(DEVSET_FILE),
             "template_file": str(TEMPLATE_FILE),
+            "requires_team_code": team_code_required(),
             "submission_count": len(
                 [
                     path
@@ -387,20 +445,17 @@ def api_task1_template_download() -> FileResponse:
 
 @app.post("/api/task1/submissions")
 async def api_task1_submit(
-    team_name: str = Form(...),
+    team_name: str = Form(""),
+    submission_code: str | None = Form(None),
     prediction_file: UploadFile = File(...),
 ) -> JSONResponse:
     ensure_directories()
 
-    cleaned_team_name = team_name.strip()
-    if not cleaned_team_name:
-        raise HTTPException(status_code=400, detail="Team name is required.")
+    slug, display_name = resolve_team_identity(team_name, submission_code)
 
     suffix = Path(prediction_file.filename or "").suffix.lower()
     if suffix not in SUBMISSION_EXTENSIONS:
         raise HTTPException(status_code=400, detail="Submission must be a .json or .jsonl file.")
-
-    slug = team_slug(cleaned_team_name)
 
     content = await prediction_file.read()
     if not content:
@@ -421,7 +476,7 @@ async def api_task1_submit(
         save_path.write_bytes(content)
 
         registry[slug] = {
-            "display_name": cleaned_team_name,
+            "display_name": display_name,
             "uploaded_at": utc_now_iso(),
             "original_filename": prediction_file.filename,
             "stored_filename": save_path.name,
@@ -446,7 +501,7 @@ async def api_task1_submit(
                 {
                     "message": "Submission received. Format and coverage were validated; scores are hidden until the deadline.",
                     "team_slug": slug,
-                    "team_name": cleaned_team_name,
+                    "team_name": display_name,
                     "validation": validation,
                     "last_updated": status_payload["last_run_at"],
                 }
@@ -483,7 +538,7 @@ async def api_task1_submit(
         {
             "message": "Submission received and leaderboard refreshed.",
             "team_slug": slug,
-            "team_name": cleaned_team_name,
+            "team_name": display_name,
             "leaderboard_row": row,
             "validation": validation,
             "last_updated": payload["dataset"].get("last_updated"),
@@ -499,6 +554,7 @@ def health() -> JSONResponse:
             "time": utc_now_iso(),
             "backend": STORAGE.backend_name,
             "portal_mode": PORTAL_MODE,
+            "requires_team_code": team_code_required(),
             "hf_repo_id": STORAGE.hf_repo_id or None,
             "devset_exists": DEVSET_FILE.exists(),
             "gold_exists": GOLD_FILE.exists(),
