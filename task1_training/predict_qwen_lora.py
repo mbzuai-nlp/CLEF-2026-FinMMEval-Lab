@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate Task 1 predictions from a trained Qwen LoRA adapter."""
+"""Generate Task 1 predictions from a trained LoRA adapter."""
 
 from __future__ import annotations
 
@@ -10,14 +10,24 @@ from pathlib import Path
 
 import torch
 from peft import PeftModel
-from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
+
+try:
+    from transformers import FineGrainedFP8Config
+except ImportError:  # Older Transformers versions do not expose FP8 dequantization.
+    FineGrainedFP8Config = None
+
+try:
+    from transformers import Mistral3ForConditionalGeneration
+except ImportError:  # Older Transformers versions do not support Ministral 3.
+    Mistral3ForConditionalGeneration = None
 
 
 LETTER_RE = re.compile(r"\b([A-Z])\b")
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Generate Task 1 predictions with a Qwen LoRA adapter.")
+    parser = argparse.ArgumentParser(description="Generate Task 1 predictions with a LoRA adapter.")
     parser.add_argument("--devset", required=True)
     parser.add_argument("--adapter-dir", required=True)
     parser.add_argument("--output", required=True)
@@ -25,6 +35,30 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-new-tokens", type=int, default=4)
     parser.add_argument("--use-4bit", action=argparse.BooleanOptionalAction, default=False)
     return parser.parse_args()
+
+
+def tokenizer_kwargs_for(model_name: str) -> dict:
+    if "ministral-3" in model_name.lower():
+        return {"fix_mistral_regex": True}
+    return {}
+
+
+def model_class_and_quantization(base_model_name: str, quantization_config):
+    config = AutoConfig.from_pretrained(base_model_name)
+    if getattr(config, "model_type", None) != "mistral3":
+        return AutoModelForCausalLM, quantization_config
+
+    if Mistral3ForConditionalGeneration is None:
+        raise RuntimeError(
+            "This model requires a Transformers version with Mistral3ForConditionalGeneration."
+        )
+    if quantization_config is None:
+        if FineGrainedFP8Config is None:
+            raise RuntimeError(
+                "This FP8 Ministral 3 checkpoint requires FineGrainedFP8Config(dequantize=True)."
+            )
+        quantization_config = FineGrainedFP8Config(dequantize=True)
+    return Mistral3ForConditionalGeneration, quantization_config
 
 
 def load_jsonl(path: Path) -> list[dict]:
@@ -63,7 +97,11 @@ def main() -> None:
     adapter_dir = Path(args.adapter_dir).resolve()
     output_path = Path(args.output).resolve()
 
-    tokenizer = AutoTokenizer.from_pretrained(adapter_dir, use_fast=True)
+    tokenizer = AutoTokenizer.from_pretrained(
+        adapter_dir,
+        use_fast=True,
+        **tokenizer_kwargs_for(args.base_model),
+    )
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
 
@@ -75,7 +113,8 @@ def main() -> None:
             bnb_4bit_quant_type="nf4",
             bnb_4bit_use_double_quant=True,
         )
-    base_model = AutoModelForCausalLM.from_pretrained(
+    model_cls, quantization_config = model_class_and_quantization(args.base_model, quantization_config)
+    base_model = model_cls.from_pretrained(
         args.base_model,
         quantization_config=quantization_config,
         torch_dtype=torch.bfloat16,
