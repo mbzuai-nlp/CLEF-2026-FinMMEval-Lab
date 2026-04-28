@@ -1,6 +1,6 @@
-## Task 1 Dev Portal Production Deployment
+## Task 1 Portal Production Deployment
 
-This is the recommended long-lived deployment model for the Task 1 dev submission portal:
+This is the recommended long-lived deployment model for the Task 1 submission portal:
 
 - GitHub Pages continues to host the official website
 - this server runs the FastAPI portal
@@ -9,11 +9,37 @@ This is the recommended long-lived deployment model for the Task 1 dev submissio
 
 ### Recommended URL
 
-Use a dedicated subdomain, for example:
+Use a dedicated subdomain for each portal mode, for example:
 
 - `https://task1-dev.example.org/task1/dev`
 - `https://task1-dev.example.org/task1/dev/submit`
 - `https://task1-dev.example.org/task1/dev/leaderboard`
+- `https://task1-test.example.org/task1/dev`
+- `https://task1-test.example.org/task1/dev/submit`
+
+### Portal Modes
+
+The app supports two modes:
+
+- `TASK1_PORTAL_MODE=dev`: shows the dev leaderboard and returns score/rank after upload.
+- `TASK1_PORTAL_MODE=test`: accepts final-test submissions, validates format and coverage, and does not expose score, rank, or correct counts before the deadline.
+
+Use `dev` for the May 6 dev leaderboard. Use `test` for the final Task 1/2 run submission window ending on May 15.
+
+Recommended `test` mode settings:
+
+```bash
+export TASK1_PORTAL_MODE=test
+export TASK1_STORAGE_BACKEND=hf_dataset
+export TASK1_HF_REPO_ID=<org-or-user>/<private-dataset-repo>
+export HF_TOKEN=<write-token>
+```
+
+Before publishing or deploying a public Space folder, run:
+
+```bash
+python task1_dev_leaderboard/check_public_release.py
+```
 
 ### 1. DNS
 
@@ -47,6 +73,9 @@ Edit these values before starting the service:
 - `User=`
 - `Group=`
 - `WorkingDirectory=`
+- `Environment=TASK1_PORTAL_MODE=`
+- `Environment=TASK1_STORAGE_BACKEND=`
+- `Environment=TASK1_HF_REPO_ID=`
 - `ExecStart=`
 
 Then enable and start it:
@@ -88,11 +117,13 @@ If it is not installed yet, install it first using your server's package manager
 After deployment, verify:
 
 ```bash
-curl -I http://127.0.0.1:8091/health
+curl http://127.0.0.1:8091/health
 curl -I https://task1-dev.example.org/task1/dev
 curl -I https://task1-dev.example.org/task1/dev/submit
 curl -I https://task1-dev.example.org/task1/dev/leaderboard
 ```
+
+In `test` mode, `/health` should return `"portal_mode":"test"` and `/api/task1/leaderboard` should return `404`.
 
 ### 7. Update The Official Website Links
 
@@ -104,4 +135,5 @@ Once the stable domain is live, update `docs/index.html` so the Task 1 dev butto
 - keep `task1_dev_leaderboard/data/accounting_CLEF/` on the server only
 - do not expose `task1_dev_leaderboard/outputs/` directly as a static directory
 - do not commit participant submissions or gold files
+- keep the final-test portal in `TASK1_PORTAL_MODE=test` until submissions close
 - the app already exposes `/health` for simple monitoring

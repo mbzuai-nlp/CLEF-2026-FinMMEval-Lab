@@ -8,6 +8,8 @@ User=zhuohanx
 Group=zhuohanx
 WorkingDirectory=/home/zhuohanx/Projects/mbzuai_nlp/CLEF-2026-FinMMEval-Lab
 Environment=PYTHONUNBUFFERED=1
+Environment=TASK1_PORTAL_MODE=dev
+Environment=TASK1_STORAGE_BACKEND=local
 ExecStart=/opt/miniconda3/bin/python3 -m uvicorn task1_dev_leaderboard.web_app:app --host 127.0.0.1 --port 8091
 Restart=always
 RestartSec=5
