@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Train a Qwen2.5-3B Task 1 baseline with QLoRA using Transformers Trainer."""
+"""Train a Task 1 LoRA baseline with Transformers Trainer."""
 
 from __future__ import annotations
 
@@ -36,7 +36,7 @@ except ImportError:  # Older Transformers versions do not support Ministral 3.
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Train a Qwen2.5-3B LoRA baseline for Task 1.")
+    parser = argparse.ArgumentParser(description="Train a LoRA baseline for Task 1.")
     parser.add_argument("--train-file", required=True, help="Prepared JSONL training file.")
     parser.add_argument("--output-dir", required=True, help="Directory for checkpoints and adapter.")
     parser.add_argument("--model-name", default="Qwen/Qwen2.5-3B-Instruct")
