@@ -27,6 +27,8 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 
 ## Task 3 Notes
 - The Task 3 endpoint submission deadline is the deadline for submitting or updating an endpoint; it is not the end of the evaluation period.
+- Submitting the Google Form registers or updates an endpoint, but it may not appear on the leaderboard immediately. Organizers first verify submitted endpoints and confirm the final endpoint list.
+- Official Task 3 performance is computed over a common evaluation window for all accepted endpoints, rather than starting separately from each team's individual form submission date.
 - Task 3 uses a longer endpoint-based evaluation workflow. Submitted systems will continue to be called daily after the endpoint submission deadline for the official Task 3 evaluation window. We expect this window to run through late June or early July, aligned with the final lab reporting schedule.
 - The daily runner starts at 00:00 UTC. Teams do not need to keep endpoints online for the full day, but should start them shortly before 00:00 UTC and keep them available for several hours to allow for queued requests, retries, and temporary network delays.
 - Participants are encouraged to prepare their working notes early. The paper should primarily describe the system architecture, methodology, and experimental setup; results can be updated later if the evaluation status is stated clearly.

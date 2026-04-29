@@ -529,8 +529,8 @@
                       <span class="text-ink-muted text-sm">Updated: 4 February 2026</span>
                       <span class="deadline-pill">Updated deadline: 05 May 2026</span>
                     </div>
-                    <h2 class="text-3xl sm:text-4xl font-bold text-ink leading-tight">Leaderboard Ready for Task 3 - Financial Decision Making</h2>
-                    <p class="text-ink-muted leading-relaxed max-w-3xl">The Task 3 leaderboard is live. Deploy your endpoint and receive daily evaluations on BTC and TSLA decision-making.</p>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-ink leading-tight">Endpoint Registration Open for Task 3 - Financial Decision Making</h2>
+                    <p class="text-ink-muted leading-relaxed max-w-3xl">Submit or update your endpoint via the Google Form. The organizers will verify submitted endpoints before the official leaderboard is computed over a common evaluation window.</p>
                     <div class="grid md:grid-cols-2 gap-4">
                       <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle">
                         <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">1</div>
@@ -549,8 +549,8 @@
                       <div class="flex items-start gap-3 bg-white/70 border border-gray-200 rounded-xl p-4 shadow-subtle md:col-span-2">
                         <div class="w-9 h-9 rounded-lg bg-accent-100 text-accent-700 flex items-center justify-center font-bold">3</div>
                         <div>
-                          <div class="font-semibold text-ink">Live Metrics</div>
-                          <div class="text-ink-muted text-sm">Track performance updates on the leaderboard as evaluations run.</div>
+                          <div class="font-semibold text-ink">Common Evaluation Window</div>
+                          <div class="text-ink-muted text-sm">Official performance is compared over the same market period for all accepted endpoints.</div>
                         </div>
                       </div>
                     </div>
@@ -904,6 +904,9 @@
               <p class="text-ink-soft text-sm mt-2">
                 The endpoint submission deadline is the deadline for submitting or updating your endpoint. It is not the end of the Task 3 evaluation period.
               </p>
+              <p class="text-ink-soft text-sm mt-2">
+                Submitting the Google Form registers or updates your endpoint, but it may not appear on the leaderboard immediately. Organizers first verify submitted endpoints and confirm the final endpoint list.
+              </p>
             </div>
             
             <div class="bg-gray-50 rounded-lg p-4 mb-4">
@@ -921,6 +924,7 @@
               <ul class="text-ink-soft text-sm space-y-2 list-disc pl-5">
                 <li>Daily process starts at <span class="font-semibold">00:00 UTC</span>.</li>
                 <li>Requests are sent progressively after start time.</li>
+                <li>Official Task 3 performance is computed over a common evaluation window for all accepted endpoints, rather than starting separately from each team&rsquo;s individual form submission date.</li>
                 <li>Submitted endpoints will continue to be called daily after the endpoint submission deadline for the official Task 3 evaluation window. We expect this window to run through late June or early July, aligned with the final lab reporting schedule.</li>
                 <li>Teams do not need to keep endpoints online for the full day, but should start them shortly before <span class="font-semibold">00:00 UTC</span> and keep them available for several hours to allow for queued requests, retries, and temporary network delays.</li>
                 <li>Per-request timeout is <span class="font-semibold">3 minutes</span>.</li>
@@ -1533,7 +1537,8 @@
 
           <div class="border border-gray-200 rounded-lg p-5 hover:border-accent-300 transition">
             <h3 class="font-bold text-ink mb-2">How does the Task 3 timeline work?</h3>
-            <p class="text-ink-soft text-sm">The updated Task 3 endpoint submission deadline is 05 May 2026. This is the deadline for submitting or updating an endpoint, not the end of evaluation. Because Task 3 evaluates market decisions across multiple trading days, submitted endpoints will continue to be called daily for the official Task 3 evaluation window. We expect this window to run through late June or early July, aligned with the final lab reporting schedule.</p>
+            <p class="text-ink-soft text-sm">The updated Task 3 endpoint submission deadline is 05 May 2026. This is the deadline for submitting or updating an endpoint, not the end of evaluation. Submitting the Google Form registers or updates an endpoint, but it may not appear on the leaderboard immediately.</p>
+            <p class="text-ink-soft text-sm mt-2">Because Task 3 evaluates market decisions across multiple trading days, organizers first verify submitted endpoints and then compute official performance over a common evaluation window for all accepted endpoints, rather than starting separately from each team&rsquo;s individual submission date. We expect this window to run through late June or early July, aligned with the final lab reporting schedule.</p>
             <p class="text-ink-soft text-sm mt-2">The daily runner starts at 00:00 UTC. Teams do not need to keep endpoints online for the full day, but should start them shortly before 00:00 UTC and keep them available for several hours after the runner starts.</p>
           </div>
 
