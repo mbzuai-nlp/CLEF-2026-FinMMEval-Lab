@@ -81,7 +81,6 @@ PACKAGE_FILES = [
 ]
 
 PACKAGE_DIRS = [
-    "dev_sets",
     "web",
 ]
 
@@ -97,6 +96,16 @@ def parse_args() -> argparse.Namespace:
         "--space-title",
         default="FinMMEval Task 1 Arabic Dev Portal",
         help="Title written into the generated Space README metadata.",
+    )
+    parser.add_argument(
+        "--devset-filename",
+        default=None,
+        help="Public dev set filename from task1_dev_leaderboard/dev_sets/ to include in the Space package.",
+    )
+    parser.add_argument(
+        "--template-filename",
+        default=None,
+        help="Submission template filename from task1_dev_leaderboard/dev_sets/ to include in the Space package.",
     )
     return parser.parse_args()
 
@@ -114,6 +123,20 @@ def main() -> None:
 
     for dirname in PACKAGE_DIRS:
         shutil.copytree(APP_ROOT / dirname, out_package_dir / dirname)
+
+    dev_sets_out = out_package_dir / "dev_sets"
+    dev_sets_out.mkdir(parents=True, exist_ok=True)
+    selected_dev_files = [args.devset_filename, args.template_filename]
+    if all(selected_dev_files):
+        for filename in selected_dev_files:
+            src = APP_ROOT / "dev_sets" / filename
+            if not src.exists():
+                raise FileNotFoundError(f"Missing requested dev set file: {src}")
+            shutil.copy2(src, dev_sets_out / filename)
+    elif any(selected_dev_files):
+        raise ValueError("--devset-filename and --template-filename must be provided together.")
+    else:
+        shutil.copytree(APP_ROOT / "dev_sets", dev_sets_out, dirs_exist_ok=True)
 
     readme = SPACE_README.replace("__SPACE_TITLE__", args.space_title)
     (out_dir / "README.md").write_text(readme, encoding="utf-8")

@@ -80,6 +80,10 @@ def main() -> None:
             str(out_dir),
             "--space-title",
             args.space_title,
+            "--devset-filename",
+            args.devset_filename,
+            "--template-filename",
+            args.template_filename,
         ],
         env=env,
     )
