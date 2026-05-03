@@ -7,9 +7,18 @@ import argparse
 import os
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 from huggingface_hub import HfApi
+
+try:
+    from huggingface_hub import get_token
+except ImportError:  # pragma: no cover - compatibility with older huggingface_hub
+    from huggingface_hub import HfFolder
+
+    def get_token() -> str | None:
+        return HfFolder.get_token()
 
 
 APP_ROOT = Path(__file__).resolve().parent
@@ -27,6 +36,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--storage-repo-id", required=True, help="HF dataset repo id for storage")
     parser.add_argument("--space-repo-id", required=True, help="HF Space repo id for the portal")
     parser.add_argument("--space-title", required=True, help="HF Space title")
+    parser.add_argument(
+        "--portal-mode",
+        choices=["dev", "test"],
+        default="dev",
+        help="Use dev mode for a scored live leaderboard, or test mode for score-hidden final submissions.",
+    )
     parser.add_argument("--official-site-url", default="https://mbzuai-nlp.github.io/CLEF-2026-FinMMEval-Lab/")
     parser.add_argument("--token", default=None, help="HF write token")
     return parser.parse_args()
@@ -38,7 +53,13 @@ def run(cmd: list[str], env: dict[str, str] | None = None) -> None:
 
 def main() -> None:
     args = parse_args()
-    token = args.token or os.getenv("HF_TOKEN") or os.getenv("HUGGINGFACEHUB_API_TOKEN") or os.getenv("HUGGINGFACE_TOKEN")
+    token = (
+        args.token
+        or os.getenv("HF_TOKEN")
+        or os.getenv("HUGGINGFACEHUB_API_TOKEN")
+        or os.getenv("HUGGINGFACE_TOKEN")
+        or get_token()
+    )
     if not token:
         raise RuntimeError("A Hugging Face write token is required.")
 
@@ -50,12 +71,13 @@ def main() -> None:
     env["HF_TOKEN"] = token
     env["TASK1_GOLD_FILENAME"] = args.gold_filename
     env["TASK1_OUTPUT_SUBDIR"] = args.output_subdir
+    env["TASK1_PORTAL_MODE"] = args.portal_mode
     existing_pythonpath = env.get("PYTHONPATH", "").strip()
     env["PYTHONPATH"] = str(PROJECT_ROOT) if not existing_pythonpath else f"{PROJECT_ROOT}:{existing_pythonpath}"
 
     run(
         [
-            "python",
+            sys.executable,
             str(APP_ROOT / "bootstrap_hf_backend.py"),
             "--repo-id",
             args.storage_repo_id,
@@ -74,7 +96,7 @@ def main() -> None:
 
     run(
         [
-            "python",
+            sys.executable,
             str(APP_ROOT / "prepare_hf_space.py"),
             "--out-dir",
             str(out_dir),
@@ -97,10 +119,12 @@ def main() -> None:
     api.add_space_variable(repo_id=args.space_repo_id, key="TASK1_TEMPLATE_FILENAME", value=args.template_filename)
     api.add_space_variable(repo_id=args.space_repo_id, key="TASK1_GOLD_FILENAME", value=args.gold_filename)
     api.add_space_variable(repo_id=args.space_repo_id, key="TASK1_OUTPUT_SUBDIR", value=args.output_subdir)
+    api.add_space_variable(repo_id=args.space_repo_id, key="TASK1_PORTAL_MODE", value=args.portal_mode)
     api.add_space_variable(repo_id=args.space_repo_id, key="TASK1_PORTAL_VARIANT", value=args.variant)
     api.add_space_variable(repo_id=args.space_repo_id, key="TASK1_PORTAL_TITLE", value=args.space_title)
-    api.add_space_variable(repo_id=args.space_repo_id, key="TASK1_PORTAL_SUBMISSION_TITLE", value=f"{args.variant} Dev Submission Portal")
-    api.add_space_variable(repo_id=args.space_repo_id, key="TASK1_PORTAL_LEADERBOARD_TITLE", value=f"Task 1 {args.variant} Dev Leaderboard")
+    mode_label = "Final Test" if args.portal_mode == "test" else "Dev"
+    api.add_space_variable(repo_id=args.space_repo_id, key="TASK1_PORTAL_SUBMISSION_TITLE", value=f"{args.variant} {mode_label} Submission Portal")
+    api.add_space_variable(repo_id=args.space_repo_id, key="TASK1_PORTAL_LEADERBOARD_TITLE", value=f"Task 1 {args.variant} {mode_label} Leaderboard")
     api.add_space_variable(repo_id=args.space_repo_id, key="TASK1_PORTAL_DATASET_LABEL", value=args.dataset_label)
 
     print(f"Storage repo ready: {args.storage_repo_id}")

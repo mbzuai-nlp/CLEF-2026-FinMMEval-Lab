@@ -41,6 +41,22 @@ Before publishing or deploying a public Space folder, run:
 python task1_dev_leaderboard/check_public_release.py
 ```
 
+For a Hugging Face final-test Space, deploy with `--portal-mode test`. Example:
+
+```bash
+python task1_dev_leaderboard/deploy_hf_portal.py \
+  --variant English \
+  --dataset-label "English Task 1 Final Test Set" \
+  --devset-filename english_task1_final_public.jsonl \
+  --template-filename english_task1_final_submission_template.json \
+  --gold-filename english_task1_final_gold.jsonl \
+  --output-subdir english_task1_final \
+  --storage-repo-id MBZUAI/finmmeval-task1-english-final-storage \
+  --space-repo-id MBZUAI/finmmeval-task1-english-final-portal \
+  --space-title "FinMMEval Task 1 English Final Submission Portal" \
+  --portal-mode test
+```
+
 ### 1. DNS
 
 Create an `A` record for your chosen subdomain and point it at this server's public IP.
