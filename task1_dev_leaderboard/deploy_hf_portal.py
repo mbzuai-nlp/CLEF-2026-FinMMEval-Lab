@@ -42,6 +42,11 @@ def parse_args() -> argparse.Namespace:
         default="dev",
         help="Use dev mode for a scored live leaderboard, or test mode for score-hidden final submissions.",
     )
+    parser.add_argument(
+        "--space-private",
+        action="store_true",
+        help="Create or update the HF Space as private staging. Omit this flag when making the portal public.",
+    )
     parser.add_argument("--official-site-url", default="https://mbzuai-nlp.github.io/CLEF-2026-FinMMEval-Lab/")
     parser.add_argument("--token", default=None, help="HF write token")
     return parser.parse_args()
@@ -65,7 +70,14 @@ def main() -> None:
 
     api = HfApi(token=token)
     api.create_repo(repo_id=args.storage_repo_id, repo_type="dataset", private=True, exist_ok=True)
-    api.create_repo(repo_id=args.space_repo_id, repo_type="space", space_sdk="docker", private=False, exist_ok=True)
+    api.create_repo(
+        repo_id=args.space_repo_id,
+        repo_type="space",
+        space_sdk="docker",
+        private=args.space_private,
+        exist_ok=True,
+    )
+    api.update_repo_settings(repo_id=args.space_repo_id, repo_type="space", private=args.space_private)
 
     env = os.environ.copy()
     env["HF_TOKEN"] = token

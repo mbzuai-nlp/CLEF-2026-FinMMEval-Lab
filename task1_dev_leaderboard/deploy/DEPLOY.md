@@ -41,7 +41,7 @@ Before publishing or deploying a public Space folder, run:
 python task1_dev_leaderboard/check_public_release.py
 ```
 
-For a Hugging Face final-test Space, deploy with `--portal-mode test`. Example:
+For a Hugging Face final-test Space, deploy with `--portal-mode test`. Use `--space-private` while staging before the public release date; omit it when publishing the participant-facing Space. Example:
 
 ```bash
 python task1_dev_leaderboard/deploy_hf_portal.py \
@@ -54,7 +54,8 @@ python task1_dev_leaderboard/deploy_hf_portal.py \
   --storage-repo-id MBZUAI/finmmeval-task1-english-final-storage \
   --space-repo-id MBZUAI/finmmeval-task1-english-final-portal \
   --space-title "FinMMEval Task 1 English Final Submission Portal" \
-  --portal-mode test
+  --portal-mode test \
+  --space-private
 ```
 
 ### 1. DNS
