@@ -3,9 +3,21 @@
 Lightweight baselines for the currently public Task 1 dev leaderboards.
 
 Current public languages:
+- `English`
+- `Chinese`
+- `Arabic`
 - `Hindi`
 
 Files:
+- `random_english_submission.jsonl`
+- `always_a_english_submission.jsonl`
+- `round_robin_english_submission.jsonl`
+- `random_chinese_submission.jsonl`
+- `always_a_chinese_submission.jsonl`
+- `round_robin_chinese_submission.jsonl`
+- `random_arabic_submission.jsonl`
+- `always_a_arabic_submission.jsonl`
+- `round_robin_arabic_submission.jsonl`
 - `random_hindi_submission.jsonl`
 - `always_a_hindi_submission.jsonl`
 - `round_robin_hindi_submission.jsonl`
@@ -15,11 +27,28 @@ Baseline definitions:
 - `Random Baseline`: chooses uniformly from the valid options shown for each item with a fixed seed.
 - `Always A`: always predicts option `A` when it is available.
 - `Round Robin`: cycles through the valid option letters in item order.
-- `Qwen2.5-0.5B-Instruct Zero shot`: runs the small Qwen2.5 instruction model without task-specific fine-tuning.
+- `Qwen2.5-0.5B-Instruct Zero shot`: runs the small Qwen2.5 instruction model without task-specific fine-tuning. This baseline is currently available for Hindi only.
 
 Regenerate them from the repo root:
 
 ```bash
+for lang in english chinese arabic; do
+  python task1_dev_leaderboard/create_random_baseline.py \
+    --devset task1_dev_leaderboard/dev_sets/${lang}_task1_final_public.jsonl \
+    --output task1_dev_leaderboard/baselines/random_${lang}_submission.jsonl \
+    --seed 2026
+
+  python task1_dev_leaderboard/create_rule_baseline.py \
+    --devset task1_dev_leaderboard/dev_sets/${lang}_task1_final_public.jsonl \
+    --output task1_dev_leaderboard/baselines/always_a_${lang}_submission.jsonl \
+    --strategy always_a
+
+  python task1_dev_leaderboard/create_rule_baseline.py \
+    --devset task1_dev_leaderboard/dev_sets/${lang}_task1_final_public.jsonl \
+    --output task1_dev_leaderboard/baselines/round_robin_${lang}_submission.jsonl \
+    --strategy round_robin
+done
+
 python task1_dev_leaderboard/create_random_baseline.py \
   --devset task1_dev_leaderboard/dev_sets/hindi_mcq_100_public.jsonl \
   --output task1_dev_leaderboard/baselines/random_hindi_submission.jsonl \
