@@ -103,12 +103,14 @@ def main() -> None:
         rows = rows[: args.max_items]
 
     tokenizer = AutoTokenizer.from_pretrained(args.model)
-    model = AutoModelForCausalLM.from_pretrained(
-        args.model,
-        dtype="auto",
-        device_map="auto" if model_device() != "cpu" else None,
-    )
-    if model_device() == "cpu":
+    device = model_device()
+    torch_dtype = torch.float16 if device == "mps" else "auto"
+    model_kwargs = {"device_map": "auto" if device != "cpu" else None}
+    try:
+        model = AutoModelForCausalLM.from_pretrained(args.model, dtype=torch_dtype, **model_kwargs)
+    except TypeError:
+        model = AutoModelForCausalLM.from_pretrained(args.model, torch_dtype=torch_dtype, **model_kwargs)
+    if device == "cpu":
         model.to("cpu")
     model.eval()
 

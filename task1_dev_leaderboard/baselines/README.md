@@ -12,12 +12,15 @@ Files:
 - `random_english_submission.jsonl`
 - `always_a_english_submission.jsonl`
 - `round_robin_english_submission.jsonl`
+- `small_qwen_zero_shot_english_submission.jsonl`
 - `random_chinese_submission.jsonl`
 - `always_a_chinese_submission.jsonl`
 - `round_robin_chinese_submission.jsonl`
+- `small_qwen_zero_shot_chinese_submission.jsonl`
 - `random_arabic_submission.jsonl`
 - `always_a_arabic_submission.jsonl`
 - `round_robin_arabic_submission.jsonl`
+- `small_qwen_zero_shot_arabic_submission.jsonl`
 - `random_hindi_submission.jsonl`
 - `always_a_hindi_submission.jsonl`
 - `round_robin_hindi_submission.jsonl`
@@ -27,7 +30,7 @@ Baseline definitions:
 - `Random Baseline`: chooses uniformly from the valid options shown for each item with a fixed seed.
 - `Always A`: always predicts option `A` when it is available.
 - `Round Robin`: cycles through the valid option letters in item order.
-- `Qwen2.5-0.5B-Instruct Zero shot`: runs the small Qwen2.5 instruction model without task-specific fine-tuning. This baseline is currently available for Hindi only.
+- `Qwen2.5-0.5B-Instruct Zero shot`: runs the small Qwen2.5 instruction model without task-specific fine-tuning.
 
 Regenerate them from the repo root:
 
@@ -47,6 +50,11 @@ for lang in english chinese arabic; do
     --devset task1_dev_leaderboard/dev_sets/${lang}_task1_final_public.jsonl \
     --output task1_dev_leaderboard/baselines/round_robin_${lang}_submission.jsonl \
     --strategy round_robin
+
+  python task1_dev_leaderboard/create_local_zero_shot_baseline.py \
+    --devset task1_dev_leaderboard/dev_sets/${lang}_task1_final_public.jsonl \
+    --output task1_dev_leaderboard/baselines/small_qwen_zero_shot_${lang}_submission.jsonl \
+    --model Qwen/Qwen2.5-0.5B-Instruct
 done
 
 python task1_dev_leaderboard/create_random_baseline.py \
