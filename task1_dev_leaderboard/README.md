@@ -52,19 +52,30 @@ Main files:
 
 ## Released Dev Sets
 
-At present, only the Hindi Task 1 dev leaderboard is public. English, Chinese, and Arabic dev leaderboards are temporarily hidden while the organizer side completes final data-pool review and split validation.
+At present, the English, Chinese, and Hindi Task 1 dev leaderboards are public. Arabic is temporarily hidden while the organizer side completes final data-pool review and split validation.
 
 Public files:
+- `task1_dev_leaderboard/dev_sets/english_task1_final_public.jsonl`
+- `task1_dev_leaderboard/dev_sets/english_task1_final_submission_template.json`
+- `task1_dev_leaderboard/dev_sets/chinese_task1_final_public.jsonl`
+- `task1_dev_leaderboard/dev_sets/chinese_task1_final_submission_template.json`
 - `task1_dev_leaderboard/dev_sets/hindi_mcq_100_public.jsonl`
 - `task1_dev_leaderboard/dev_sets/hindi_mcq_100_submission_template.json`
 
-Organizer-private file:
+Organizer-private files:
+- `task1_dev_leaderboard/private/english_task1_final_gold.jsonl`
+- `task1_dev_leaderboard/private/english_task1_final_hidden_test.jsonl`
+- `task1_dev_leaderboard/private/chinese_task1_final_gold.jsonl`
+- `task1_dev_leaderboard/private/chinese_task1_final_hidden_test.jsonl`
 - `task1_dev_leaderboard/private/hindi_mcq_100_gold.jsonl`
+- `task1_dev_leaderboard/private/hindi_mcq_hidden_test.jsonl`
 
 Sampling policy:
 - deterministic
 - seed = `2026`
-- target size = `100`
+- English: 70 public dev examples and 200 hidden test examples
+- Chinese: 71 public dev examples and 200 hidden test examples
+- Hindi: 100 public dev examples and 200 hidden test examples
 
 ### Participant Submission Format
 
