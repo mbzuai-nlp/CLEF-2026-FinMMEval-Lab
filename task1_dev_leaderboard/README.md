@@ -52,13 +52,15 @@ Main files:
 
 ## Released Dev Sets
 
-At present, the English, Chinese, and Hindi Task 1 dev leaderboards are public. Arabic is temporarily hidden while the organizer side completes final data-pool review and split validation.
+At present, the English, Chinese, Arabic, and Hindi Task 1 dev leaderboards are public.
 
 Public files:
 - `task1_dev_leaderboard/dev_sets/english_task1_final_public.jsonl`
 - `task1_dev_leaderboard/dev_sets/english_task1_final_submission_template.json`
 - `task1_dev_leaderboard/dev_sets/chinese_task1_final_public.jsonl`
 - `task1_dev_leaderboard/dev_sets/chinese_task1_final_submission_template.json`
+- `task1_dev_leaderboard/dev_sets/arabic_task1_final_public.jsonl`
+- `task1_dev_leaderboard/dev_sets/arabic_task1_final_submission_template.json`
 - `task1_dev_leaderboard/dev_sets/hindi_mcq_100_public.jsonl`
 - `task1_dev_leaderboard/dev_sets/hindi_mcq_100_submission_template.json`
 
@@ -67,6 +69,8 @@ Organizer-private files:
 - `task1_dev_leaderboard/private/english_task1_final_hidden_test.jsonl`
 - `task1_dev_leaderboard/private/chinese_task1_final_gold.jsonl`
 - `task1_dev_leaderboard/private/chinese_task1_final_hidden_test.jsonl`
+- `task1_dev_leaderboard/private/arabic_task1_final_gold.jsonl`
+- `task1_dev_leaderboard/private/arabic_task1_final_hidden_test.jsonl`
 - `task1_dev_leaderboard/private/hindi_mcq_100_gold.jsonl`
 - `task1_dev_leaderboard/private/hindi_mcq_hidden_test.jsonl`
 
@@ -75,6 +79,7 @@ Sampling policy:
 - seed = `2026`
 - English: 70 public dev examples and 200 hidden test examples
 - Chinese: 71 public dev examples and 200 hidden test examples
+- Arabic: 97 public dev examples and 200 hidden test examples after conservative question-level de-duplication
 - Hindi: 100 public dev examples and 200 hidden test examples
 
 ### Participant Submission Format
@@ -87,7 +92,7 @@ Minimal per-item schema:
 
 ```json
 {
-  "id": "acct-dev-001",
+  "id": "ar-task1-final-dev-001",
   "prediction": "B"
 }
 ```
@@ -115,17 +120,18 @@ Run:
 
 ```bash
 python task1_dev_leaderboard/evaluate_submissions.py \
-  --gold-file task1_dev_leaderboard/private/hindi_mcq_100_gold.jsonl \
+  --gold-file task1_dev_leaderboard/private/arabic_task1_final_gold.jsonl \
   --submissions-dir task1_dev_leaderboard/submissions \
-  --out-dir task1_dev_leaderboard/outputs/hindi_mcq_dev
+  --out-dir task1_dev_leaderboard/outputs/arabic_task1_final_dev
 ```
 
 This writes:
 - `leaderboard_overall.csv`
-- `leaderboard_by_source.csv`
 - `per_item_results.csv`
 - one `*__validation.json` per submission
 - a rendered `README.md`
+
+`leaderboard_by_source.csv` is only created for older gold files that include a non-empty `source` field.
 
 ### Auto-Refresh Mode
 
@@ -133,9 +139,9 @@ If you want organizer-side near-real-time leaderboard refresh, run the watcher:
 
 ```bash
 python task1_dev_leaderboard/watch_submissions.py \
-  --gold-file task1_dev_leaderboard/private/hindi_mcq_100_gold.jsonl \
+  --gold-file task1_dev_leaderboard/private/arabic_task1_final_gold.jsonl \
   --submissions-dir task1_dev_leaderboard/submissions \
-  --out-dir task1_dev_leaderboard/outputs/hindi_mcq_dev \
+  --out-dir task1_dev_leaderboard/outputs/arabic_task1_final_dev \
   --run-on-start
 ```
 
@@ -146,7 +152,7 @@ Behavior:
 - refreshes leaderboard outputs in place
 - writes `watch_status.json` with watcher state and last run result
 
-This gives you organizer-side automatic ranking updates. If you later want a public live page, you can point a static site, Hugging Face Space, or dashboard script at the files in `task1_dev_leaderboard/outputs/accounting_clef_dev/`.
+This gives you organizer-side automatic ranking updates. If you later want a public live page, you can point a static site, Hugging Face Space, or dashboard script at the files in `task1_dev_leaderboard/outputs/arabic_task1_final_dev/`.
 
 ## Web Portal
 
@@ -289,7 +295,7 @@ Map the fields in config, for example:
 
 ```json
 {
-  "key": "accounting_clef_ar",
+  "key": "arabic_accounting_clef",
   "format": "mcq_parquet",
   "path": "../data/accounting_CLEF/data/train-00000-of-00001.parquet",
   "answer_field": "correct_answer",

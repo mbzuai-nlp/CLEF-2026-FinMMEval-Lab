@@ -77,7 +77,10 @@ def main() -> None:
         private=args.space_private,
         exist_ok=True,
     )
-    api.update_repo_settings(repo_id=args.space_repo_id, repo_type="space", private=args.space_private)
+    if hasattr(api, "update_repo_settings"):
+        api.update_repo_settings(repo_id=args.space_repo_id, repo_type="space", private=args.space_private)
+    else:
+        api.update_repo_visibility(repo_id=args.space_repo_id, repo_type="space", private=args.space_private)
 
     env = os.environ.copy()
     env["HF_TOKEN"] = token

@@ -1,7 +1,7 @@
 {
   "datasets": [
     {
-      "key": "accounting_clef_ar",
+      "key": "arabic_accounting_clef",
       "name": "Accounting CLEF",
       "format": "mcq_parquet",
       "path": "../data/accounting_CLEF/data/train-00000-of-00001.parquet",
@@ -22,7 +22,7 @@
       "model_name": "replace_with_model_name",
       "format": "task1_jsonl",
       "path": "replace_with_prediction_file.jsonl",
-      "datasets": ["accounting_clef_ar"]
+      "datasets": ["arabic_accounting_clef"]
     }
   ]
 }
