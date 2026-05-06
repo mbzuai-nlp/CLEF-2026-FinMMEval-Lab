@@ -448,12 +448,15 @@ def current_test_status_payload() -> dict[str, Any]:
             format_validation = load_json(OUTPUT_DIR / f"{slug}__format_validation.json", {})
             evaluation_validation = load_json(OUTPUT_DIR / f"{slug}__validation.json", {})
             format_valid = bool(format_validation and format_validation.get("valid_submission"))
+            evaluation_completed = bool(evaluation_validation)
             submissions.append(
                 {
                     "team_name": meta.get("display_name", slug),
                     "uploaded_at": meta.get("uploaded_at"),
+                    "coverage": format_validation.get("coverage") if format_validation else None,
+                    "completed": bool(format_valid and evaluation_completed),
                     "format_valid": format_valid,
-                    "evaluation_completed": bool(evaluation_validation),
+                    "evaluation_completed": evaluation_completed,
                     "missing_ids": len(format_validation.get("missing_ids") or []),
                     "unknown_ids": len(format_validation.get("unknown_ids") or []),
                     "duplicate_ids": int(format_validation.get("duplicate_ids") or 0),

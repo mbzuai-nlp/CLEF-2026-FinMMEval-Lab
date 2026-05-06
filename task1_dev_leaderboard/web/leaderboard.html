@@ -141,29 +141,21 @@
     function renderSubmissionStatus(rows) {
       const body = document.getElementById('overall-body');
       if (!rows.length) {
-        body.innerHTML = '<tr><td colspan="6">No submissions yet.</td></tr>';
+        body.innerHTML = '<tr><td colspan="4">No submissions yet.</td></tr>';
         return;
       }
-      body.innerHTML = rows.map((row, index) => {
-        const issueText = [
-          `missing ${row.missing_ids ?? 0}`,
-          `unknown ${row.unknown_ids ?? 0}`,
-          `duplicate ${row.duplicate_ids ?? 0}`,
-          `invalid ${row.invalid_prediction_count ?? 0}`,
-        ].join(', ');
+      body.innerHTML = rows.map((row) => {
         return `
         <tr>
-          <td>${index + 1}</td>
           <td>
             <div class="team-name-cell">${escapeHtml(row.team_name || 'Submitted team')}</div>
             <div class="team-meta">
               <span class="team-pill participant">Submitted</span>
             </div>
           </td>
-          <td>${row.format_valid ? 'yes' : 'no'}</td>
-          <td>${row.evaluation_completed ? 'completed' : 'pending'}</td>
-          <td>${escapeHtml(issueText)}</td>
           <td>${escapeHtml(row.uploaded_at ?? '-')}</td>
+          <td>${formatPercent(row.coverage)}</td>
+          <td>${row.completed ? 'completed' : 'pending'}</td>
         </tr>
       `;
       }).join('');
@@ -176,12 +168,10 @@
       document.getElementById('leaderboard-table-title').textContent = 'Submission Status';
       document.getElementById('leaderboard-head').innerHTML = `
         <tr>
-          <th>#</th>
           <th>Team</th>
-          <th>Format Valid</th>
-          <th>Evaluation</th>
-          <th>Validation Issues</th>
-          <th>Uploaded At</th>
+          <th>Updated</th>
+          <th>Coverage</th>
+          <th>Completed</th>
         </tr>
       `;
     }
