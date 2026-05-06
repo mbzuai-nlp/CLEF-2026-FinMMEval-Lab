@@ -115,7 +115,7 @@ def build_markdown_table(rows: list[dict], columns: list[tuple[str, str]]) -> st
     return "\n".join([header, separator] + body)
 
 
-def write_empty_outputs(out_dir: Path) -> None:
+def write_empty_outputs(out_dir: Path, has_source_breakdown: bool = False) -> None:
     write_csv(
         out_dir / "leaderboard_overall.csv",
         [],
@@ -135,16 +135,19 @@ def write_empty_outputs(out_dir: Path) -> None:
             "valid_submission",
         ],
     )
-    write_csv(
-        out_dir / "leaderboard_by_source.csv",
-        [],
-        ["model_name", "source", "accuracy", "correct", "total", "coverage", "answered_accuracy", "answered"],
-    )
-    write_csv(
-        out_dir / "per_item_results.csv",
-        [],
-        ["model_name", "id", "source", "gold_answer", "pred_answer", "answered", "is_correct"],
-    )
+    by_source_path = out_dir / "leaderboard_by_source.csv"
+    if has_source_breakdown:
+        write_csv(
+            by_source_path,
+            [],
+            ["model_name", "source", "accuracy", "correct", "total", "coverage", "answered_accuracy", "answered"],
+        )
+    else:
+        by_source_path.unlink(missing_ok=True)
+    per_item_fields = ["model_name", "id", "gold_answer", "pred_answer", "answered", "is_correct"]
+    if has_source_breakdown:
+        per_item_fields.insert(2, "source")
+    write_csv(out_dir / "per_item_results.csv", [], per_item_fields)
     readme = [
         "# Task 1 Dev Leaderboard",
         "",
@@ -153,10 +156,11 @@ def write_empty_outputs(out_dir: Path) -> None:
         "## Files",
         "",
         "- `leaderboard_overall.csv`: overall leaderboard",
-        "- `leaderboard_by_source.csv`: breakdown by source split",
         "- `per_item_results.csv`: organizer-side per-item scoring results",
         "",
     ]
+    if has_source_breakdown:
+        readme.insert(-2, "- `leaderboard_by_source.csv`: breakdown by source split")
     (out_dir / "README.md").write_text("\n".join(readme), encoding="utf-8")
 
 
@@ -174,6 +178,7 @@ def main() -> None:
 
     gold_map, gold_meta = load_gold(gold_file)
     expected_ids = set(gold_map.keys())
+    has_source_breakdown = any(str(row.get("source", "")).strip() for row in gold_meta.values())
 
     summary_rows = []
     per_item_rows = []
@@ -188,7 +193,7 @@ def main() -> None:
     )
 
     if not submission_files:
-        write_empty_outputs(out_dir)
+        write_empty_outputs(out_dir, has_source_breakdown=has_source_breakdown)
         print(f"Wrote evaluation outputs to: {out_dir}")
         return
 
@@ -204,7 +209,7 @@ def main() -> None:
         for item_id in sorted(expected_ids):
             pred = predictions.get(item_id, "")
             gold = gold_map[item_id]
-            source = gold_meta[item_id].get("source", "")
+            source = str(gold_meta[item_id].get("source", "")).strip()
             is_correct = int(pred != "" and pred == gold)
             row = {
                 "model_name": model_name,
@@ -217,7 +222,8 @@ def main() -> None:
             }
             rows.append(row)
             per_item_rows.append(row)
-            source_groups[source].append(row)
+            if has_source_breakdown and source:
+                source_groups[source].append(row)
 
         total = len(rows)
         answered = sum(r["answered"] for r in rows)
@@ -296,16 +302,25 @@ def main() -> None:
             "valid_submission",
         ],
     )
-    write_csv(
-        out_dir / "leaderboard_by_source.csv",
-        by_source_rows,
-        ["model_name", "source", "accuracy", "correct", "total", "coverage", "answered_accuracy", "answered"],
-    )
-    write_csv(
-        out_dir / "per_item_results.csv",
-        per_item_rows,
-        ["model_name", "id", "source", "gold_answer", "pred_answer", "answered", "is_correct"],
-    )
+    by_source_path = out_dir / "leaderboard_by_source.csv"
+    if has_source_breakdown:
+        write_csv(
+            by_source_path,
+            by_source_rows,
+            ["model_name", "source", "accuracy", "correct", "total", "coverage", "answered_accuracy", "answered"],
+        )
+    else:
+        by_source_path.unlink(missing_ok=True)
+    per_item_fields = ["model_name", "id", "gold_answer", "pred_answer", "answered", "is_correct"]
+    per_item_output_rows = per_item_rows
+    if has_source_breakdown:
+        per_item_fields.insert(2, "source")
+    else:
+        per_item_output_rows = [
+            {key: value for key, value in row.items() if key != "source"}
+            for row in per_item_rows
+        ]
+    write_csv(out_dir / "per_item_results.csv", per_item_output_rows, per_item_fields)
 
     markdown_rows = []
     for row in summary_rows:
@@ -338,11 +353,12 @@ def main() -> None:
         "## Files",
         "",
         "- `leaderboard_overall.csv`: overall leaderboard",
-        "- `leaderboard_by_source.csv`: breakdown by source split",
         "- `per_item_results.csv`: organizer-side per-item scoring results",
         "- `*__validation.json`: validation diagnostics per submission",
         "",
     ]
+    if has_source_breakdown:
+        readme.insert(-3, "- `leaderboard_by_source.csv`: breakdown by source split")
     (out_dir / "README.md").write_text("\n".join(readme), encoding="utf-8")
     print(f"Wrote evaluation outputs to: {out_dir}")
 
