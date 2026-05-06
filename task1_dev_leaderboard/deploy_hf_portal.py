@@ -47,6 +47,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Create or update the HF Space as private staging. Omit this flag when making the portal public.",
     )
+    parser.add_argument(
+        "--skip-bootstrap",
+        action="store_true",
+        help="Only upload/update Space code and variables. Use this after the storage repo already exists to avoid resetting registry/output state.",
+    )
     parser.add_argument("--official-site-url", default="https://mbzuai-nlp.github.io/CLEF-2026-FinMMEval-Lab/")
     parser.add_argument("--token", default=None, help="HF write token")
     return parser.parse_args()
@@ -90,19 +95,20 @@ def main() -> None:
     existing_pythonpath = env.get("PYTHONPATH", "").strip()
     env["PYTHONPATH"] = str(PROJECT_ROOT) if not existing_pythonpath else f"{PROJECT_ROOT}:{existing_pythonpath}"
 
-    run(
-        [
-            sys.executable,
-            str(APP_ROOT / "bootstrap_hf_backend.py"),
-            "--repo-id",
-            args.storage_repo_id,
-            "--gold-file",
-            str(APP_ROOT / "private" / args.gold_filename),
-            "--token",
-            token,
-        ],
-        env=env,
-    )
+    if not args.skip_bootstrap:
+        run(
+            [
+                sys.executable,
+                str(APP_ROOT / "bootstrap_hf_backend.py"),
+                "--repo-id",
+                args.storage_repo_id,
+                "--gold-file",
+                str(APP_ROOT / "private" / args.gold_filename),
+                "--token",
+                token,
+            ],
+            env=env,
+        )
 
     safe_variant = args.variant.strip().lower().replace(" ", "_")
     out_dir = PROJECT_ROOT / f"task1_dev_leaderboard_hf_space_{safe_variant}"

@@ -75,6 +75,15 @@
   </div>
 
   <script>
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
     function formatPercent(value) {
       if (value === null || value === undefined || value === '') return '-';
       return `${(Number(value) * 100).toFixed(2)}%`;
@@ -112,18 +121,18 @@
         const displayName = normalizedDisplayName(row, isBaseline);
         return `
         <tr class="${isBaseline ? 'baseline-row' : ''}">
-          <td>${row.rank}</td>
+          <td>${escapeHtml(row.rank)}</td>
           <td>
-            <div class="team-name-cell">${displayName}</div>
+            <div class="team-name-cell">${escapeHtml(displayName)}</div>
             <div class="team-meta">
               <span class="team-pill ${isBaseline ? 'baseline' : 'participant'}">${typeLabel}</span>
             </div>
           </td>
           <td>${formatPercent(row.accuracy)}</td>
-          <td>${row.correct} / ${row.total}</td>
+          <td>${escapeHtml(row.correct)} / ${escapeHtml(row.total)}</td>
           <td>${formatPercent(row.coverage)}</td>
           <td>${row.valid_submission ? 'yes' : 'no'}</td>
-          <td>${row.uploaded_at ?? '-'}</td>
+          <td>${escapeHtml(row.uploaded_at ?? '-')}</td>
         </tr>
       `;
       }).join('');
@@ -146,15 +155,15 @@
         <tr>
           <td>${index + 1}</td>
           <td>
-            <div class="team-name-cell">${row.team_name || 'Submitted team'}</div>
+            <div class="team-name-cell">${escapeHtml(row.team_name || 'Submitted team')}</div>
             <div class="team-meta">
               <span class="team-pill participant">Submitted</span>
             </div>
           </td>
           <td>${row.format_valid ? 'yes' : 'no'}</td>
           <td>${row.evaluation_completed ? 'completed' : 'pending'}</td>
-          <td>${issueText}</td>
-          <td>${row.uploaded_at ?? '-'}</td>
+          <td>${escapeHtml(issueText)}</td>
+          <td>${escapeHtml(row.uploaded_at ?? '-')}</td>
         </tr>
       `;
       }).join('');

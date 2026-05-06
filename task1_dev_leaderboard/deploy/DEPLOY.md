@@ -58,6 +58,23 @@ python task1_dev_leaderboard/deploy_hf_portal.py \
   --space-private
 ```
 
+After the storage repo exists, use `--skip-bootstrap` for routine Space code or UI updates. This avoids resetting the private registry and output state:
+
+```bash
+python task1_dev_leaderboard/deploy_hf_portal.py \
+  --variant English \
+  --dataset-label "English Task 1 Final Test Set" \
+  --devset-filename english_task1_final_test_public.jsonl \
+  --template-filename english_task1_final_test_submission_template.json \
+  --gold-filename english_task1_final_test_gold.jsonl \
+  --output-subdir english_task1_final_test \
+  --storage-repo-id MBZUAI/finmmeval-task1-english-final-storage \
+  --space-repo-id MBZUAI/finmmeval-task1-english-final-portal \
+  --space-title "FinMMEval Task 1 English Final Submission Portal" \
+  --portal-mode test \
+  --skip-bootstrap
+```
+
 ### 1. DNS
 
 Create an `A` record for your chosen subdomain and point it at this server's public IP.

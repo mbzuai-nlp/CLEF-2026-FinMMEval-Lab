@@ -84,6 +84,15 @@
   </div>
 
   <script>
+    function escapeHtml(value) {
+      return String(value ?? '')
+        .replaceAll('&', '&amp;')
+        .replaceAll('<', '&lt;')
+        .replaceAll('>', '&gt;')
+        .replaceAll('"', '&quot;')
+        .replaceAll("'", '&#39;');
+    }
+
     async function loadMeta() {
       const response = await fetch('/api/task1/dev/meta');
       if (!response.ok) return;
@@ -126,7 +135,7 @@
       panel.classList.remove('hidden', 'result-success', 'result-error');
       panel.classList.add(isError ? 'result-error' : 'result-success');
       if (isError) {
-        panel.innerHTML = `<h3>Submission Failed</h3><pre>${JSON.stringify(payload, null, 2)}</pre>`;
+        panel.innerHTML = `<h3>Submission Failed</h3><pre>${escapeHtml(JSON.stringify(payload, null, 2))}</pre>`;
         return;
       }
       const row = payload.leaderboard_row || null;
@@ -134,22 +143,22 @@
       const evaluation = payload.evaluation || {};
       const scoreCells = row
         ? `
-          <div><span>Rank</span><strong>${row.rank ?? '-'}</strong></div>
-          <div><span>Accuracy</span><strong>${row.accuracy ?? '-'}</strong></div>
-          <div><span>Coverage</span><strong>${row.coverage ?? '-'}</strong></div>`
+          <div><span>Rank</span><strong>${escapeHtml(row.rank ?? '-')}</strong></div>
+          <div><span>Accuracy</span><strong>${escapeHtml(row.accuracy ?? '-')}</strong></div>
+          <div><span>Coverage</span><strong>${escapeHtml(row.coverage ?? '-')}</strong></div>`
         : `
-          <div><span>Coverage</span><strong>${validation.coverage ?? '-'}</strong></div>
-          <div><span>Answered</span><strong>${validation.answered ?? '-'} / ${validation.total ?? '-'}</strong></div>
+          <div><span>Coverage</span><strong>${escapeHtml(validation.coverage ?? '-')}</strong></div>
+          <div><span>Answered</span><strong>${escapeHtml(validation.answered ?? '-')} / ${escapeHtml(validation.total ?? '-')}</strong></div>
           <div><span>Format Valid</span><strong>${validation.valid_submission ? 'yes' : 'no'}</strong></div>
           <div><span>Evaluation</span><strong>${evaluation.completed ? 'completed' : 'not completed'}</strong></div>`;
       panel.innerHTML = `
         <h3>Submission Accepted</h3>
-        <p>${payload.message}</p>
+        <p>${escapeHtml(payload.message)}</p>
         <div class="result-grid">
-          <div><span>Team</span><strong>${payload.team_name}</strong></div>
+          <div><span>Team</span><strong>${escapeHtml(payload.team_name)}</strong></div>
           ${scoreCells}
         </div>
-        <p class="helper-text">Validation: unknown IDs = ${validation.unknown_ids?.length ?? 0}, missing IDs = ${validation.missing_ids?.length ?? 0}, duplicate IDs = ${validation.duplicate_ids ?? 0}, invalid predictions = ${validation.invalid_prediction_count ?? 0}</p>
+        <p class="helper-text">Validation: unknown IDs = ${escapeHtml(validation.unknown_ids?.length ?? 0)}, missing IDs = ${escapeHtml(validation.missing_ids?.length ?? 0)}, duplicate IDs = ${escapeHtml(validation.duplicate_ids ?? 0)}, invalid predictions = ${escapeHtml(validation.invalid_prediction_count ?? 0)}</p>
       `;
     }
 

@@ -225,9 +225,13 @@ def resolve_submission_identity(
         display_name = team_name.strip()
         if not display_name:
             raise HTTPException(status_code=400, detail="Team name is required.")
+        if len(display_name) > 160:
+            raise HTTPException(status_code=400, detail="Team name must be 160 characters or fewer.")
         return email_submission_slug(email), display_name, email
 
     slug, display_name = resolve_team_identity(team_name, submission_code)
+    if len(display_name) > 160:
+        raise HTTPException(status_code=400, detail="Team name must be 160 characters or fewer.")
     email = normalize_email(contact_email) if contact_email.strip() else None
     if email and not EMAIL_RE.fullmatch(email):
         raise HTTPException(status_code=400, detail="Please provide a valid email address.")
@@ -448,7 +452,6 @@ def current_test_status_payload() -> dict[str, Any]:
                 {
                     "team_name": meta.get("display_name", slug),
                     "uploaded_at": meta.get("uploaded_at"),
-                    "original_filename": meta.get("original_filename"),
                     "format_valid": format_valid,
                     "evaluation_completed": bool(evaluation_validation),
                     "missing_ids": len(format_validation.get("missing_ids") or []),
