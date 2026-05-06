@@ -581,12 +581,41 @@
       color: var(--ink);
     }
 
+    .test-language-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .test-language-card {
+      padding: 18px;
+      background: #ffffff;
+      border: 1px solid rgba(145, 170, 210, 0.25);
+      border-radius: var(--radius-md);
+    }
+
+    .test-language-card h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .test-language-card p {
+      font-size: 13px;
+      line-height: 1.7;
+      margin-bottom: 14px;
+    }
+
     @media (max-width: 1040px) {
       .dev-grid {
         grid-template-columns: 1fr;
       }
 
       .leaderboard-summary {
+        grid-template-columns: 1fr;
+      }
+
+      .test-language-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -648,7 +677,7 @@
         </button>
         <button class="stage-tab" data-stage="test">
           <strong>Test</strong>
-          <span>Hidden test release status and upcoming submission instructions.</span>
+          <span>Final-test submissions, templates, and private evaluation status.</span>
         </button>
       </div>
 
@@ -696,12 +725,54 @@
       <div class="stage-panel" id="stage-test">
         <div class="test-shell">
           <div class="card test-card">
-            <h2>Task 1 Hidden Test</h2>
-            <p>Stay tuned.</p>
+            <h2>Task 1 Final Test Submission</h2>
+            <p>Final-test portals are open for English, Chinese, Arabic, and Hindi. Each submission must include an email address. The email is used as the unique submission key, so a later upload from the same email replaces the earlier active submission. Scores and ranks remain hidden until the official result release.</p>
             <div class="test-tags">
-              <div class="test-tag">Organizer-only test sets already prepared internally</div>
-              <div class="test-tag">Submission instructions pending release</div>
-              <div class="test-tag">Public announcement will appear on the official site</div>
+              <div class="test-tag">200 final-test questions per language</div>
+              <div class="test-tag">One active submission per email</div>
+              <div class="test-tag">Status only: format valid and evaluation completed</div>
+            </div>
+            <div class="test-language-grid">
+              <div class="test-language-card">
+                <h3>English</h3>
+                <p>English Task 1 final test set.</p>
+                <div class="actions-grid">
+                  <a class="button primary" href="https://mbzuai-finmmeval-task1-english-final-portal.hf.space/task1/dev/submit">Open Submission Portal</a>
+                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-english-final-portal.hf.space/task1/dev/leaderboard">View Submission Status</a>
+                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-english-final-portal.hf.space/api/task1/devset/download">Download Test Set</a>
+                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-english-final-portal.hf.space/api/task1/template/download">Download Template</a>
+                </div>
+              </div>
+              <div class="test-language-card">
+                <h3>Chinese</h3>
+                <p>Chinese Task 1 final test set.</p>
+                <div class="actions-grid">
+                  <a class="button primary" href="https://mbzuai-finmmeval-task1-chinese-final-portal.hf.space/task1/dev/submit">Open Submission Portal</a>
+                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-chinese-final-portal.hf.space/task1/dev/leaderboard">View Submission Status</a>
+                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-chinese-final-portal.hf.space/api/task1/devset/download">Download Test Set</a>
+                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-chinese-final-portal.hf.space/api/task1/template/download">Download Template</a>
+                </div>
+              </div>
+              <div class="test-language-card">
+                <h3>Arabic</h3>
+                <p>Arabic Task 1 final test set.</p>
+                <div class="actions-grid">
+                  <a class="button primary" href="https://mbzuai-finmmeval-task1-arabic-final-portal.hf.space/task1/dev/submit">Open Submission Portal</a>
+                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-arabic-final-portal.hf.space/task1/dev/leaderboard">View Submission Status</a>
+                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-arabic-final-portal.hf.space/api/task1/devset/download">Download Test Set</a>
+                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-arabic-final-portal.hf.space/api/task1/template/download">Download Template</a>
+                </div>
+              </div>
+              <div class="test-language-card">
+                <h3>Hindi</h3>
+                <p>Hindi Task 1 final test set.</p>
+                <div class="actions-grid">
+                  <a class="button primary" href="https://mbzuai-finmmeval-task1-hindi-final-portal.hf.space/task1/dev/submit">Open Submission Portal</a>
+                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-final-portal.hf.space/task1/dev/leaderboard">View Submission Status</a>
+                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-final-portal.hf.space/api/task1/devset/download">Download Test Set</a>
+                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-final-portal.hf.space/api/task1/template/download">Download Template</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
