@@ -178,7 +178,7 @@ def main() -> None:
 
     gold_map, gold_meta = load_gold(gold_file)
     expected_ids = set(gold_map.keys())
-    has_source_breakdown = any(str(row.get("source", "")).strip() for row in gold_meta.values())
+    has_source_breakdown = False
 
     summary_rows = []
     per_item_rows = []

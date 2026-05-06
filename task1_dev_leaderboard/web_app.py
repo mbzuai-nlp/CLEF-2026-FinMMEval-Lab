@@ -362,7 +362,6 @@ def current_leaderboard_payload() -> dict[str, Any]:
         STORAGE.sync_remote_state()
         registry = load_registry()
         overall = normalize_rows(load_csv_rows(OUTPUT_DIR / "leaderboard_overall.csv"))
-        by_source = normalize_rows(load_csv_rows(OUTPUT_DIR / "leaderboard_by_source.csv"))
         status = load_json(WATCH_STATUS_FILE, {})
         public_status = {
             "backend": status.get("backend", STORAGE.backend_name),
@@ -378,10 +377,6 @@ def current_leaderboard_payload() -> dict[str, Any]:
             row["uploaded_at"] = registry.get(slug, {}).get("uploaded_at")
             row["original_filename"] = registry.get(slug, {}).get("original_filename")
 
-        for row in by_source:
-            slug = row.get("model_name", "")
-            row["display_name"] = registry.get(slug, {}).get("display_name", slug)
-
         dataset_meta = {
             "devset_filename": DEVSET_FILE.name,
             "template_filename": TEMPLATE_FILE.name,
@@ -395,7 +390,7 @@ def current_leaderboard_payload() -> dict[str, Any]:
             ),
             "last_updated": status.get("last_run_at"),
         }
-        return {"overall": overall, "by_source": by_source, "status": public_status, "dataset": dataset_meta}
+        return {"overall": overall, "status": public_status, "dataset": dataset_meta}
 
 
 @app.on_event("startup")

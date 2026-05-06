@@ -78,12 +78,8 @@ def main() -> None:
             "valid_submission",
         ]
         (outputs_dir / "leaderboard_overall.csv").write_text(",".join(leaderboard_fields) + "\n", encoding="utf-8")
-        (outputs_dir / "leaderboard_by_source.csv").write_text(
-            "model_name,source,accuracy,correct,total,coverage,answered_accuracy,answered\n",
-            encoding="utf-8",
-        )
         (outputs_dir / "per_item_results.csv").write_text(
-            "model_name,id,source,gold_answer,pred_answer,answered,is_correct\n",
+            "model_name,id,gold_answer,pred_answer,answered,is_correct\n",
             encoding="utf-8",
         )
         (outputs_dir / "README.md").write_text("# Task 1 Dev Leaderboard\n\nNo submissions yet.\n", encoding="utf-8")
