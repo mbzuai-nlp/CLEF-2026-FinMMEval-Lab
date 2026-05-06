@@ -17,9 +17,9 @@
     </div>
     <header class="topbar compact-topbar">
       <div class="brand-block">
-        <div id="leaderboard-kicker" class="brand-kicker">Live Ranking</div>
+        <div id="leaderboard-kicker" class="brand-kicker">__LEADERBOARD_KICKER__</div>
         <h1>__PORTAL_LEADERBOARD_TITLE__</h1>
-        <p id="leaderboard-intro">Official organizer-side ranking page for the released __PORTAL_VARIANT__ Task 1 dev set. Results refresh automatically after each successful submission.</p>
+        <p id="leaderboard-intro">__LEADERBOARD_INTRO__</p>
       </div>
       <nav class="nav-links">
         <a href="__OFFICIAL_SITE_URL__">Official Site</a>
@@ -44,29 +44,21 @@
     </section>
 
     <section class="panel">
-      <p id="leaderboard-note" class="helper-text">Organizer note: each registered team should use one consistent official team name. Duplicate aliases, test entries, or obvious non-team submissions may be merged, renamed, or removed from this dev leaderboard.</p>
+      <p id="leaderboard-note" class="helper-text">__LEADERBOARD_NOTE__</p>
     </section>
 
     <section class="panel">
       <div class="panel-header">
-        <h2 id="leaderboard-table-title">Overall Ranking</h2>
+        <h2 id="leaderboard-table-title">__LEADERBOARD_TABLE_TITLE__</h2>
         <button id="refresh-button" class="button button-secondary">Refresh Now</button>
       </div>
       <div class="table-wrap">
         <table class="data-table">
           <thead id="leaderboard-head">
-            <tr>
-              <th>Rank</th>
-              <th>Team</th>
-              <th>Accuracy</th>
-              <th>Correct / Total</th>
-              <th>Coverage</th>
-              <th>Valid</th>
-              <th>Uploaded At</th>
-            </tr>
+            __LEADERBOARD_TABLE_HEAD__
           </thead>
           <tbody id="overall-body">
-            <tr><td colspan="7">Loading...</td></tr>
+            <tr><td colspan="__LEADERBOARD_EMPTY_COLSPAN__">Loading...</td></tr>
           </tbody>
         </table>
       </div>

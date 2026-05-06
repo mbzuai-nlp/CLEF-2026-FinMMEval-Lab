@@ -86,6 +86,7 @@ def read_text_file(path: Path) -> str:
 
 def render_page(path: Path) -> str:
     content = read_text_file(path)
+    leaderboard_is_test = PORTAL_MODE == "test"
     replacements = {
         "__OFFICIAL_SITE_URL__": OFFICIAL_SITE_URL,
         "__PORTAL_TITLE__": PORTAL_TITLE,
@@ -93,6 +94,24 @@ def render_page(path: Path) -> str:
         "__PORTAL_LEADERBOARD_TITLE__": PORTAL_LEADERBOARD_TITLE,
         "__PORTAL_VARIANT__": PORTAL_VARIANT,
         "__PORTAL_DATASET_LABEL__": PORTAL_DATASET_LABEL,
+        "__LEADERBOARD_KICKER__": "Submission Status" if leaderboard_is_test else "Live Ranking",
+        "__LEADERBOARD_INTRO__": (
+            "Final-test submissions are accepted and evaluated privately. Scores, ranks, and correct counts remain hidden until the official release."
+            if leaderboard_is_test
+            else f"Official organizer-side ranking page for the released {PORTAL_VARIANT} Task 1 dev set. Results refresh automatically after each successful submission."
+        ),
+        "__LEADERBOARD_NOTE__": (
+            "Each submission must include an email address. The email is used as the unique submission key, so a later upload from the same email replaces the earlier active submission."
+            if leaderboard_is_test
+            else "Organizer note: each registered team should use one consistent official team name. Duplicate aliases, test entries, or obvious non-team submissions may be merged, renamed, or removed from this dev leaderboard."
+        ),
+        "__LEADERBOARD_TABLE_TITLE__": "Submission Status" if leaderboard_is_test else "Overall Ranking",
+        "__LEADERBOARD_TABLE_HEAD__": (
+            "<tr><th>Team</th><th>Updated</th><th>Coverage</th><th>Completed</th></tr>"
+            if leaderboard_is_test
+            else "<tr><th>Rank</th><th>Team</th><th>Accuracy</th><th>Correct / Total</th><th>Coverage</th><th>Valid</th><th>Uploaded At</th></tr>"
+        ),
+        "__LEADERBOARD_EMPTY_COLSPAN__": "4" if leaderboard_is_test else "7",
     }
     for old, new in replacements.items():
         content = content.replace(old, new)
