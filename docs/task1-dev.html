@@ -149,7 +149,8 @@
     }
 
     .stage-tab,
-    .language-tab {
+    .language-tab,
+    .test-language-tab {
       border: 1px solid rgba(145, 170, 210, 0.28);
       background: rgba(255, 255, 255, 0.7);
       color: var(--ink);
@@ -166,7 +167,8 @@
     }
 
     .stage-tab strong,
-    .language-tab strong {
+    .language-tab strong,
+    .test-language-tab strong {
       display: block;
       font-size: 15px;
       margin-bottom: 3px;
@@ -180,7 +182,8 @@
     }
 
     .stage-tab.active,
-    .language-tab.active {
+    .language-tab.active,
+    .test-language-tab.active {
       background: linear-gradient(135deg, #1f63d8 0%, #1a4aa8 100%);
       color: white;
       border-color: transparent;
@@ -188,7 +191,8 @@
     }
 
     .stage-tab.active span,
-    .language-tab.active span {
+    .language-tab.active span,
+    .test-language-tab.active span {
       color: rgba(255, 255, 255, 0.82);
     }
 
@@ -223,23 +227,27 @@
       margin-bottom: 18px;
     }
 
-    .language-tab {
+    .language-tab,
+    .test-language-tab {
       border-radius: 999px;
       padding: 12px 18px;
       text-align: left;
     }
 
-    .language-tab span {
+    .language-tab span,
+    .test-language-tab span {
       display: block;
       font-size: 12px;
       color: var(--muted);
     }
 
-    .language-panel {
+    .language-panel,
+    .test-language-panel {
       display: none;
     }
 
-    .language-panel.active {
+    .language-panel.active,
+    .test-language-panel.active {
       display: block;
     }
 
@@ -536,86 +544,12 @@
       font-size: 14px;
     }
 
-    .test-shell {
-      padding: 10px 0 4px;
-    }
-
-    .test-card {
-      padding: 24px;
-      background:
-        linear-gradient(135deg, rgba(31, 99, 216, 0.1), rgba(31, 99, 216, 0.03)),
-        #ffffff;
-    }
-
-    .test-card h2 {
-      margin: 0 0 10px;
-      font-family: "Source Serif 4", serif;
-      font-size: clamp(26px, 4vw, 36px);
-    }
-
-    .test-card p {
-      margin: 0;
-      color: var(--muted);
-      font-size: 15px;
-      line-height: 1.8;
-      max-width: 760px;
-    }
-
-    .test-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 18px 0 20px;
-    }
-
-    .test-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      border-radius: 999px;
-      padding: 10px 14px;
-      background: rgba(255, 255, 255, 0.75);
-      border: 1px solid rgba(145, 170, 210, 0.28);
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--ink);
-    }
-
-    .test-language-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 18px;
-    }
-
-    .test-language-card {
-      padding: 18px;
-      background: #ffffff;
-      border: 1px solid rgba(145, 170, 210, 0.25);
-      border-radius: var(--radius-md);
-    }
-
-    .test-language-card h3 {
-      margin: 0 0 8px;
-      font-size: 18px;
-    }
-
-    .test-language-card p {
-      font-size: 13px;
-      line-height: 1.7;
-      margin-bottom: 14px;
-    }
-
     @media (max-width: 1040px) {
       .dev-grid {
         grid-template-columns: 1fr;
       }
 
       .leaderboard-summary {
-        grid-template-columns: 1fr;
-      }
-
-      .test-language-grid {
         grid-template-columns: 1fr;
       }
     }
@@ -723,60 +657,42 @@
       </div>
 
       <div class="stage-panel" id="stage-test">
-        <div class="test-shell">
-          <div class="card test-card">
-            <h2>Task 1 Final Test Submission</h2>
-            <p>Final-test portals are open for English, Chinese, Arabic, and Hindi. Each submission must include an email address. The email is used as the unique submission key, so a later upload from the same email replaces the earlier active submission. Scores and ranks remain hidden until the official result release.</p>
-            <div class="test-tags">
-              <div class="test-tag">200 final-test questions per language</div>
-              <div class="test-tag">One active submission per email</div>
-              <div class="test-tag">Status only: updated time, coverage, and completed state</div>
-            </div>
-            <div class="test-language-grid">
-              <div class="test-language-card">
-                <h3>English</h3>
-                <p>English Task 1 final test set.</p>
-                <div class="actions-grid">
-                  <a class="button primary" href="https://mbzuai-finmmeval-task1-english-final-portal.hf.space/task1/dev/submit">Open Submission Portal</a>
-                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-english-final-portal.hf.space/task1/dev/leaderboard">View Submission Status</a>
-                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-english-final-portal.hf.space/api/task1/devset/download">Download Test Set</a>
-                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-english-final-portal.hf.space/api/task1/template/download">Download Template</a>
-                </div>
-              </div>
-              <div class="test-language-card">
-                <h3>Chinese</h3>
-                <p>Chinese Task 1 final test set.</p>
-                <div class="actions-grid">
-                  <a class="button primary" href="https://mbzuai-finmmeval-task1-chinese-final-portal.hf.space/task1/dev/submit">Open Submission Portal</a>
-                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-chinese-final-portal.hf.space/task1/dev/leaderboard">View Submission Status</a>
-                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-chinese-final-portal.hf.space/api/task1/devset/download">Download Test Set</a>
-                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-chinese-final-portal.hf.space/api/task1/template/download">Download Template</a>
-                </div>
-              </div>
-              <div class="test-language-card">
-                <h3>Arabic</h3>
-                <p>Arabic Task 1 final test set.</p>
-                <div class="actions-grid">
-                  <a class="button primary" href="https://mbzuai-finmmeval-task1-arabic-final-portal.hf.space/task1/dev/submit">Open Submission Portal</a>
-                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-arabic-final-portal.hf.space/task1/dev/leaderboard">View Submission Status</a>
-                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-arabic-final-portal.hf.space/api/task1/devset/download">Download Test Set</a>
-                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-arabic-final-portal.hf.space/api/task1/template/download">Download Template</a>
-                </div>
-              </div>
-              <div class="test-language-card">
-                <h3>Hindi</h3>
-                <p>Hindi Task 1 final test set.</p>
-                <div class="actions-grid">
-                  <a class="button primary" href="https://mbzuai-finmmeval-task1-hindi-final-portal.hf.space/task1/dev/submit">Open Submission Portal</a>
-                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-final-portal.hf.space/task1/dev/leaderboard">View Submission Status</a>
-                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-final-portal.hf.space/api/task1/devset/download">Download Test Set</a>
-                  <a class="button secondary" href="https://mbzuai-finmmeval-task1-hindi-final-portal.hf.space/api/task1/template/download">Download Template</a>
-                </div>
-              </div>
-            </div>
+        <div class="dev-header">
+          <div>
+            <h2 class="section-title">Final Test Submissions</h2>
           </div>
         </div>
-      </div>
+
+        <div class="card pad" style="margin-bottom: 20px;">
+          <h3 class="meta-title">Official final-test submission</h3>
+          <p class="meta-copy">Final-test portals are open for English, Chinese, Arabic, and Hindi. Each submission must include an email address. The email is used as the unique submission key, so a later upload from the same email replaces the earlier active submission.</p>
+          <p class="meta-copy">Scores and ranks remain hidden until the official result release. The status table only shows each team's updated time, coverage, and whether validation plus private evaluation completed successfully.</p>
+        </div>
+
+        <div class="language-tabs">
+          <button class="test-language-tab active" data-test-language="english">
+            <strong>English</strong>
+            <span>English finance MCQ benchmark</span>
+          </button>
+          <button class="test-language-tab" data-test-language="chinese">
+            <strong>Chinese</strong>
+            <span>Chinese finance MCQ benchmark</span>
+          </button>
+          <button class="test-language-tab" data-test-language="hindi">
+            <strong>Hindi</strong>
+            <span>Hindi finance MCQ benchmark</span>
+          </button>
+          <button class="test-language-tab" data-test-language="arabic">
+            <strong>Arabic</strong>
+            <span>Accounting MCQ benchmark</span>
+          </button>
+        </div>
+
+        <div class="test-language-panel active" id="test-panel-english"></div>
+        <div class="test-language-panel" id="test-panel-chinese"></div>
+        <div class="test-language-panel" id="test-panel-arabic"></div>
+        <div class="test-language-panel" id="test-panel-hindi"></div>
+          </div>
     </section>
   </div>
 
@@ -836,6 +752,57 @@
       },
     };
 
+    const TEST_LANGUAGE_CONFIG = {
+      english: {
+        label: "English",
+        subtitle: "English finance MCQ final test benchmark",
+        testCount: 200,
+        answerSpace: "3-5 choices",
+        answerNote: "This benchmark mixes 3-option, 4-option, and 5-option questions. Participants should always answer using the options shown in each item.",
+        submitUrl: "https://mbzuai-finmmeval-task1-english-final-portal.hf.space/task1/dev/submit",
+        downloadUrl: "https://mbzuai-finmmeval-task1-english-final-portal.hf.space/api/task1/devset/download",
+        templateUrl: "https://mbzuai-finmmeval-task1-english-final-portal.hf.space/api/task1/template/download",
+        statusUrl: "https://mbzuai-finmmeval-task1-english-final-portal.hf.space/task1/dev/leaderboard",
+        statusApi: "https://mbzuai-finmmeval-task1-english-final-portal.hf.space/api/task1/leaderboard",
+      },
+      chinese: {
+        label: "Chinese",
+        subtitle: "Chinese finance MCQ final test benchmark",
+        testCount: 200,
+        answerSpace: "3-5 choices",
+        answerNote: "This benchmark mixes 3-option, 4-option, and 5-option questions. Participants should always answer using the options shown in each item.",
+        submitUrl: "https://mbzuai-finmmeval-task1-chinese-final-portal.hf.space/task1/dev/submit",
+        downloadUrl: "https://mbzuai-finmmeval-task1-chinese-final-portal.hf.space/api/task1/devset/download",
+        templateUrl: "https://mbzuai-finmmeval-task1-chinese-final-portal.hf.space/api/task1/template/download",
+        statusUrl: "https://mbzuai-finmmeval-task1-chinese-final-portal.hf.space/task1/dev/leaderboard",
+        statusApi: "https://mbzuai-finmmeval-task1-chinese-final-portal.hf.space/api/task1/leaderboard",
+      },
+      arabic: {
+        label: "Arabic",
+        subtitle: "Accounting and auditing MCQ final test benchmark",
+        testCount: 200,
+        answerSpace: "4-5 choices",
+        answerNote: "This benchmark mixes 4-option and 5-option questions. Participants should always answer using the options shown in each item.",
+        submitUrl: "https://mbzuai-finmmeval-task1-arabic-final-portal.hf.space/task1/dev/submit",
+        downloadUrl: "https://mbzuai-finmmeval-task1-arabic-final-portal.hf.space/api/task1/devset/download",
+        templateUrl: "https://mbzuai-finmmeval-task1-arabic-final-portal.hf.space/api/task1/template/download",
+        statusUrl: "https://mbzuai-finmmeval-task1-arabic-final-portal.hf.space/task1/dev/leaderboard",
+        statusApi: "https://mbzuai-finmmeval-task1-arabic-final-portal.hf.space/api/task1/leaderboard",
+      },
+      hindi: {
+        label: "Hindi",
+        subtitle: "Hindi finance MCQ final test benchmark",
+        testCount: 200,
+        answerSpace: "4 choices",
+        answerNote: "All Hindi final-test questions use four answer choices.",
+        submitUrl: "https://mbzuai-finmmeval-task1-hindi-final-portal.hf.space/task1/dev/submit",
+        downloadUrl: "https://mbzuai-finmmeval-task1-hindi-final-portal.hf.space/api/task1/devset/download",
+        templateUrl: "https://mbzuai-finmmeval-task1-hindi-final-portal.hf.space/api/task1/template/download",
+        statusUrl: "https://mbzuai-finmmeval-task1-hindi-final-portal.hf.space/task1/dev/leaderboard",
+        statusApi: "https://mbzuai-finmmeval-task1-hindi-final-portal.hf.space/api/task1/leaderboard",
+      },
+    };
+
     function baselineTypeLabel(row) {
       const name = String(row.display_name || row.model_name || "").toLowerCase();
       const baselineMatchers = [
@@ -854,8 +821,10 @@
     }
 
     const leaderboardCache = {};
+    const testLeaderboardCache = {};
     let currentStage = "dev";
-    let currentLanguage = "hindi";
+    let currentLanguage = "english";
+    let currentTestLanguage = "english";
 
     function formatPercent(value) {
       const number = Number(value || 0) * 100;
@@ -1024,6 +993,129 @@
       `;
     }
 
+    function renderTestStatusRows(rows) {
+      return rows.map((row) => `
+        <tr>
+          <td>
+            <div class="team-name">${escapeHtml(row.team_name || "Submitted team")}</div>
+            <div class="team-meta">
+              <span class="team-pill participant">Submitted</span>
+            </div>
+          </td>
+          <td>${escapeHtml(formatTimestamp(row.uploaded_at))}</td>
+          <td>${formatPercent(row.coverage)}</td>
+          <td>${row.completed ? "completed" : "pending"}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderTestStatusCard(language, state) {
+      const config = TEST_LANGUAGE_CONFIG[language];
+
+      if (state.status === "loading") {
+        return `
+          <div class="card leaderboard-card">
+            <div class="leaderboard-head">
+              <div>
+                <h3>${escapeHtml(config.label)} Final Test Status</h3>
+                <p>Fetching the latest final-test submission status.</p>
+              </div>
+            </div>
+            <div class="table-shell">
+              <div class="loading-state">
+                <div>
+                  <strong>Loading submission status</strong>
+                  <p>The hub is requesting the latest status data for the ${escapeHtml(config.label)} final test.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      if (state.status === "error") {
+        return `
+          <div class="card leaderboard-card">
+            <div class="leaderboard-head">
+              <div>
+                <h3>${escapeHtml(config.label)} Final Test Status</h3>
+                <p>The submission status could not be loaded from the public API.</p>
+              </div>
+            </div>
+            <div class="table-shell">
+              <div class="error-state">
+                <div>
+                  <strong>Status unavailable</strong>
+                  <p>${escapeHtml(state.message || "The public status API did not respond as expected. Please try again shortly.")}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      const payload = state.payload || {};
+      const rows = Array.isArray(payload.submissions) ? payload.submissions : [];
+      const dataset = payload.dataset || {};
+      const submissions = dataset.submission_count ?? rows.length;
+      const completed = rows.filter((row) => row.completed).length;
+      const lastUpdated = formatTimestamp(dataset.last_updated);
+
+      let tableMarkup = `
+        <div class="empty-state">
+          <div>
+            <strong>No submissions yet</strong>
+            <p>The ${escapeHtml(config.label)} final-test portal is open, but no active submissions have been recorded yet.</p>
+          </div>
+        </div>
+      `;
+
+      if (rows.length) {
+        tableMarkup = `
+          <table>
+            <thead>
+              <tr>
+                <th>Team</th>
+                <th>Updated</th>
+                <th>Coverage</th>
+                <th>Completed</th>
+              </tr>
+            </thead>
+            <tbody>${renderTestStatusRows(rows)}</tbody>
+          </table>
+        `;
+      }
+
+      return `
+        <div class="card leaderboard-card">
+          <div class="leaderboard-head">
+            <div>
+              <h3>${escapeHtml(config.label)} Final Test Status</h3>
+            </div>
+            <div class="leaderboard-status">
+              <div>Last updated</div>
+              <strong>${escapeHtml(lastUpdated)}</strong>
+            </div>
+          </div>
+          <div class="leaderboard-summary">
+            <div class="summary-card">
+              <span>Submissions</span>
+              <strong>${escapeHtml(submissions)}</strong>
+            </div>
+            <div class="summary-card">
+              <span>Completed</span>
+              <strong>${escapeHtml(completed)}</strong>
+            </div>
+            <div class="summary-card">
+              <span>Scores</span>
+              <strong>Hidden</strong>
+            </div>
+          </div>
+          <div class="table-shell">${tableMarkup}</div>
+        </div>
+      `;
+    }
+
     function renderLanguagePanel(language) {
       const config = LANGUAGE_CONFIG[language];
       const target = document.getElementById(`panel-${language}`);
@@ -1103,6 +1195,65 @@
       `;
     }
 
+    function renderTestLanguagePanel(language) {
+      const config = TEST_LANGUAGE_CONFIG[language];
+      const target = document.getElementById(`test-panel-${language}`);
+      const cachedState = testLeaderboardCache[language] || {status: "loading"};
+
+      target.innerHTML = `
+        <div class="dev-grid">
+          <div class="stack">
+            <div class="card pad">
+              <div class="meta-head">
+                <div>
+                  <div class="language-label">${escapeHtml(config.label)} Test</div>
+                  <h3 class="meta-title">${escapeHtml(config.subtitle)}</h3>
+                </div>
+              </div>
+              <div class="metric-grid">
+                <div class="metric">
+                  <div class="metric-label">Final Test</div>
+                  <div class="metric-value">${escapeHtml(config.testCount)}</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">Labels</div>
+                  <div class="metric-value">Private</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">Answer Space</div>
+                  <div class="metric-value">${escapeHtml(config.answerSpace)}</div>
+                </div>
+                <div class="metric">
+                  <div class="metric-label">Mode</div>
+                  <div class="metric-value">Open</div>
+                </div>
+              </div>
+              <p class="tiny-note"><strong>Choice handling:</strong> ${escapeHtml(config.answerNote)}</p>
+            </div>
+
+            <div class="card pad">
+              <div class="actions-grid">
+                <a class="button primary" href="${escapeHtml(config.submitUrl)}">Open ${escapeHtml(config.label)} Submission</a>
+                <a class="button secondary" href="${escapeHtml(config.downloadUrl)}">Download ${escapeHtml(config.label)} Test Set</a>
+                <a class="button secondary" href="${escapeHtml(config.templateUrl)}">Download ${escapeHtml(config.label)} Template</a>
+                <a class="button secondary" href="${escapeHtml(config.statusUrl)}">Open ${escapeHtml(config.label)} Status Portal</a>
+              </div>
+            </div>
+
+            <div class="card pad">
+              <h3 class="meta-title">How to submit</h3>
+              <p class="meta-copy">1. Download the final-test set and the submission template.</p>
+              <p class="meta-copy">2. Answer every item with one option letter from the options shown in that item.</p>
+              <p class="meta-copy">3. Submit through the final-test portal with your team name and email address.</p>
+              <p class="meta-copy">4. A later upload from the same email replaces the earlier active submission. Scores and ranks remain hidden until official release.</p>
+            </div>
+          </div>
+
+          <div>${renderTestStatusCard(language, cachedState)}</div>
+        </div>
+      `;
+    }
+
     async function loadLeaderboard(language, force = false) {
       if (LANGUAGE_CONFIG[language].status === "paused") {
         return;
@@ -1138,6 +1289,38 @@
       }
     }
 
+    async function loadTestLeaderboard(language, force = false) {
+      if (!force && testLeaderboardCache[language] && testLeaderboardCache[language].status === "ready") {
+        return;
+      }
+
+      testLeaderboardCache[language] = {status: "loading"};
+      if (language === currentTestLanguage && currentStage === "test") {
+        renderTestLanguagePanel(language);
+      }
+
+      try {
+        const response = await fetch(TEST_LANGUAGE_CONFIG[language].statusApi, {
+          mode: "cors",
+          credentials: "omit",
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+        const payload = await response.json();
+        testLeaderboardCache[language] = {status: "ready", payload};
+      } catch (error) {
+        testLeaderboardCache[language] = {
+          status: "error",
+          message: error instanceof Error ? error.message : "Unknown error",
+        };
+      }
+
+      if (language === currentTestLanguage && currentStage === "test") {
+        renderTestLanguagePanel(language);
+      }
+    }
+
     function setStage(stage) {
       currentStage = stage;
       document.querySelectorAll(".stage-tab").forEach((button) => {
@@ -1146,6 +1329,10 @@
       document.querySelectorAll(".stage-panel").forEach((panel) => {
         panel.classList.toggle("active", panel.id === `stage-${stage}`);
       });
+      if (stage === "test") {
+        renderTestLanguagePanel(currentTestLanguage);
+        loadTestLeaderboard(currentTestLanguage);
+      }
     }
 
     function setLanguage(language) {
@@ -1160,6 +1347,18 @@
       loadLeaderboard(language);
     }
 
+    function setTestLanguage(language) {
+      currentTestLanguage = language;
+      document.querySelectorAll(".test-language-tab").forEach((button) => {
+        button.classList.toggle("active", button.dataset.testLanguage === language);
+      });
+      document.querySelectorAll(".test-language-panel").forEach((panel) => {
+        panel.classList.toggle("active", panel.id === `test-panel-${language}`);
+      });
+      renderTestLanguagePanel(language);
+      loadTestLeaderboard(language);
+    }
+
     document.querySelectorAll(".stage-tab").forEach((button) => {
       button.addEventListener("click", () => {
         setStage(button.dataset.stage);
@@ -1172,12 +1371,23 @@
       });
     });
 
+    document.querySelectorAll(".test-language-tab").forEach((button) => {
+      button.addEventListener("click", () => {
+        setTestLanguage(button.dataset.testLanguage);
+      });
+    });
+
     renderLanguagePanel("english");
     renderLanguagePanel("chinese");
     renderLanguagePanel("arabic");
     renderLanguagePanel("hindi");
+    renderTestLanguagePanel("english");
+    renderTestLanguagePanel("chinese");
+    renderTestLanguagePanel("arabic");
+    renderTestLanguagePanel("hindi");
     setStage("dev");
     setLanguage("english");
+    setTestLanguage("english");
   </script>
 </body>
 </html>
