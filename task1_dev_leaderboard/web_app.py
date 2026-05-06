@@ -364,6 +364,13 @@ def current_leaderboard_payload() -> dict[str, Any]:
         overall = normalize_rows(load_csv_rows(OUTPUT_DIR / "leaderboard_overall.csv"))
         by_source = normalize_rows(load_csv_rows(OUTPUT_DIR / "leaderboard_by_source.csv"))
         status = load_json(WATCH_STATUS_FILE, {})
+        public_status = {
+            "backend": status.get("backend", STORAGE.backend_name),
+            "last_run_at": status.get("last_run_at"),
+            "last_run_ok": status.get("last_run_ok", True),
+            "returncode": status.get("returncode"),
+            "message": status.get("message"),
+        }
 
         for row in overall:
             slug = row.get("model_name", "")
@@ -376,8 +383,8 @@ def current_leaderboard_payload() -> dict[str, Any]:
             row["display_name"] = registry.get(slug, {}).get("display_name", slug)
 
         dataset_meta = {
-            "devset_file": str(DEVSET_FILE),
-            "template_file": str(TEMPLATE_FILE),
+            "devset_filename": DEVSET_FILE.name,
+            "template_filename": TEMPLATE_FILE.name,
             "requires_team_code": team_code_required(),
             "submission_count": len(
                 [
@@ -388,7 +395,7 @@ def current_leaderboard_payload() -> dict[str, Any]:
             ),
             "last_updated": status.get("last_run_at"),
         }
-        return {"overall": overall, "by_source": by_source, "status": status, "dataset": dataset_meta}
+        return {"overall": overall, "by_source": by_source, "status": public_status, "dataset": dataset_meta}
 
 
 @app.on_event("startup")
@@ -555,11 +562,8 @@ def health() -> JSONResponse:
             "backend": STORAGE.backend_name,
             "portal_mode": PORTAL_MODE,
             "requires_team_code": team_code_required(),
-            "hf_repo_id": STORAGE.hf_repo_id or None,
-            "devset_exists": DEVSET_FILE.exists(),
-            "gold_exists": GOLD_FILE.exists(),
-            "submission_dir": str(SUBMISSIONS_DIR),
-            "output_dir": str(OUTPUT_DIR),
+            "devset_ready": DEVSET_FILE.exists(),
+            "leaderboard_ready": (OUTPUT_DIR / "leaderboard_overall.csv").exists(),
             "official_site_url": OFFICIAL_SITE_URL,
         }
     )
