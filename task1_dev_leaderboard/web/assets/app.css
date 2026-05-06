@@ -233,6 +233,8 @@ code {
   font-weight: 700;
 }
 
+.stack-form input[type="email"],
+.stack-form input[type="password"],
 .stack-form input[type="text"],
 .stack-form input[type="file"] {
   width: 100%;

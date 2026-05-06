@@ -17,9 +17,9 @@
     </div>
     <header class="topbar compact-topbar">
       <div class="brand-block">
-        <div class="brand-kicker">Live Ranking</div>
+        <div id="leaderboard-kicker" class="brand-kicker">Live Ranking</div>
         <h1>__PORTAL_LEADERBOARD_TITLE__</h1>
-        <p>Official organizer-side ranking page for the released __PORTAL_VARIANT__ Task 1 dev set. Results refresh automatically after each successful submission.</p>
+        <p id="leaderboard-intro">Official organizer-side ranking page for the released __PORTAL_VARIANT__ Task 1 dev set. Results refresh automatically after each successful submission.</p>
       </div>
       <nav class="nav-links">
         <a href="__OFFICIAL_SITE_URL__">Official Site</a>
@@ -44,17 +44,17 @@
     </section>
 
     <section class="panel">
-      <p class="helper-text">Organizer note: each registered team should use one consistent official team name. Duplicate aliases, test entries, or obvious non-team submissions may be merged, renamed, or removed from this dev leaderboard.</p>
+      <p id="leaderboard-note" class="helper-text">Organizer note: each registered team should use one consistent official team name. Duplicate aliases, test entries, or obvious non-team submissions may be merged, renamed, or removed from this dev leaderboard.</p>
     </section>
 
     <section class="panel">
       <div class="panel-header">
-        <h2>Overall Ranking</h2>
+        <h2 id="leaderboard-table-title">Overall Ranking</h2>
         <button id="refresh-button" class="button button-secondary">Refresh Now</button>
       </div>
       <div class="table-wrap">
         <table class="data-table">
-          <thead>
+          <thead id="leaderboard-head">
             <tr>
               <th>Rank</th>
               <th>Team</th>
@@ -129,6 +129,54 @@
       }).join('');
     }
 
+    function renderSubmissionStatus(rows) {
+      const body = document.getElementById('overall-body');
+      if (!rows.length) {
+        body.innerHTML = '<tr><td colspan="6">No submissions yet.</td></tr>';
+        return;
+      }
+      body.innerHTML = rows.map((row, index) => {
+        const issueText = [
+          `missing ${row.missing_ids ?? 0}`,
+          `unknown ${row.unknown_ids ?? 0}`,
+          `duplicate ${row.duplicate_ids ?? 0}`,
+          `invalid ${row.invalid_prediction_count ?? 0}`,
+        ].join(', ');
+        return `
+        <tr>
+          <td>${index + 1}</td>
+          <td>
+            <div class="team-name-cell">${row.team_name || 'Submitted team'}</div>
+            <div class="team-meta">
+              <span class="team-pill participant">Submitted</span>
+            </div>
+          </td>
+          <td>${row.format_valid ? 'yes' : 'no'}</td>
+          <td>${row.evaluation_completed ? 'completed' : 'pending'}</td>
+          <td>${issueText}</td>
+          <td>${row.uploaded_at ?? '-'}</td>
+        </tr>
+      `;
+      }).join('');
+    }
+
+    function setTestModeLayout() {
+      document.getElementById('leaderboard-kicker').textContent = 'Submission Status';
+      document.getElementById('leaderboard-intro').textContent = 'Final-test submissions are accepted and evaluated privately. Scores, ranks, and correct counts remain hidden until the official release.';
+      document.getElementById('leaderboard-note').textContent = 'Each submission must include an email address. The email is used as the unique submission key, so a later upload from the same email replaces the earlier active submission.';
+      document.getElementById('leaderboard-table-title').textContent = 'Submission Status';
+      document.getElementById('leaderboard-head').innerHTML = `
+        <tr>
+          <th>#</th>
+          <th>Team</th>
+          <th>Format Valid</th>
+          <th>Evaluation</th>
+          <th>Validation Issues</th>
+          <th>Uploaded At</th>
+        </tr>
+      `;
+    }
+
     async function refreshLeaderboard() {
       const response = await fetch('/api/task1/leaderboard');
       if (!response.ok) return;
@@ -136,7 +184,12 @@
       document.getElementById('meta-submissions').textContent = String(payload.dataset?.submission_count ?? 0);
       document.getElementById('meta-updated').textContent = payload.dataset?.last_updated ?? 'Not evaluated yet';
       document.getElementById('meta-watch').textContent = payload.status?.last_run_ok === false ? 'Last run failed' : 'Healthy';
-      renderOverall(payload.overall || []);
+      if (payload.dataset?.portal_mode === 'test') {
+        setTestModeLayout();
+        renderSubmissionStatus(payload.submissions || []);
+      } else {
+        renderOverall(payload.overall || []);
+      }
     }
 
     document.getElementById('refresh-button').addEventListener('click', refreshLeaderboard);

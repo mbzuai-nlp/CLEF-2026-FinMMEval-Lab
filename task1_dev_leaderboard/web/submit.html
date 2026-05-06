@@ -19,12 +19,12 @@
       <div class="brand-block">
         <div class="brand-kicker">Participant Submission</div>
         <h1>__PORTAL_VARIANT__ Dev Upload</h1>
-        <p>Upload one prediction file per team. A new upload from the same team replaces the older one and refreshes the official __PORTAL_VARIANT__ dev ranking.</p>
+        <p id="submission-intro">Upload one prediction file per team. A new upload from the same team replaces the older one and refreshes the official __PORTAL_VARIANT__ dev ranking.</p>
       </div>
       <nav class="nav-links">
         <a href="__OFFICIAL_SITE_URL__">Official Site</a>
         <a href="/task1/dev">Home</a>
-        <a href="/task1/dev/leaderboard">Leaderboard</a>
+        <a id="leaderboard-link" href="/task1/dev/leaderboard">Leaderboard</a>
       </nav>
     </header>
 
@@ -37,6 +37,11 @@
           <label>
             <span>Team Name</span>
             <input type="text" id="team_name" name="team_name" placeholder="Example: MBZUAI Finance Lab" required />
+          </label>
+
+          <label id="contact-email-field" class="hidden">
+            <span>Email</span>
+            <input type="email" id="contact_email" name="contact_email" placeholder="name@example.com" autocomplete="email" />
           </label>
 
           <label id="submission-code-field" class="hidden">
@@ -55,7 +60,7 @@
           </div>
 
           <div class="card-actions">
-            <button type="submit" class="button button-primary">Submit And Refresh Leaderboard</button>
+            <button id="submit-button" type="submit" class="button button-primary">Submit And Refresh Leaderboard</button>
             <a class="button button-secondary" href="/api/task1/template/download">Download Template</a>
           </div>
         </form>
@@ -66,7 +71,7 @@
         <ul class="resource-list">
           <li><a href="/api/task1/devset/download">Download Public Dev Set</a></li>
           <li><a href="/api/task1/template/download">Download Submission Template</a></li>
-          <li><a href="/task1/dev/leaderboard">View Live Leaderboard</a></li>
+          <li><a id="resource-leaderboard-link" href="/task1/dev/leaderboard">View Live Leaderboard</a></li>
         </ul>
         <div class="mini-status">
           <div><span>Submissions</span><strong id="submission-count">Loading...</strong></div>
@@ -83,8 +88,26 @@
       const response = await fetch('/api/task1/dev/meta');
       if (!response.ok) return;
       const payload = await response.json();
+      const isTestMode = payload.portal_mode === 'test';
       document.getElementById('submission-count').textContent = String(payload.submission_count ?? 0);
       document.getElementById('last-updated').textContent = payload.last_updated ?? 'Not evaluated yet';
+      document.getElementById('leaderboard-link').textContent = isTestMode ? 'Submission Status' : 'Leaderboard';
+      document.getElementById('resource-leaderboard-link').textContent = isTestMode ? 'View Submission Status' : 'View Live Leaderboard';
+      document.getElementById('submit-button').textContent = isTestMode ? 'Submit Final Predictions' : 'Submit And Refresh Leaderboard';
+      document.getElementById('submission-intro').textContent = isTestMode
+        ? 'Upload one final-test prediction file. Your email is used as the unique submission key; a later upload from the same email replaces the earlier active submission. Scores and ranks remain hidden.'
+        : 'Upload one prediction file per team. A new upload from the same team replaces the older one and refreshes the official __PORTAL_VARIANT__ dev ranking.';
+
+      const emailField = document.getElementById('contact-email-field');
+      const emailInput = document.getElementById('contact_email');
+      if (payload.requires_email) {
+        emailField.classList.remove('hidden');
+        emailInput.required = true;
+      } else {
+        emailField.classList.add('hidden');
+        emailInput.required = false;
+      }
+
       const codeField = document.getElementById('submission-code-field');
       const codeInput = document.getElementById('submission_code');
       if (payload.requires_team_code) {
@@ -108,6 +131,7 @@
       }
       const row = payload.leaderboard_row || null;
       const validation = payload.validation || {};
+      const evaluation = payload.evaluation || {};
       const scoreCells = row
         ? `
           <div><span>Rank</span><strong>${row.rank ?? '-'}</strong></div>
@@ -116,7 +140,8 @@
         : `
           <div><span>Coverage</span><strong>${validation.coverage ?? '-'}</strong></div>
           <div><span>Answered</span><strong>${validation.answered ?? '-'} / ${validation.total ?? '-'}</strong></div>
-          <div><span>Valid</span><strong>${validation.valid_submission ? 'yes' : 'no'}</strong></div>`;
+          <div><span>Format Valid</span><strong>${validation.valid_submission ? 'yes' : 'no'}</strong></div>
+          <div><span>Evaluation</span><strong>${evaluation.completed ? 'completed' : 'not completed'}</strong></div>`;
       panel.innerHTML = `
         <h3>Submission Accepted</h3>
         <p>${payload.message}</p>

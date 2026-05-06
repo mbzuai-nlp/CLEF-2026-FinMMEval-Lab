@@ -22,7 +22,7 @@ Use a dedicated subdomain for each portal mode, for example:
 The app supports two modes:
 
 - `TASK1_PORTAL_MODE=dev`: shows the dev leaderboard and returns score/rank after upload.
-- `TASK1_PORTAL_MODE=test`: accepts final-test submissions, validates format and coverage, and does not expose score, rank, or correct counts before the deadline.
+- `TASK1_PORTAL_MODE=test`: requires an email address, accepts one active final-test submission per email, validates format and coverage, runs organizer-side evaluation, and only exposes submission status before the deadline. It does not expose score, rank, or correct counts.
 
 Use `dev` for the May 6 dev leaderboard. Use `test` for the final Task 1/2 run submission window ending on May 15.
 
@@ -47,10 +47,10 @@ For a Hugging Face final-test Space, deploy with `--portal-mode test`. Use `--sp
 python task1_dev_leaderboard/deploy_hf_portal.py \
   --variant English \
   --dataset-label "English Task 1 Final Test Set" \
-  --devset-filename english_task1_final_public.jsonl \
-  --template-filename english_task1_final_submission_template.json \
-  --gold-filename english_task1_final_gold.jsonl \
-  --output-subdir english_task1_final \
+  --devset-filename english_task1_final_test_public.jsonl \
+  --template-filename english_task1_final_test_submission_template.json \
+  --gold-filename english_task1_final_test_gold.jsonl \
+  --output-subdir english_task1_final_test \
   --storage-repo-id MBZUAI/finmmeval-task1-english-final-storage \
   --space-repo-id MBZUAI/finmmeval-task1-english-final-portal \
   --space-title "FinMMEval Task 1 English Final Submission Portal" \
@@ -105,7 +105,7 @@ TASK1_HF_REPO_ID=<org-or-user>/<private-dataset-repo>
 HF_TOKEN=<write-token>
 ```
 
-To prevent arbitrary or duplicate team names, enable team submission codes. Store this file in the private dataset repo, not in the public Space repo:
+For dev portals, you can prevent arbitrary or duplicate team names by enabling team submission codes. Store this file in the private dataset repo, not in the public Space repo:
 
 ```json
 {
@@ -123,6 +123,8 @@ private/team_codes.json
 ```
 
 When `private/team_codes.json` exists, or when `TASK1_REQUIRE_TEAM_CODE=1` is set, uploads must include a valid code. The portal then uses the organizer-provided `team_slug` and `display_name`, so participants cannot create extra leaderboard rows by changing the team name.
+
+In final-test mode, email is the duplicate-control key. The app stores submissions under a hashed email slug in the private storage backend, and the public status API does not expose the participant email or score.
 
 Edit these values before starting the service:
 
@@ -187,7 +189,7 @@ curl -I https://task1-dev.example.org/task1/dev/submit
 curl -I https://task1-dev.example.org/task1/dev/leaderboard
 ```
 
-In `test` mode, `/health` should return `"portal_mode":"test"` and `/api/task1/leaderboard` should return `404`.
+In `test` mode, `/health` should return `"portal_mode":"test"` and `"requires_email":true`; `/api/task1/leaderboard` should return submission-status rows only, with no score, rank, or correct-count fields.
 
 ### 7. Update The Official Website Links
 

@@ -61,9 +61,11 @@ TEAM_CODES_FILE = Path(
     os.getenv("TASK1_TEAM_CODES_FILE", str(STORAGE.private_dir / STORAGE.team_codes_filename))
 ).resolve()
 REQUIRE_TEAM_CODE = os.getenv("TASK1_REQUIRE_TEAM_CODE", "").strip().lower() in {"1", "true", "yes", "on"}
+REQUIRE_EMAIL = PORTAL_MODE == "test" or os.getenv("TASK1_REQUIRE_EMAIL", "").strip().lower() in {"1", "true", "yes", "on"}
 
 SUBMISSION_EXTENSIONS = {".json", ".jsonl"}
 VALID_LETTERS = {"A", "B", "C", "D", "E", "F"}
+EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 SUBMISSION_LOCK = threading.Lock()
 
 app = FastAPI(title="FinMMEval Task 1 Dev Portal", version="1.0.0")
@@ -124,6 +126,24 @@ def team_slug(value: str) -> str:
         return slug
     digest = hashlib.sha1(value.strip().encode("utf-8")).hexdigest()[:10]
     return f"team-{digest}"
+
+
+def normalize_email(value: str) -> str:
+    return value.strip().lower()
+
+
+def validate_email(value: str) -> str:
+    email = normalize_email(value)
+    if not email:
+        raise HTTPException(status_code=400, detail="Email is required.")
+    if not EMAIL_RE.fullmatch(email):
+        raise HTTPException(status_code=400, detail="Please provide a valid email address.")
+    return email
+
+
+def email_submission_slug(email: str) -> str:
+    digest = hashlib.sha256(email.encode("utf-8")).hexdigest()[:16]
+    return f"email-{digest}"
 
 
 def load_registry() -> dict[str, dict]:
@@ -193,6 +213,25 @@ def resolve_team_identity(team_name: str, submission_code: str | None) -> tuple[
     if not cleaned_team_name:
         raise HTTPException(status_code=400, detail="Team name is required.")
     return team_slug(cleaned_team_name), cleaned_team_name
+
+
+def resolve_submission_identity(
+    team_name: str,
+    submission_code: str | None,
+    contact_email: str,
+) -> tuple[str, str, str | None]:
+    if REQUIRE_EMAIL:
+        email = validate_email(contact_email)
+        display_name = team_name.strip()
+        if not display_name:
+            raise HTTPException(status_code=400, detail="Team name is required.")
+        return email_submission_slug(email), display_name, email
+
+    slug, display_name = resolve_team_identity(team_name, submission_code)
+    email = normalize_email(contact_email) if contact_email.strip() else None
+    if email and not EMAIL_RE.fullmatch(email):
+        raise HTTPException(status_code=400, detail="Please provide a valid email address.")
+    return slug, display_name, email
 
 
 def parse_submission_rows(content: bytes, suffix: str) -> list[dict[str, Any]]:
@@ -380,7 +419,9 @@ def current_leaderboard_payload() -> dict[str, Any]:
         dataset_meta = {
             "devset_filename": DEVSET_FILE.name,
             "template_filename": TEMPLATE_FILE.name,
-            "requires_team_code": team_code_required(),
+            "portal_mode": PORTAL_MODE,
+            "requires_team_code": False if REQUIRE_EMAIL else team_code_required(),
+            "requires_email": REQUIRE_EMAIL,
             "submission_count": len(
                 [
                     path
@@ -391,6 +432,55 @@ def current_leaderboard_payload() -> dict[str, Any]:
             "last_updated": status.get("last_run_at"),
         }
         return {"overall": overall, "status": public_status, "dataset": dataset_meta}
+
+
+def current_test_status_payload() -> dict[str, Any]:
+    with SUBMISSION_LOCK:
+        STORAGE.sync_remote_state()
+        registry = load_registry()
+        status = load_json(WATCH_STATUS_FILE, {})
+        submissions = []
+        for slug, meta in sorted(registry.items(), key=lambda item: (item[1].get("uploaded_at") or "", item[0]), reverse=True):
+            format_validation = load_json(OUTPUT_DIR / f"{slug}__format_validation.json", {})
+            evaluation_validation = load_json(OUTPUT_DIR / f"{slug}__validation.json", {})
+            format_valid = bool(format_validation and format_validation.get("valid_submission"))
+            submissions.append(
+                {
+                    "team_name": meta.get("display_name", slug),
+                    "uploaded_at": meta.get("uploaded_at"),
+                    "original_filename": meta.get("original_filename"),
+                    "format_valid": format_valid,
+                    "evaluation_completed": bool(evaluation_validation),
+                    "missing_ids": len(format_validation.get("missing_ids") or []),
+                    "unknown_ids": len(format_validation.get("unknown_ids") or []),
+                    "duplicate_ids": int(format_validation.get("duplicate_ids") or 0),
+                    "invalid_prediction_count": int(format_validation.get("invalid_prediction_count") or 0),
+                }
+            )
+
+        public_status = {
+            "backend": status.get("backend", STORAGE.backend_name),
+            "last_run_at": status.get("last_run_at"),
+            "last_run_ok": status.get("last_run_ok", True),
+            "returncode": status.get("returncode"),
+            "message": status.get("message"),
+        }
+        dataset_meta = {
+            "devset_filename": DEVSET_FILE.name,
+            "template_filename": TEMPLATE_FILE.name,
+            "portal_mode": PORTAL_MODE,
+            "requires_team_code": False if REQUIRE_EMAIL else team_code_required(),
+            "requires_email": REQUIRE_EMAIL,
+            "submission_count": len(
+                [
+                    path
+                    for path in SUBMISSIONS_DIR.iterdir()
+                    if is_submission_file(path)
+                ]
+            ),
+            "last_updated": status.get("last_run_at"),
+        }
+        return {"submissions": submissions, "status": public_status, "dataset": dataset_meta}
 
 
 @app.on_event("startup")
@@ -427,7 +517,7 @@ def api_task1_dev_meta() -> JSONResponse:
 @app.get("/api/task1/leaderboard")
 def api_task1_leaderboard() -> JSONResponse:
     if PORTAL_MODE == "test":
-        raise HTTPException(status_code=404, detail="Leaderboard is disabled for test submissions before the deadline.")
+        return JSONResponse(current_test_status_payload())
     return JSONResponse(current_leaderboard_payload())
 
 
@@ -448,12 +538,13 @@ def api_task1_template_download() -> FileResponse:
 @app.post("/api/task1/submissions")
 async def api_task1_submit(
     team_name: str = Form(""),
+    contact_email: str = Form(""),
     submission_code: str | None = Form(None),
     prediction_file: UploadFile = File(...),
 ) -> JSONResponse:
     ensure_directories()
 
-    slug, display_name = resolve_team_identity(team_name, submission_code)
+    slug, display_name, email = resolve_submission_identity(team_name, submission_code, contact_email)
 
     suffix = Path(prediction_file.filename or "").suffix.lower()
     if suffix not in SUBMISSION_EXTENSIONS:
@@ -483,6 +574,9 @@ async def api_task1_submit(
             "original_filename": prediction_file.filename,
             "stored_filename": save_path.name,
         }
+        if email:
+            registry[slug]["contact_email"] = email
+            registry[slug]["email_hash"] = hashlib.sha256(email.encode("utf-8")).hexdigest()
         save_registry(registry)
         if previous_filename and previous_filename != save_path.name:
             STORAGE.delete_remote_submission(previous_filename)
@@ -491,20 +585,44 @@ async def api_task1_submit(
 
         if PORTAL_MODE == "test":
             validation = validate_submission_for_test_mode(content, suffix)
+            save_json(OUTPUT_DIR / f"{slug}__format_validation.json", validation)
+            result = run_evaluation()
             status_payload = {
                 "backend": STORAGE.backend_name,
                 "mode": PORTAL_MODE,
                 "last_run_at": utc_now_iso(),
-                "last_run_ok": True,
-                "message": "Submission saved and format-validated. Scores are hidden until the deadline.",
+                "last_run_ok": result["ok"],
+                "returncode": result["returncode"],
+                "message": "Submission saved, format-validated, and evaluated. Scores are hidden until the deadline."
+                if result["ok"]
+                else "Submission saved and format-validated, but organizer-side evaluation did not complete.",
             }
             save_watch_status(status_payload)
+            STORAGE.upload_outputs()
+            if not result["ok"]:
+                return JSONResponse(
+                    {
+                        "message": "Submission received and format-validated, but organizer-side evaluation did not complete.",
+                        "team_slug": slug,
+                        "team_name": display_name,
+                        "validation": validation,
+                        "evaluation": {
+                            "completed": False,
+                            "last_updated": status_payload["last_run_at"],
+                        },
+                    },
+                    status_code=202,
+                )
             return JSONResponse(
                 {
-                    "message": "Submission received. Format and coverage were validated; scores are hidden until the deadline.",
+                    "message": "Submission received. Format was validated and organizer-side evaluation completed; scores are hidden until the deadline.",
                     "team_slug": slug,
                     "team_name": display_name,
                     "validation": validation,
+                    "evaluation": {
+                        "completed": True,
+                        "last_updated": status_payload["last_run_at"],
+                    },
                     "last_updated": status_payload["last_run_at"],
                 }
             )
@@ -556,7 +674,8 @@ def health() -> JSONResponse:
             "time": utc_now_iso(),
             "backend": STORAGE.backend_name,
             "portal_mode": PORTAL_MODE,
-            "requires_team_code": team_code_required(),
+            "requires_team_code": False if REQUIRE_EMAIL else team_code_required(),
+            "requires_email": REQUIRE_EMAIL,
             "devset_ready": DEVSET_FILE.exists(),
             "leaderboard_ready": (OUTPUT_DIR / "leaderboard_overall.csv").exists(),
             "official_site_url": OFFICIAL_SITE_URL,

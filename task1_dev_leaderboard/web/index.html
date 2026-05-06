@@ -19,7 +19,7 @@
       <div class="brand-block">
         <div class="brand-kicker">FinMMEval Task 1 __PORTAL_VARIANT__</div>
         <h1>__PORTAL_SUBMISSION_TITLE__</h1>
-        <p>Official organizer portal for the __PORTAL_VARIANT__ Task 1 dev benchmark, including public dev set distribution, participant uploads, and live leaderboard tracking.</p>
+        <p id="home-intro">Official organizer portal for the __PORTAL_VARIANT__ Task 1 benchmark, including dataset distribution, participant uploads, and submission tracking.</p>
       </div>
       <nav class="nav-links">
         <a href="__OFFICIAL_SITE_URL__">Official Site</a>
@@ -32,7 +32,7 @@
       <section class="hero-card accent-card">
         <div class="eyebrow">Participant Flow</div>
         <h2>Upload a JSON or JSONL prediction file</h2>
-        <p>The upload endpoint stores the submission, reruns evaluation immediately, and updates the Arabic leaderboard in place.</p>
+        <p id="flow-copy">The upload endpoint stores the submission, reruns evaluation immediately, and updates the __PORTAL_VARIANT__ leaderboard in place.</p>
         <div class="card-actions">
           <a class="button button-primary" href="/task1/dev/submit">Open Submission Page</a>
           <a class="button button-secondary" href="/api/task1/template/download">Download Template</a>
@@ -41,8 +41,8 @@
 
       <section class="hero-card">
         <div class="eyebrow">Organizer View</div>
-        <h2>Track ranking updates in near real time</h2>
-        <p>The leaderboard page polls the latest outputs and reflects refreshed Arabic ranking updates after each successful submission.</p>
+        <h2 id="tracking-title">Track ranking updates in near real time</h2>
+        <p id="tracking-copy">The leaderboard page polls the latest outputs and reflects refreshed __PORTAL_VARIANT__ ranking updates after each successful submission.</p>
         <div class="card-actions">
           <a class="button button-primary" href="/task1/dev/leaderboard">Open Leaderboard</a>
           <a class="button button-secondary" href="/api/task1/devset/download">Download Public Dev Set</a>
@@ -68,9 +68,9 @@
     <section class="notes-panel">
       <h3>Current Setup</h3>
       <ul>
-        <li>Public dev set: 100 multiple-choice questions from the __PORTAL_VARIANT__ benchmark split.</li>
+        <li>Public dataset: multiple-choice questions from the __PORTAL_VARIANT__ benchmark split.</li>
         <li>Accepted submission formats: `.json` and `.jsonl`.</li>
-        <li>Ranking metric: accuracy on the 100-item dev set.</li>
+        <li id="metric-note">Ranking metric: accuracy on the public dev set.</li>
       </ul>
     </section>
   </div>
@@ -83,6 +83,12 @@
       document.getElementById('meta-devset').textContent = '__PORTAL_DATASET_LABEL__';
       document.getElementById('meta-submissions').textContent = String(payload.submission_count ?? 0);
       document.getElementById('meta-updated').textContent = payload.last_updated ?? 'Not evaluated yet';
+      if (payload.portal_mode === 'test') {
+        document.getElementById('flow-copy').textContent = 'The upload endpoint stores one active final-test submission per email, validates the format, and runs organizer-side evaluation without exposing scores.';
+        document.getElementById('tracking-title').textContent = 'Track submission status without public scores';
+        document.getElementById('tracking-copy').textContent = 'The status page shows whether each submission passed format checks and whether private evaluation completed. Scores and ranks remain hidden.';
+        document.getElementById('metric-note').textContent = 'Scores and ranks are hidden until the official result release.';
+      }
     }
     loadMeta();
   </script>
