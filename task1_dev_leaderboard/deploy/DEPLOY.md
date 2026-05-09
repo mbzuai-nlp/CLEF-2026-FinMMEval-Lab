@@ -51,7 +51,7 @@ python task1_dev_leaderboard/deploy_hf_portal.py \
   --template-filename english_task1_final_test_submission_template.json \
   --gold-filename english_task1_final_test_gold.jsonl \
   --output-subdir english_task1_final_test \
-  --storage-repo-id MBZUAI/finmmeval-task1-english-final-storage \
+  --storage-repo-id <org-or-user>/<private-task1-english-storage-repo> \
   --space-repo-id MBZUAI/finmmeval-task1-english-final-portal \
   --space-title "FinMMEval Task 1 English Final Submission Portal" \
   --portal-mode test \
@@ -68,7 +68,7 @@ python task1_dev_leaderboard/deploy_hf_portal.py \
   --template-filename english_task1_final_test_submission_template.json \
   --gold-filename english_task1_final_test_gold.jsonl \
   --output-subdir english_task1_final_test \
-  --storage-repo-id MBZUAI/finmmeval-task1-english-final-storage \
+  --storage-repo-id <org-or-user>/<private-task1-english-storage-repo> \
   --space-repo-id MBZUAI/finmmeval-task1-english-final-portal \
   --space-title "FinMMEval Task 1 English Final Submission Portal" \
   --portal-mode test \
