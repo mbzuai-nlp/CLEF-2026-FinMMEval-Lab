@@ -1,0 +1,35 @@
+{
+  "task1": [
+    {
+      "label": "English",
+      "repo_id": "ORG/PRIVATE_TASK1_ENGLISH_STORAGE",
+      "output_remote_dir": "outputs/english_task1_final_test",
+      "registry_remote_path": "submissions/_registry.json"
+    },
+    {
+      "label": "Chinese",
+      "repo_id": "ORG/PRIVATE_TASK1_CHINESE_STORAGE",
+      "output_remote_dir": "outputs/chinese_task1_final_test",
+      "registry_remote_path": "submissions/_registry.json"
+    },
+    {
+      "label": "Hindi",
+      "repo_id": "ORG/PRIVATE_TASK1_HINDI_STORAGE",
+      "output_remote_dir": "outputs/hindi_task1_final_test",
+      "registry_remote_path": "submissions/_registry.json"
+    },
+    {
+      "label": "Arabic",
+      "repo_id": "ORG/PRIVATE_TASK1_ARABIC_STORAGE",
+      "output_remote_dir": "outputs/arabic_task1_final_test",
+      "registry_remote_path": "submissions/_registry.json"
+    }
+  ],
+  "task2": [
+    {
+      "label": "Task2",
+      "repo_id": "ORG/PRIVATE_TASK2_STORAGE",
+      "private_results_dir": "private_results"
+    }
+  ]
+}

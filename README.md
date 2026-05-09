@@ -34,6 +34,14 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 - Participants are encouraged to prepare their working notes early. The paper should primarily describe the system architecture, methodology, and experimental setup; results can be updated later if the evaluation status is stated clearly.
 - Awards are decided primarily based on paper quality, with leaderboard performance considered as supporting evidence.
 
+## Organizer-Only Result Export
+- Task 1 and Task 2 final-test portals keep participant-facing scores hidden before the deadline, while storing organizer-side results in private Hugging Face dataset storage.
+- After submissions close, organizers can export release-ready ranking CSVs with:
+  `python scripts/export_private_results.py --config organizer_private_exports.local.json --out-dir private_exports/YYYY-MM-DD --force-download`
+- Copy `scripts/export_private_results.sample.json` to `organizer_private_exports.local.json` and fill in the private HF dataset repo IDs and remote output folders. Keep the local config uncommitted. It should contain repo IDs, but no tokens. The script reads `HF_TOKEN`, `HUGGINGFACEHUB_API_TOKEN`, or `HUGGINGFACE_TOKEN` from the environment.
+- The exporter intentionally writes ranking-level CSVs only. It does not copy Task 1 per-item result files, because those contain gold answers.
+- Run `python scripts/export_private_results.py --self-test` before the final export to verify the local export logic.
+
 ## Training Data (Released)
 - Download the training collection on Hugging Face (released 2025-12-15): https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026
 - This collection is the official public data release for the lab. Participants may use the released datasets as training resources for their systems, including reorganizing or re-splitting them as needed for model development.
