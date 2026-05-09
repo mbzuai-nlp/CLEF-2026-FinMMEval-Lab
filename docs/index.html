@@ -174,8 +174,10 @@
     .nav-link {
       position: relative;
       color: #475569;
-      padding: 0.5rem 0;
-      font-weight: 500;
+      padding: 0.45rem 0;
+      font-size: 0.95rem;
+      font-weight: 600;
+      white-space: nowrap;
     }
     
     .nav-link::after {
@@ -364,29 +366,29 @@
             <!-- span class="text-white font-bold text-sm">F</span -->
             <img src="images/favicon.png" alt="FinMMEval Logo">
           </div>
-          <span class="font-bold text-ink">FinMMEval Lab 2026</span>
+          <span class="font-bold text-ink whitespace-nowrap">FinMMEval Lab 2026</span>
         </div>
         
-        <nav class="hidden md:flex items-center space-x-6">
+        <nav class="hidden lg:flex items-center gap-5">
           <a href="#about" class="nav-link">About</a>
           <a href="#data" class="nav-link">Data</a>
           <a href="#tasks" class="nav-link">Tasks</a>
-          <a href="task1-dev.html" class="nav-link">Task 1 Submission</a>
-          <a href="https://mbzuai-finmmeval-task2-final-portal.hf.space/task2/test" target="_blank" rel="noopener noreferrer" class="nav-link">Task 2 Submission</a>
+          <a href="task1-dev.html" class="nav-link" title="Task 1 Submission Portal">Task 1</a>
+          <a href="https://mbzuai-finmmeval-task2-final-portal.hf.space/task2/test" target="_blank" rel="noopener noreferrer" class="nav-link" title="Task 2 Submission Portal">Task 2</a>
           <a href="#timeline" class="nav-link">Timeline</a>
           <a href="#awards" class="nav-link">Awards</a>
-          <a href="#submission" class="nav-link">Submission</a>
+          <a href="#submission" class="nav-link">Guidelines</a>
           <a href="#organizers" class="nav-link">Organizers</a>
           <a href="#faq" class="nav-link">FAQ</a>
           <a href="https://clef-labs-registration.dipintra.it/registrationForm.php#registrationFrom" 
              target="_blank" 
              rel="noopener noreferrer"
-             class="ml-4 bg-accent-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-accent-700 transition shadow-subtle">
+             class="ml-1 whitespace-nowrap bg-accent-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-accent-700 transition shadow-subtle">
             Join In
           </a>
         </nav>
         
-        <button id="menuBtn" class="md:hidden text-ink-muted">
+        <button id="menuBtn" class="lg:hidden text-ink-muted">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
           </svg>
