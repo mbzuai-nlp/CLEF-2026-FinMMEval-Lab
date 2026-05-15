@@ -170,6 +170,22 @@
       backdrop-filter: blur(10px);
       border: 1px solid rgba(229, 231, 235, 0.8);
     }
+
+    .citation-card pre {
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      font-size: 0.78rem;
+      line-height: 1.55;
+      color: #1f2937;
+    }
+
+    .citation-card code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-variant-ligatures: none;
+      font-feature-settings: "liga" 0, "calt" 0;
+    }
     
     .nav-link {
       position: relative;
@@ -378,6 +394,7 @@
           <a href="#timeline" class="nav-link">Timeline</a>
           <a href="#awards" class="nav-link">Awards</a>
           <a href="#submission" class="nav-link">Guidelines</a>
+          <a href="#citations" class="nav-link">Cite</a>
           <a href="#organizers" class="nav-link">Organizers</a>
           <a href="#faq" class="nav-link">FAQ</a>
           <a href="https://clef-labs-registration.dipintra.it/registrationForm.php#registrationFrom" 
@@ -406,6 +423,7 @@
           <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="https://mbzuai-finmmeval-task2-final-portal.hf.space/task2/test" target="_blank" rel="noopener noreferrer">Task 2 Submission</a></li>
           <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#timeline">Timeline</a></li>
           <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#awards">Awards</a></li>
+          <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#citations">Citations</a></li>
           <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="https://clef-labs-registration.dipintra.it/registrationForm.php#registrationFrom" target="_blank" rel="noopener noreferrer"><b><u>Join In</u></b></a></li>
           <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#organizers">Organizers</a></li>
           <li><a class="block rounded-lg px-3 py-2 hover:bg-white/10" href="#faq">FAQ</a></li>
@@ -1246,6 +1264,86 @@
                 <span class="text-ink-soft">License compliance acknowledgements (if applicable)</span>
               </li>
             </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CITATIONS -->
+    <section id="citations" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+      <div class="academic-section p-8">
+        <h2 class="text-3xl font-bold text-ink academic-heading mb-6">Recommended Citations</h2>
+        <p class="text-ink-muted mb-8">
+          Please cite the FinMMEval Lab overview paper when referring to the full lab. If your work is associated with a specific task, please also cite the corresponding task overview paper.
+        </p>
+
+        <div class="grid gap-6">
+          <div class="citation-card bg-white rounded-lg p-6 border border-gray-200 shadow-subtle">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+              <h3 class="font-bold text-ink">FinMMEval Lab Overview</h3>
+              <span class="text-xs uppercase tracking-wide text-accent-700 font-semibold bg-accent-50 rounded-full px-3 py-1">LNCS</span>
+            </div>
+            <pre class="bg-gray-50 rounded-lg p-4 border border-gray-200"><code>@inproceedings{FinMMEval2026,
+  title = {Overview of {FinMMEval} 2026: Multilingual and Multimodal Financial Evaluation},
+  author = {Zhuohan Xie and Yuyang Dai and Rania Elbadry and Vanshikaa Jani and Xueqing Peng and Lingfei Qian and Georgi Georgiev and Dimitar Dimitrov and Fan Zhang and Jimin Huang and Jiahui Geng and Yankai Chen and Yuan Ye and Haolun Wu and Yuxia Wang and Ivan Koychev and Veselin Stoyanov and Mingzi Song and Yu Chen and Steve Liu and Preslav Nakov},
+  booktitle = {Experimental IR Meets Multilinguality, Multimodality, and Interaction},
+  series = {Proceedings of the Seventeenth International Conference of the CLEF Association (CLEF 2026)},
+  year = {2026},
+  month = {September 21--24},
+  address = {Jena, Germany},
+  publisher = {Springer Lecture Notes in Computer Science LNCS},
+}</code></pre>
+          </div>
+
+          <div class="citation-card bg-white rounded-lg p-6 border border-gray-200 shadow-subtle">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+              <h3 class="font-bold text-ink">Task 1 Overview</h3>
+              <span class="text-xs uppercase tracking-wide text-accent-700 font-semibold bg-accent-50 rounded-full px-3 py-1">CEUR-WS</span>
+            </div>
+            <pre class="bg-gray-50 rounded-lg p-4 border border-gray-200"><code>@inproceedings{FinMMEvalTask1Overview2026,
+  title = {Overview of the {FinMMEval} 2026 Task 1: Multilingual Financial Multiple-Choice Question Answering},
+  author = {Zhuohan Xie and Yuyang Dai and Rania Elbadry and Vanshikaa Jani and Georgi Georgiev and Dimitar Dimitrov and Fan Zhang and Xueqing Peng and Lingfei Qian and Jimin Huang and Jiahui Geng and Yankai Chen and Yuan Ye and Haolun Wu and Yuxia Wang and Ivan Koychev and Veselin Stoyanov and Mingzi Song and Yu Chen and Steve Liu and Preslav Nakov},
+  booktitle = {CLEF 2026 Working Notes},
+  series = {CEUR Workshop Proceedings},
+  year = {2026},
+  month = {September 21--24},
+  address = {Jena, Germany},
+  publisher = {CEUR-WS.org},
+}</code></pre>
+          </div>
+
+          <div class="citation-card bg-white rounded-lg p-6 border border-gray-200 shadow-subtle">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+              <h3 class="font-bold text-ink">Task 2 Overview</h3>
+              <span class="text-xs uppercase tracking-wide text-accent-700 font-semibold bg-accent-50 rounded-full px-3 py-1">CEUR-WS</span>
+            </div>
+            <pre class="bg-gray-50 rounded-lg p-4 border border-gray-200"><code>@inproceedings{FinMMEvalTask2Overview2026,
+  title = {Overview of the {FinMMEval} 2026 Task 2: Financial Question Answering and Summarization},
+  author = {Zhuohan Xie and Xueqing Peng and Georgi Georgiev and Dimitar Dimitrov and Rania Elbadry and Fan Zhang and Lingfei Qian and Jimin Huang and Vanshikaa Jani and Yuyang Dai and Jiahui Geng and Yankai Chen and Yuan Ye and Haolun Wu and Yuxia Wang and Ivan Koychev and Veselin Stoyanov and Mingzi Song and Yu Chen and Steve Liu and Preslav Nakov},
+  booktitle = {CLEF 2026 Working Notes},
+  series = {CEUR Workshop Proceedings},
+  year = {2026},
+  month = {September 21--24},
+  address = {Jena, Germany},
+  publisher = {CEUR-WS.org},
+}</code></pre>
+          </div>
+
+          <div class="citation-card bg-white rounded-lg p-6 border border-gray-200 shadow-subtle">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-4">
+              <h3 class="font-bold text-ink">Task 3 Overview</h3>
+              <span class="text-xs uppercase tracking-wide text-accent-700 font-semibold bg-accent-50 rounded-full px-3 py-1">CEUR-WS</span>
+            </div>
+            <pre class="bg-gray-50 rounded-lg p-4 border border-gray-200"><code>@inproceedings{FinMMEvalTask3Overview2026,
+  title = {Overview of the {FinMMEval} 2026 Task 3: Financial Decision Making},
+  author = {Zhuohan Xie and Lingfei Qian and Georgi Georgiev and Dimitar Dimitrov and Rania Elbadry and Fan Zhang and Xueqing Peng and Jimin Huang and Vanshikaa Jani and Yuyang Dai and Jiahui Geng and Yankai Chen and Yuan Ye and Haolun Wu and Yuxia Wang and Ivan Koychev and Veselin Stoyanov and Mingzi Song and Yu Chen and Steve Liu and Preslav Nakov},
+  booktitle = {CLEF 2026 Working Notes},
+  series = {CEUR Workshop Proceedings},
+  year = {2026},
+  month = {September 21--24},
+  address = {Jena, Germany},
+  publisher = {CEUR-WS.org},
+}</code></pre>
           </div>
         </div>
       </div>
