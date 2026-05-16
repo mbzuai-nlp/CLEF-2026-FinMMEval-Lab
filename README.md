@@ -27,10 +27,12 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 
 ## Working Notes Template
 - Participant working notes should follow the CLEF Labs Working Notes format.
-- Working notes are published in CEUR-WS proceedings and should use the CEUR-WS / CEURART template.
+- Working notes are published in CEUR-WS proceedings and should use the CLEF 2026 1-column CEURART working notes template.
 - Papers should be written in English, with a minimum length of 5 pages and no maximum page limit.
-- Official CEURART package: https://ceur-ws.org/Vol-XXX/CEURART.zip
-- Overleaf template: https://www.overleaf.com/latex/templates/template-for-submissions-to-ceur-workshop-proceedings-ceur-ws-dot-org/wqyfdgftmcfw
+- CLEF 2026 LaTeX template: https://clef2026.clef-initiative.eu/calls/submitting/clef26-working-notes-template.zip
+- CLEF 2026 ODT template: https://clef2026.clef-initiative.eu/calls/submitting/clef26-working-notes-template.odt
+- CLEF 2026 instructions PDF: https://clef2026.clef-initiative.eu/calls/submitting/clef26-working-notes-instructions.pdf
+- Generic CEURART Overleaf template, for reference: https://www.overleaf.com/latex/templates/template-for-submissions-to-ceur-workshop-proceedings-ceur-ws-dot-org/wqyfdgftmcfw
 - CLEF 2026 submission instructions: https://clef2026.clef-initiative.eu/calls/submitting/
 
 ## Task 3 Notes
