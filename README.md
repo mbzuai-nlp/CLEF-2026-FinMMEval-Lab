@@ -63,7 +63,7 @@ Please cite the FinMMEval Lab overview paper when referring to the full lab. If 
 ```bibtex
 @inproceedings{FinMMEval2026,
   title = {Overview of {FinMMEval} 2026: Multilingual and Multimodal Financial Evaluation},
-  author = {Zhuohan Xie and Yuyang Dai and Rania Elbadry and Vanshikaa Jani and Xueqing Peng and Lingfei Qian and Georgi Georgiev and Dimitar Dimitrov and Fan Zhang and Jimin Huang and Jiahui Geng and Yankai Chen and Yuan Ye and Haolun Wu and Yuxia Wang and Ivan Koychev and Veselin Stoyanov and Mingzi Song and Yu Chen and Steve Liu and Preslav Nakov},
+  author = {Zhuohan Xie and Yuyang Dai and Rania Elbadry and Vanshikaa Jani and Xueqing Peng and Lingfei Qian and Georgi Georgiev and Dimitar Dimitrov and Fan Zhang and Jimin Huang and Jiahui Geng and Yankai Chen and Ye Yuan and Haolun Wu and Yuxia Wang and Ivan Koychev and Veselin Stoyanov and Mingzi Song and Yu Chen and Steve Liu and Preslav Nakov},
   booktitle = {Experimental IR Meets Multilinguality, Multimodality, and Interaction},
   series = {Proceedings of the Seventeenth International Conference of the CLEF Association (CLEF 2026)},
   year = {2026},
@@ -74,7 +74,7 @@ Please cite the FinMMEval Lab overview paper when referring to the full lab. If 
 
 @inproceedings{FinMMEvalTask1Overview2026,
   title = {Overview of the {FinMMEval} 2026 Task 1: Multilingual Financial Multiple-Choice Question Answering},
-  author = {Zhuohan Xie and Yuyang Dai and Rania Elbadry and Vanshikaa Jani and Georgi Georgiev and Dimitar Dimitrov and Fan Zhang and Xueqing Peng and Lingfei Qian and Jimin Huang and Jiahui Geng and Yankai Chen and Yuan Ye and Haolun Wu and Yuxia Wang and Ivan Koychev and Veselin Stoyanov and Mingzi Song and Yu Chen and Steve Liu and Preslav Nakov},
+  author = {Zhuohan Xie and Yuyang Dai and Rania Elbadry and Vanshikaa Jani and Georgi Georgiev and Dimitar Dimitrov and Fan Zhang and Xueqing Peng and Lingfei Qian and Jimin Huang and Jiahui Geng and Yankai Chen and Ye Yuan and Haolun Wu and Yuxia Wang and Ivan Koychev and Veselin Stoyanov and Mingzi Song and Yu Chen and Steve Liu and Preslav Nakov},
   booktitle = {CLEF 2026 Working Notes},
   series = {CEUR Workshop Proceedings},
   year = {2026},
@@ -85,7 +85,7 @@ Please cite the FinMMEval Lab overview paper when referring to the full lab. If 
 
 @inproceedings{FinMMEvalTask2Overview2026,
   title = {Overview of the {FinMMEval} 2026 Task 2: Financial Question Answering and Summarization},
-  author = {Zhuohan Xie and Xueqing Peng and Georgi Georgiev and Dimitar Dimitrov and Rania Elbadry and Fan Zhang and Lingfei Qian and Jimin Huang and Vanshikaa Jani and Yuyang Dai and Jiahui Geng and Yankai Chen and Yuan Ye and Haolun Wu and Yuxia Wang and Ivan Koychev and Veselin Stoyanov and Mingzi Song and Yu Chen and Steve Liu and Preslav Nakov},
+  author = {Zhuohan Xie and Xueqing Peng and Georgi Georgiev and Dimitar Dimitrov and Rania Elbadry and Fan Zhang and Lingfei Qian and Jimin Huang and Vanshikaa Jani and Yuyang Dai and Jiahui Geng and Yankai Chen and Ye Yuan and Haolun Wu and Yuxia Wang and Ivan Koychev and Veselin Stoyanov and Mingzi Song and Yu Chen and Steve Liu and Preslav Nakov},
   booktitle = {CLEF 2026 Working Notes},
   series = {CEUR Workshop Proceedings},
   year = {2026},
@@ -96,7 +96,7 @@ Please cite the FinMMEval Lab overview paper when referring to the full lab. If 
 
 @inproceedings{FinMMEvalTask3Overview2026,
   title = {Overview of the {FinMMEval} 2026 Task 3: Financial Decision Making},
-  author = {Zhuohan Xie and Lingfei Qian and Georgi Georgiev and Dimitar Dimitrov and Rania Elbadry and Fan Zhang and Xueqing Peng and Jimin Huang and Vanshikaa Jani and Yuyang Dai and Jiahui Geng and Yankai Chen and Yuan Ye and Haolun Wu and Yuxia Wang and Ivan Koychev and Veselin Stoyanov and Mingzi Song and Yu Chen and Steve Liu and Preslav Nakov},
+  author = {Zhuohan Xie and Lingfei Qian and Georgi Georgiev and Dimitar Dimitrov and Rania Elbadry and Fan Zhang and Xueqing Peng and Jimin Huang and Vanshikaa Jani and Yuyang Dai and Jiahui Geng and Yankai Chen and Ye Yuan and Haolun Wu and Yuxia Wang and Ivan Koychev and Veselin Stoyanov and Mingzi Song and Yu Chen and Steve Liu and Preslav Nakov},
   booktitle = {CLEF 2026 Working Notes},
   series = {CEUR Workshop Proceedings},
   year = {2026},
@@ -125,7 +125,7 @@ Please cite the FinMMEval Lab overview paper when referring to the full lab. If 
 - Yuyang Dai (INSAIT, Bulgaria)
 - Jiahui Geng (Linköping University, Sweden)
 - Yankai Chen (McGill University, Canada & MBZUAI, UAE)
-- Yuan Ye (McGill University, Canada & Mila - Quebec AI Institute, Canada)
+- Ye Yuan (McGill University, Canada & Mila - Quebec AI Institute, Canada)
 - Haolun Wu (McGill University, Canada & Mila - Quebec AI Institute, Canada)
 - Yuxia Wang (INSAIT, Bulgaria)
 - Ivan Koychev (Sofia University "St. Kliment Ohridski", Bulgaria)
