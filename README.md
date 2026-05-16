@@ -19,11 +19,19 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 - Full call, visuals, and timeline: https://mbzuai-nlp.github.io/CLEF-2026-FinMMEval-Lab/
 - At present, we do not enforce a hard submission cap per task. Participants may submit multiple times as needed, but should avoid unnecessary rapid resubmission.
 - Task 1/2 dev leaderboards and test questions release: 06 May 2026.
-- Task 1/2 final run submission deadline and final leaderboard release: 15 May 2026, after submissions close.
+- Task 1/2 final run submission deadline and final leaderboard release: 20 May 2026 AoE, after submissions close.
 
 ## Task 3 Endpoint Example
 - A reference FastAPI endpoint implementation is available at `examples/simple_trading_api.py`.
 - The example matches the documented Task 3 request/response format and returns `recommended_action` only.
+
+## Working Notes Template
+- Participant working notes should follow the CLEF Labs Working Notes format.
+- Working notes are published in CEUR-WS proceedings and should use the CEUR-WS / CEURART template.
+- Papers should be written in English, with a minimum length of 5 pages and no maximum page limit.
+- Official CEURART package: https://ceur-ws.org/Vol-XXX/CEURART.zip
+- Overleaf template: https://www.overleaf.com/latex/templates/template-for-submissions-to-ceur-workshop-proceedings-ceur-ws-dot-org/wqyfdgftmcfw
+- CLEF 2026 submission instructions: https://clef2026.clef-initiative.eu/calls/submitting/
 
 ## Task 3 Notes
 - The Task 3 endpoint submission deadline is the deadline for submitting or updating an endpoint; it is not the end of the evaluation period.

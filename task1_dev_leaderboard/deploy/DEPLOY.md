@@ -24,7 +24,7 @@ The app supports two modes:
 - `TASK1_PORTAL_MODE=dev`: shows the dev leaderboard and returns score/rank after upload.
 - `TASK1_PORTAL_MODE=test`: requires an email address, accepts one active final-test submission per email, validates format and coverage, runs organizer-side evaluation, and only exposes submission status before the deadline. It does not expose score, rank, or correct counts.
 
-Use `dev` for the May 6 dev leaderboard. Use `test` for the final Task 1/2 run submission window ending on May 15.
+Use `dev` for the May 6 dev leaderboard. Use `test` for the final Task 1/2 run submission window ending on May 20 AoE.
 
 Recommended `test` mode settings:
 
