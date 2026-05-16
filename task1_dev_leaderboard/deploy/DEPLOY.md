@@ -122,6 +122,24 @@ TASK1_HF_REPO_ID=<org-or-user>/<private-dataset-repo>
 HF_TOKEN=<write-token>
 ```
 
+Optional automatic format-check notification email:
+
+```bash
+FINMMEVAL_NOTIFY_SMTP_HOST=<smtp-host>
+FINMMEVAL_NOTIFY_SMTP_PORT=587
+FINMMEVAL_NOTIFY_SMTP_USERNAME=<smtp-username>
+FINMMEVAL_NOTIFY_SMTP_PASSWORD=<smtp-password-or-app-password>
+FINMMEVAL_NOTIFY_FROM="FinMMEval Organizers <no-reply@example.org>"
+FINMMEVAL_NOTIFY_REPLY_TO=<organizer-contact-email>
+FINMMEVAL_SUBMISSION_DEADLINE_TEXT="20 May 2026 AoE"
+```
+
+When these SMTP settings are configured, final-test submissions that fail the
+format check automatically trigger an email to the registered participant
+address. The email reports only non-answer-leaking format diagnostics such as
+missing IDs, unknown IDs, duplicate IDs, invalid predictions, and coverage.
+Successful submissions and score/rank information are not emailed by this hook.
+
 For dev portals, you can prevent arbitrary or duplicate team names by enabling team submission codes. Store this file in the private dataset repo, not in the public Space repo:
 
 ```json

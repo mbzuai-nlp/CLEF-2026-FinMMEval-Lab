@@ -8,10 +8,12 @@ import hashlib
 import json
 import os
 import re
+import smtplib
 import subprocess
 import sys
 import threading
 from datetime import datetime, timezone
+from email.message import EmailMessage
 from pathlib import Path
 from typing import Any
 
@@ -67,6 +69,20 @@ SUBMISSION_EXTENSIONS = {".json", ".jsonl"}
 VALID_LETTERS = {"A", "B", "C", "D", "E", "F"}
 EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 SUBMISSION_LOCK = threading.Lock()
+
+NOTIFY_SMTP_HOST = os.getenv("FINMMEVAL_NOTIFY_SMTP_HOST", "").strip()
+NOTIFY_SMTP_PORT = int(os.getenv("FINMMEVAL_NOTIFY_SMTP_PORT", "587"))
+NOTIFY_SMTP_USERNAME = os.getenv("FINMMEVAL_NOTIFY_SMTP_USERNAME", "").strip()
+NOTIFY_SMTP_PASSWORD = os.getenv("FINMMEVAL_NOTIFY_SMTP_PASSWORD", "").strip()
+NOTIFY_FROM = os.getenv("FINMMEVAL_NOTIFY_FROM", NOTIFY_SMTP_USERNAME).strip()
+NOTIFY_REPLY_TO = os.getenv("FINMMEVAL_NOTIFY_REPLY_TO", "").strip()
+NOTIFY_STARTTLS = os.getenv("FINMMEVAL_NOTIFY_STARTTLS", "1").strip().lower() not in {
+    "0",
+    "false",
+    "no",
+    "off",
+}
+SUBMISSION_DEADLINE_TEXT = os.getenv("FINMMEVAL_SUBMISSION_DEADLINE_TEXT", "20 May 2026 AoE").strip()
 
 app = FastAPI(title="FinMMEval Task 1 Dev Portal", version="1.0.0")
 app.mount("/task1/dev/static", StaticFiles(directory=str(WEB_ROOT / "assets")), name="task1-dev-static")
@@ -163,6 +179,102 @@ def validate_email(value: str) -> str:
 def email_submission_slug(email: str) -> str:
     digest = hashlib.sha256(email.encode("utf-8")).hexdigest()[:16]
     return f"email-{digest}"
+
+
+def notification_configured() -> bool:
+    return bool(NOTIFY_SMTP_HOST and NOTIFY_FROM)
+
+
+def send_email_notification(to_email: str, subject: str, body: str) -> dict[str, Any]:
+    if not to_email:
+        return {"sent": False, "reason": "missing_recipient"}
+    if not notification_configured():
+        return {"sent": False, "reason": "smtp_not_configured"}
+
+    msg = EmailMessage()
+    msg["From"] = NOTIFY_FROM
+    msg["To"] = to_email
+    msg["Subject"] = subject
+    if NOTIFY_REPLY_TO:
+        msg["Reply-To"] = NOTIFY_REPLY_TO
+    msg.set_content(body)
+
+    try:
+        if NOTIFY_SMTP_PORT == 465:
+            with smtplib.SMTP_SSL(NOTIFY_SMTP_HOST, NOTIFY_SMTP_PORT, timeout=20) as server:
+                if NOTIFY_SMTP_USERNAME and NOTIFY_SMTP_PASSWORD:
+                    server.login(NOTIFY_SMTP_USERNAME, NOTIFY_SMTP_PASSWORD)
+                server.send_message(msg)
+        else:
+            with smtplib.SMTP(NOTIFY_SMTP_HOST, NOTIFY_SMTP_PORT, timeout=20) as server:
+                if NOTIFY_STARTTLS:
+                    server.starttls()
+                if NOTIFY_SMTP_USERNAME and NOTIFY_SMTP_PASSWORD:
+                    server.login(NOTIFY_SMTP_USERNAME, NOTIFY_SMTP_PASSWORD)
+                server.send_message(msg)
+    except Exception as exc:  # pragma: no cover - depends on deployment SMTP
+        print(f"format notification failed for {to_email}: {exc}", file=sys.stderr)
+        return {"sent": False, "reason": str(exc)}
+    return {"sent": True}
+
+
+def first_items(values: list[str], limit: int = 5) -> str:
+    if not values:
+        return ""
+    shown = ", ".join(values[:limit])
+    if len(values) > limit:
+        shown += f", ... ({len(values)} total)"
+    return shown
+
+
+def task1_format_issue_lines(validation: dict[str, Any]) -> list[str]:
+    lines = []
+    missing_ids = validation.get("missing_ids") or []
+    unknown_ids = validation.get("unknown_ids") or []
+    duplicate_id_values = validation.get("duplicate_id_values") or []
+    invalid_prediction_ids = validation.get("invalid_prediction_ids") or []
+
+    if missing_ids:
+        lines.append(f"- Missing expected question IDs: {len(missing_ids)}")
+        lines.append(f"  Examples: {first_items(missing_ids)}")
+    if unknown_ids:
+        lines.append(f"- Unknown question IDs not in the official test set: {len(unknown_ids)}")
+        lines.append(f"  Examples: {first_items(unknown_ids)}")
+    if validation.get("duplicate_ids", 0):
+        lines.append(f"- Duplicate question ID entries: {validation['duplicate_ids']}")
+        if duplicate_id_values:
+            lines.append(f"  Examples: {first_items(duplicate_id_values)}")
+    if invalid_prediction_ids:
+        lines.append(f"- Invalid predictions: {len(invalid_prediction_ids)}")
+        lines.append(f"  Examples: {first_items(invalid_prediction_ids)}")
+
+    return lines or ["- The submission did not pass the final-test format check."]
+
+
+def notify_task1_format_issue(to_email: str, team_name: str, validation: dict[str, Any]) -> dict[str, Any]:
+    coverage = validation.get("coverage")
+    coverage_text = f"{float(coverage) * 100:.2f}%" if coverage is not None else "not available"
+    subject = f"FinMMEval Task 1 {PORTAL_VARIANT} Submission Format Check"
+    issue_text = "\n".join(task1_format_issue_lines(validation))
+    body = f"""Dear {team_name} team,
+
+We received your FinMMEval Task 1 {PORTAL_VARIANT} final-test submission, but it did not pass the organizer-side format check.
+
+Detected issues:
+{issue_text}
+
+Current answered coverage: {coverage_text}
+Rows received: {validation.get("rows", "not available")}
+Expected test items: {validation.get("total", "not available")}
+
+Please update the file so that each official test question ID appears exactly once and each prediction is one of A/B/C/D/E/F. You can resubmit before {SUBMISSION_DEADLINE_TEXT}; only the latest submission from the same email will be used.
+
+This email is only a format-check notification. Scores and ranks remain hidden until the official release.
+
+Best regards,
+FinMMEval Organizers
+"""
+    return send_email_notification(to_email, subject, body)
 
 
 def load_registry() -> dict[str, dict]:
@@ -337,6 +449,7 @@ def validate_submission_for_test_mode(content: bytes, suffix: str) -> dict[str, 
     expected_ids = load_expected_ids(GOLD_FILE)
     predictions: dict[str, str] = {}
     duplicate_ids = 0
+    duplicate_id_values = []
     invalid_prediction_ids = []
 
     for row in rows:
@@ -346,6 +459,7 @@ def validate_submission_for_test_mode(content: bytes, suffix: str) -> dict[str, 
         raw_pred, pred = extract_prediction(row)
         if item_id in predictions:
             duplicate_ids += 1
+            duplicate_id_values.append(item_id)
         predictions[item_id] = pred
         if raw_pred and not pred:
             invalid_prediction_ids.append(item_id)
@@ -365,6 +479,7 @@ def validate_submission_for_test_mode(content: bytes, suffix: str) -> dict[str, 
         "missing_ids": missing_ids,
         "unknown_ids": unknown_ids,
         "duplicate_ids": duplicate_ids,
+        "duplicate_id_values": sorted(set(duplicate_id_values)),
         "invalid_prediction_ids": sorted(set(invalid_prediction_ids)),
         "invalid_prediction_count": len(set(invalid_prediction_ids)),
         "valid_submission": int(
@@ -612,6 +727,10 @@ async def api_task1_submit(
             validation = validate_submission_for_test_mode(content, suffix)
             save_json(OUTPUT_DIR / f"{slug}__format_validation.json", validation)
             result = run_evaluation()
+            notification = None
+            if email and not validation.get("valid_submission"):
+                notification = notify_task1_format_issue(email, display_name, validation)
+                save_json(OUTPUT_DIR / f"{slug}__format_notification.json", notification)
             status_payload = {
                 "backend": STORAGE.backend_name,
                 "mode": PORTAL_MODE,
@@ -635,6 +754,7 @@ async def api_task1_submit(
                             "completed": False,
                             "last_updated": status_payload["last_run_at"],
                         },
+                        "notification_sent": bool(notification and notification.get("sent")),
                     },
                     status_code=202,
                 )
@@ -648,6 +768,7 @@ async def api_task1_submit(
                         "completed": True,
                         "last_updated": status_payload["last_run_at"],
                     },
+                    "notification_sent": bool(notification and notification.get("sent")),
                     "last_updated": status_payload["last_run_at"],
                 }
             )

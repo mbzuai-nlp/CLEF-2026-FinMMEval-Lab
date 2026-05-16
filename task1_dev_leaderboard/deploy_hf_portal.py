@@ -61,6 +61,26 @@ def run(cmd: list[str], env: dict[str, str] | None = None) -> None:
     subprocess.run(cmd, check=True, env=env)
 
 
+def add_optional_notification_settings(api: HfApi, repo_id: str) -> None:
+    variables = [
+        "FINMMEVAL_NOTIFY_SMTP_HOST",
+        "FINMMEVAL_NOTIFY_SMTP_PORT",
+        "FINMMEVAL_NOTIFY_SMTP_USERNAME",
+        "FINMMEVAL_NOTIFY_FROM",
+        "FINMMEVAL_NOTIFY_REPLY_TO",
+        "FINMMEVAL_NOTIFY_STARTTLS",
+        "FINMMEVAL_SUBMISSION_DEADLINE_TEXT",
+    ]
+    for key in variables:
+        value = os.getenv(key)
+        if value:
+            api.add_space_variable(repo_id=repo_id, key=key, value=value)
+
+    password = os.getenv("FINMMEVAL_NOTIFY_SMTP_PASSWORD")
+    if password:
+        api.add_space_secret(repo_id=repo_id, key="FINMMEVAL_NOTIFY_SMTP_PASSWORD", value=password)
+
+
 def main() -> None:
     args = parse_args()
     token = (
@@ -147,6 +167,7 @@ def main() -> None:
     api.add_space_variable(repo_id=args.space_repo_id, key="TASK1_PORTAL_SUBMISSION_TITLE", value=f"{args.variant} {mode_label} Submission Portal")
     api.add_space_variable(repo_id=args.space_repo_id, key="TASK1_PORTAL_LEADERBOARD_TITLE", value=f"Task 1 {args.variant} {mode_label} Leaderboard")
     api.add_space_variable(repo_id=args.space_repo_id, key="TASK1_PORTAL_DATASET_LABEL", value=args.dataset_label)
+    add_optional_notification_settings(api, args.space_repo_id)
 
     print(f"Storage repo ready: {args.storage_repo_id}")
     print(f"Space deployed: https://{args.space_repo_id.replace('/', '-')}.hf.space/task1/dev")
