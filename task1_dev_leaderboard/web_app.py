@@ -82,7 +82,7 @@ NOTIFY_STARTTLS = os.getenv("FINMMEVAL_NOTIFY_STARTTLS", "1").strip().lower() no
     "no",
     "off",
 }
-SUBMISSION_DEADLINE_TEXT = os.getenv("FINMMEVAL_SUBMISSION_DEADLINE_TEXT", "20 May 2026 AoE").strip()
+SUBMISSION_DEADLINE_TEXT = os.getenv("FINMMEVAL_SUBMISSION_DEADLINE_TEXT", "25 May 2026 AoE").strip()
 
 app = FastAPI(title="FinMMEval Task 1 Dev Portal", version="1.0.0")
 app.mount("/task1/dev/static", StaticFiles(directory=str(WEB_ROOT / "assets")), name="task1-dev-static")
