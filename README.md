@@ -41,16 +41,15 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 - Official Task 3 performance is computed over a common evaluation window for all accepted endpoints, rather than starting separately from each team's individual form submission date.
 - Task 3 uses a longer endpoint-based evaluation workflow. Submitted systems will continue to be called daily after the endpoint submission deadline for the official Task 3 evaluation window. We expect this window to run through late June or early July, aligned with the final lab reporting schedule.
 - The daily runner starts at 00:00 UTC. Teams do not need to keep endpoints online for the full day, but should start them shortly before 00:00 UTC and keep them available for several hours to allow for queued requests, retries, and temporary network delays.
-- Participants are encouraged to prepare their working notes early. The paper should primarily describe the system architecture, methodology, and experimental setup; final rankings and official leaderboard numbers can be added after the leaderboard is released.
+- Participants are encouraged to prepare their working notes early. The paper should primarily describe the system architecture, methodology, and experimental setup; results can be updated later if the evaluation status is stated clearly.
 - Awards are decided primarily based on paper quality, with leaderboard performance considered as supporting evidence.
 
-## Organizer-Only Result Export
-- Task 1 and Task 2 final-test portals keep participant-facing scores hidden before the deadline, while storing organizer-side results in private Hugging Face dataset storage.
-- After submissions close, organizers can export release-ready ranking CSVs with:
-  `python scripts/export_private_results.py --config organizer_private_exports.local.json --out-dir private_exports/YYYY-MM-DD --force-download`
-- Copy `scripts/export_private_results.sample.json` to `organizer_private_exports.local.json` and fill in the private HF dataset repo IDs and remote output folders. Keep the local config uncommitted. It should contain repo IDs, but no tokens. The script reads `HF_TOKEN`, `HUGGINGFACEHUB_API_TOKEN`, or `HUGGINGFACE_TOKEN` from the environment.
-- The exporter intentionally writes ranking-level CSVs only. It does not copy Task 1 per-item result files, because those contain gold answers.
-- Run `python scripts/export_private_results.py --self-test` before the final export to verify the local export logic.
+## Working Notes and Awards
+- FinMMEval participant systems should be documented in CLEF Working Notes papers.
+- FinMMEval awards are evaluated over FinMMEval participant submissions and their CLEF Working Notes papers.
+- The separate CLEF main conference paper track is not used for FinMMEval award evaluation.
+- Participants should not submit the same or near-identical manuscript to both the CLEF main conference track and the CLEF Working Notes track.
+- After the lab, a substantially extended version may be submitted to another conference or journal if it follows that venue's originality, prior-publication, and dual-submission policies.
 
 ## Training Data (Released)
 - Download the training collection on Hugging Face (released 2025-12-15): https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026
