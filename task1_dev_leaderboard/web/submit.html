@@ -106,6 +106,14 @@
       document.getElementById('submission-intro').textContent = isTestMode
         ? 'Upload one final-test prediction file. Your email is used as the unique submission key; a later upload from the same email replaces the earlier active submission. Scores and ranks remain hidden.'
         : 'Upload one prediction file per team. A new upload from the same team replaces the older one and refreshes the official __PORTAL_VARIANT__ dev ranking.';
+      if (payload.submissions_closed) {
+        document.getElementById('submit-button').textContent = 'Submission Window Closed';
+        document.getElementById('submit-button').disabled = true;
+        document.getElementById('submission-intro').textContent = 'The final-test submission window is closed. Please use the final leaderboards for official Task 1 results.';
+        document.querySelectorAll('#submission-form input, #submission-form button').forEach((item) => {
+          item.disabled = true;
+        });
+      }
 
       const emailField = document.getElementById('contact-email-field');
       const emailInput = document.getElementById('contact_email');

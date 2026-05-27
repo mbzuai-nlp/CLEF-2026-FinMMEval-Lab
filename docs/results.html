@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FinMMEval 2026 Final Leaderboards</title>
+  <meta name="description" content="Official FinMMEval 2026 Task 1 and Task 2 final-test leaderboards." />
+  <link rel="icon" href="images/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: Manrope, Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+    }
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      background: white;
+    }
+    table {
+      width: 100%;
+      min-width: 780px;
+      border-collapse: collapse;
+    }
+    th {
+      background: #f1f5f9;
+      color: #475569;
+      font-size: 0.74rem;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      text-align: left;
+      white-space: nowrap;
+    }
+    th, td {
+      padding: 0.85rem 1rem;
+      border-bottom: 1px solid #e2e8f0;
+      vertical-align: top;
+    }
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+    .rank-pill {
+      display: inline-flex;
+      min-width: 2.4rem;
+      height: 2.1rem;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      background: #e0ecff;
+      color: #1d4ed8;
+      font-weight: 800;
+    }
+    .tab-btn[aria-selected="true"] {
+      background: #2563eb;
+      color: white;
+      border-color: #2563eb;
+    }
+  </style>
+</head>
+<body>
+  <header class="sticky top-0 z-40 border-b border-slate-200 bg-white/95 backdrop-blur">
+    <div class="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+      <a href="index.html" class="flex items-center gap-3 font-bold">
+        <img src="images/favicon.png" alt="FinMMEval Logo" class="h-10 w-10 rounded">
+        <span>FinMMEval Lab 2026</span>
+      </a>
+      <nav class="hidden items-center gap-5 text-sm font-semibold text-slate-600 md:flex">
+        <a href="index.html#tasks" class="hover:text-blue-700">Tasks</a>
+        <a href="task1-dev.html" class="hover:text-blue-700">Task 1 Hub</a>
+        <a href="https://mbzuai-finmmeval-task2-final-portal.hf.space/task2/test" target="_blank" rel="noopener noreferrer" class="hover:text-blue-700">Task 2 Portal</a>
+        <a href="index.html#citations" class="hover:text-blue-700">Cite</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+    <section class="mb-10">
+      <p class="mb-3 text-sm font-bold uppercase tracking-wide text-blue-700">Official Final Results</p>
+      <h1 class="max-w-4xl text-3xl font-extrabold tracking-tight text-slate-950 sm:text-4xl">FinMMEval Task 1 and Task 2 final-test leaderboards</h1>
+      <p class="mt-4 max-w-3xl text-slate-600">
+        These leaderboards report organizer-side final-test results for Task 1 and Task 2 after the submission window closed. The tables include ranking-level metrics only and do not expose hidden labels, participant answers, or private evaluation files.
+      </p>
+      <div class="mt-6 grid gap-3 text-sm text-slate-700 md:grid-cols-3">
+        <div class="rounded-lg border border-slate-200 bg-white p-4">
+          <div class="font-bold text-slate-950">Freeze policy</div>
+          <div class="mt-1">Latest completed submissions after organizer-side validation are ranked.</div>
+        </div>
+        <div class="rounded-lg border border-slate-200 bg-white p-4">
+          <div class="font-bold text-slate-950">Working notes</div>
+          <div class="mt-1">Participants may add these results to their CLEF Working Notes papers.</div>
+        </div>
+        <div class="rounded-lg border border-slate-200 bg-white p-4">
+          <div class="font-bold text-slate-950">Snapshot</div>
+          <div id="snapshot-time" class="mt-1">Loading...</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="mb-12">
+      <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 class="text-2xl font-extrabold text-slate-950">Task 1: Multilingual Financial MCQ</h2>
+          <p class="mt-2 text-slate-600">Primary metric: accuracy. Each language is ranked separately.</p>
+        </div>
+        <div class="flex flex-wrap gap-2" role="tablist" aria-label="Task 1 languages">
+          <button class="tab-btn rounded-lg border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700" data-lang="English" aria-selected="true">English</button>
+          <button class="tab-btn rounded-lg border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700" data-lang="Chinese" aria-selected="false">Chinese</button>
+          <button class="tab-btn rounded-lg border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700" data-lang="Arabic" aria-selected="false">Arabic</button>
+          <button class="tab-btn rounded-lg border border-slate-300 px-4 py-2 text-sm font-bold text-slate-700" data-lang="Hindi" aria-selected="false">Hindi</button>
+        </div>
+      </div>
+      <div class="mb-3 flex flex-wrap gap-2 text-sm">
+        <a id="task1-csv" href="results/task1_english_final_leaderboard.csv" class="rounded-lg border border-slate-300 bg-white px-3 py-2 font-semibold text-slate-700 hover:bg-slate-50">Download current CSV</a>
+      </div>
+      <div id="task1-table" class="table-wrap"></div>
+    </section>
+
+    <section>
+      <div class="mb-5 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <h2 class="text-2xl font-extrabold text-slate-950">Task 2: Multilingual Financial Q&A</h2>
+          <p class="mt-2 text-slate-600">Primary metric: ROUGE-1 F1. Only completed submissions are included in the official ranking.</p>
+        </div>
+        <a href="results/task2_final_leaderboard.csv" class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">Download CSV</a>
+      </div>
+      <div id="task2-table" class="table-wrap"></div>
+      <p id="task2-note" class="mt-3 text-sm text-slate-500"></p>
+    </section>
+  </main>
+
+  <script>
+    const task1Csv = {
+      English: "results/task1_english_final_leaderboard.csv",
+      Chinese: "results/task1_chinese_final_leaderboard.csv",
+      Arabic: "results/task1_arabic_final_leaderboard.csv",
+      Hindi: "results/task1_hindi_final_leaderboard.csv"
+    };
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function formatUtc(value) {
+      if (!value) return "Not available";
+      return value.replace("T", " ").replace("Z", " UTC");
+    }
+
+    function renderTask1(rows) {
+      return `
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Team</th>
+              <th>Accuracy</th>
+              <th>Correct</th>
+              <th>Coverage</th>
+              <th>Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.map(row => `
+              <tr>
+                <td><span class="rank-pill">#${escapeHtml(row.rank)}</span></td>
+                <td class="font-bold text-slate-950">${escapeHtml(row.team)}</td>
+                <td class="font-bold text-blue-800">${escapeHtml(row.accuracy.toFixed(2))}%</td>
+                <td>${escapeHtml(row.correct)} / ${escapeHtml(row.total)}</td>
+                <td>${escapeHtml(row.coverage.toFixed(2))}%</td>
+                <td>${escapeHtml(formatUtc(row.updated_utc))}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    function renderTask2(rows) {
+      return `
+        <table>
+          <thead>
+            <tr>
+              <th>Rank</th>
+              <th>Team</th>
+              <th>ROUGE-1 F1</th>
+              <th>Precision</th>
+              <th>Recall</th>
+              <th>Coverage</th>
+              <th>Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rows.map(row => `
+              <tr>
+                <td><span class="rank-pill">#${escapeHtml(row.rank)}</span></td>
+                <td class="font-bold text-slate-950">${escapeHtml(row.team)}</td>
+                <td class="font-bold text-blue-800">${escapeHtml(row.rouge1_f1_percent.toFixed(2))}%</td>
+                <td>${escapeHtml(row.rouge1_precision.toFixed(4))}</td>
+                <td>${escapeHtml(row.rouge1_recall.toFixed(4))}</td>
+                <td>${escapeHtml(row.coverage.toFixed(2))}%</td>
+                <td>${escapeHtml(formatUtc(row.updated_utc))}</td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>
+      `;
+    }
+
+    async function main() {
+      const response = await fetch("results/results-data.json", {cache: "no-store"});
+      if (!response.ok) throw new Error("Could not load results-data.json");
+      const data = await response.json();
+      document.getElementById("snapshot-time").textContent = formatUtc(data.meta.released_at_utc);
+
+      let activeLang = "English";
+      const task1Table = document.getElementById("task1-table");
+      const task1CsvLink = document.getElementById("task1-csv");
+      function setLanguage(lang) {
+        activeLang = lang;
+        task1Table.innerHTML = renderTask1(data.task1[lang].ranked);
+        task1CsvLink.href = task1Csv[lang];
+        task1CsvLink.textContent = `Download ${lang} CSV`;
+        document.querySelectorAll(".tab-btn").forEach(btn => {
+          btn.setAttribute("aria-selected", btn.dataset.lang === lang ? "true" : "false");
+        });
+      }
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => setLanguage(btn.dataset.lang));
+      });
+      setLanguage(activeLang);
+
+      document.getElementById("task2-table").innerHTML = renderTask2(data.task2.ranked);
+      if (data.task2.not_ranked_count > 0) {
+        document.getElementById("task2-note").textContent = `${data.task2.not_ranked_count} incomplete Task 2 submission was not included in the official ranking.`;
+      }
+    }
+
+    main().catch(error => {
+      document.getElementById("task1-table").innerHTML = `<div class="p-6 text-red-700">${escapeHtml(error.message)}</div>`;
+      document.getElementById("task2-table").innerHTML = `<div class="p-6 text-red-700">${escapeHtml(error.message)}</div>`;
+    });
+  </script>
+</body>
+</html>

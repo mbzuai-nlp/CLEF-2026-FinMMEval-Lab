@@ -70,6 +70,7 @@ def add_optional_notification_settings(api: HfApi, repo_id: str) -> None:
         "FINMMEVAL_NOTIFY_REPLY_TO",
         "FINMMEVAL_NOTIFY_STARTTLS",
         "FINMMEVAL_SUBMISSION_DEADLINE_TEXT",
+        "FINMMEVAL_SUBMISSIONS_CLOSED",
     ]
     for key in variables:
         value = os.getenv(key)

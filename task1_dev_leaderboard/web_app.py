@@ -83,6 +83,7 @@ NOTIFY_STARTTLS = os.getenv("FINMMEVAL_NOTIFY_STARTTLS", "1").strip().lower() no
     "off",
 }
 SUBMISSION_DEADLINE_TEXT = os.getenv("FINMMEVAL_SUBMISSION_DEADLINE_TEXT", "25 May 2026 AoE").strip()
+SUBMISSIONS_CLOSED = os.getenv("FINMMEVAL_SUBMISSIONS_CLOSED", "").strip().lower() in {"1", "true", "yes", "on"}
 
 app = FastAPI(title="FinMMEval Task 1 Dev Portal", version="1.0.0")
 app.mount("/task1/dev/static", StaticFiles(directory=str(WEB_ROOT / "assets")), name="task1-dev-static")
@@ -568,6 +569,7 @@ def current_leaderboard_payload() -> dict[str, Any]:
                 ]
             ),
             "last_updated": status.get("last_run_at"),
+            "submissions_closed": SUBMISSIONS_CLOSED,
         }
         return {"overall": overall, "status": public_status, "dataset": dataset_meta}
 
@@ -619,6 +621,7 @@ def current_test_status_payload() -> dict[str, Any]:
                 ]
             ),
             "last_updated": status.get("last_run_at"),
+            "submissions_closed": SUBMISSIONS_CLOSED,
         }
         return {"submissions": submissions, "status": public_status, "dataset": dataset_meta}
 
@@ -682,6 +685,9 @@ async def api_task1_submit(
     submission_code: str | None = Form(None),
     prediction_file: UploadFile = File(...),
 ) -> JSONResponse:
+    if SUBMISSIONS_CLOSED:
+        raise HTTPException(status_code=403, detail="The final-test submission window is closed.")
+
     ensure_directories()
 
     slug, display_name, email = resolve_submission_identity(team_name, submission_code, contact_email)

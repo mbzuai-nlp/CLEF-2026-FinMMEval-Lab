@@ -1,0 +1,590 @@
+{
+  "meta": {
+    "generated_at_utc": "2026-05-27T04:48:52Z",
+    "released_at_utc": "2026-05-27T04:48:52Z",
+    "freeze_note": "Task 1 and Task 2 final-test submissions were frozen after the 25 May 2026 AoE deadline and organizer-side validation.",
+    "not_ranked_note": "Incomplete submissions are not included in official ranks."
+  },
+  "task1": {
+    "English": {
+      "ranked": [
+        {
+          "rank": 1,
+          "team": "PooRi",
+          "accuracy": 97.5,
+          "correct": 195,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-09T10:34:30+00:00"
+        },
+        {
+          "rank": 2,
+          "team": "fosu ltw",
+          "accuracy": 93.5,
+          "correct": 187,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-06T16:04:06+00:00"
+        },
+        {
+          "rank": 3,
+          "team": "pranshu rastogi",
+          "accuracy": 91.0,
+          "correct": 182,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-21T03:36:50+00:00"
+        },
+        {
+          "rank": 4,
+          "team": "NLP-DE",
+          "accuracy": 87.5,
+          "correct": 175,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-23T10:15:57+00:00"
+        },
+        {
+          "rank": 5,
+          "team": "UyoAngle",
+          "accuracy": 83.0,
+          "correct": 166,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-15T11:52:17+00:00"
+        },
+        {
+          "rank": 6,
+          "team": "TextSentinels",
+          "accuracy": 81.5,
+          "correct": 163,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-20T11:39:44+00:00"
+        },
+        {
+          "rank": 7,
+          "team": "AI_TLfanclub",
+          "accuracy": 80.5,
+          "correct": 161,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-15T06:45:54+00:00"
+        },
+        {
+          "rank": 8,
+          "team": "TCLabs",
+          "accuracy": 79.0,
+          "correct": 158,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-13T07:33:17+00:00"
+        },
+        {
+          "rank": 9,
+          "team": "DS@GT - FinMMEval Task 1",
+          "accuracy": 69.5,
+          "correct": 139,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-09T19:19:47+00:00"
+        },
+        {
+          "rank": 10,
+          "team": "FinEval",
+          "accuracy": 66.5,
+          "correct": 133,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-21T11:52:11+00:00"
+        },
+        {
+          "rank": 11,
+          "team": "Paticipate",
+          "accuracy": 64.5,
+          "correct": 129,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-18T12:31:46+00:00"
+        },
+        {
+          "rank": 12,
+          "team": "Vitt Manthan",
+          "accuracy": 29.5,
+          "correct": 59,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-20T22:17:05+00:00"
+        },
+        {
+          "rank": 13,
+          "team": "FinEval",
+          "accuracy": 26.5,
+          "correct": 53,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-21T11:56:24+00:00"
+        }
+      ],
+      "count": 13,
+      "metric": "Accuracy"
+    },
+    "Chinese": {
+      "ranked": [
+        {
+          "rank": 1,
+          "team": "PooRi",
+          "accuracy": 96.5,
+          "correct": 193,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-16T15:54:49+00:00"
+        },
+        {
+          "rank": 2,
+          "team": "fosu ltw",
+          "accuracy": 92.0,
+          "correct": 184,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-06T16:26:46+00:00"
+        },
+        {
+          "rank": 3,
+          "team": "pranshu rastogi",
+          "accuracy": 92.0,
+          "correct": 184,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-21T03:36:30+00:00"
+        },
+        {
+          "rank": 4,
+          "team": "NLP-DE",
+          "accuracy": 87.0,
+          "correct": 174,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-23T10:17:05+00:00"
+        },
+        {
+          "rank": 5,
+          "team": "UyoAngle",
+          "accuracy": 77.0,
+          "correct": 154,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-15T11:53:07+00:00"
+        },
+        {
+          "rank": 6,
+          "team": "TextSentinels",
+          "accuracy": 76.5,
+          "correct": 153,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-20T11:41:29+00:00"
+        },
+        {
+          "rank": 7,
+          "team": "TCLabs",
+          "accuracy": 75.5,
+          "correct": 151,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-13T07:34:17+00:00"
+        },
+        {
+          "rank": 8,
+          "team": "AI_TLfanclub",
+          "accuracy": 70.5,
+          "correct": 141,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-15T06:47:08+00:00"
+        },
+        {
+          "rank": 9,
+          "team": "DS@GT - FinMMEval Task 1",
+          "accuracy": 64.5,
+          "correct": 129,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-09T19:20:42+00:00"
+        },
+        {
+          "rank": 10,
+          "team": "FinEval",
+          "accuracy": 46.5,
+          "correct": 93,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-21T10:05:11+00:00"
+        },
+        {
+          "rank": 11,
+          "team": "Vitt Manthan",
+          "accuracy": 26.5,
+          "correct": 53,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-21T01:23:13+00:00"
+        }
+      ],
+      "count": 11,
+      "metric": "Accuracy"
+    },
+    "Arabic": {
+      "ranked": [
+        {
+          "rank": 1,
+          "team": "PooRi",
+          "accuracy": 97.5,
+          "correct": 195,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-16T15:55:10+00:00"
+        },
+        {
+          "rank": 2,
+          "team": "pranshu rastogi",
+          "accuracy": 95.0,
+          "correct": 190,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-21T03:35:38+00:00"
+        },
+        {
+          "rank": 3,
+          "team": "fosu ltw",
+          "accuracy": 94.0,
+          "correct": 188,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-07T01:16:35+00:00"
+        },
+        {
+          "rank": 4,
+          "team": "NLP-DE",
+          "accuracy": 91.5,
+          "correct": 183,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-23T10:18:54+00:00"
+        },
+        {
+          "rank": 5,
+          "team": "TCLabs",
+          "accuracy": 89.5,
+          "correct": 179,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-12T07:39:07+00:00"
+        },
+        {
+          "rank": 6,
+          "team": "UyoAngle",
+          "accuracy": 86.5,
+          "correct": 173,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-15T11:53:52+00:00"
+        },
+        {
+          "rank": 7,
+          "team": "TextSentinels",
+          "accuracy": 86.0,
+          "correct": 172,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-20T11:51:16+00:00"
+        },
+        {
+          "rank": 8,
+          "team": "AI_TLfanclub",
+          "accuracy": 84.0,
+          "correct": 168,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-15T06:47:57+00:00"
+        },
+        {
+          "rank": 9,
+          "team": "FinEval",
+          "accuracy": 83.5,
+          "correct": 167,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-20T17:38:21+00:00"
+        },
+        {
+          "rank": 10,
+          "team": "DS@GT - FinMMEval Task 1",
+          "accuracy": 76.0,
+          "correct": 152,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-09T19:21:48+00:00"
+        },
+        {
+          "rank": 11,
+          "team": "FinEval",
+          "accuracy": 9.5,
+          "correct": 19,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-21T11:54:05+00:00"
+        }
+      ],
+      "count": 11,
+      "metric": "Accuracy"
+    },
+    "Hindi": {
+      "ranked": [
+        {
+          "rank": 1,
+          "team": "fosu ltw",
+          "accuracy": 92.0,
+          "correct": 184,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-06T16:41:10+00:00"
+        },
+        {
+          "rank": 2,
+          "team": "PooRi",
+          "accuracy": 92.0,
+          "correct": 184,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-09T10:45:52+00:00"
+        },
+        {
+          "rank": 3,
+          "team": "pranshu rastogi",
+          "accuracy": 91.5,
+          "correct": 183,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-21T03:36:10+00:00"
+        },
+        {
+          "rank": 4,
+          "team": "TCLabs",
+          "accuracy": 90.0,
+          "correct": 180,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-12T07:38:26+00:00"
+        },
+        {
+          "rank": 5,
+          "team": "UyoAngle",
+          "accuracy": 87.0,
+          "correct": 174,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-15T11:53:27+00:00"
+        },
+        {
+          "rank": 6,
+          "team": "NLP-DE",
+          "accuracy": 85.5,
+          "correct": 171,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-23T10:17:48+00:00"
+        },
+        {
+          "rank": 7,
+          "team": "DS@GT - FinMMEval Task 1",
+          "accuracy": 73.5,
+          "correct": 147,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-09T19:21:18+00:00"
+        },
+        {
+          "rank": 8,
+          "team": "AI_TLfanclub",
+          "accuracy": 68.5,
+          "correct": 137,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-15T06:47:34+00:00"
+        },
+        {
+          "rank": 9,
+          "team": "FinEval",
+          "accuracy": 62.5,
+          "correct": 125,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-21T11:56:02+00:00"
+        },
+        {
+          "rank": 10,
+          "team": "Vitt Manthan SVNIT",
+          "accuracy": 31.0,
+          "correct": 62,
+          "total": 200,
+          "coverage": 100.0,
+          "updated_utc": "2026-05-21T00:22:55+00:00"
+        }
+      ],
+      "count": 10,
+      "metric": "Accuracy"
+    }
+  },
+  "task2": {
+    "ranked": [
+      {
+        "rank": 1,
+        "team": "Calibrated Signals",
+        "rouge1_f1": 0.31182,
+        "rouge1_f1_percent": 31.18,
+        "rouge1_precision": 0.302498,
+        "rouge1_recall": 0.376361,
+        "coverage": 100.0,
+        "easy_coverage": 100.0,
+        "expert_coverage": 100.0,
+        "updated_utc": "2026-05-14T15:07:31Z"
+      },
+      {
+        "rank": 2,
+        "team": "pranshu rastogi",
+        "rouge1_f1": 0.309609,
+        "rouge1_f1_percent": 30.96,
+        "rouge1_precision": 0.320841,
+        "rouge1_recall": 0.35366,
+        "coverage": 100.0,
+        "easy_coverage": 100.0,
+        "expert_coverage": 100.0,
+        "updated_utc": "2026-05-21T03:16:19Z"
+      },
+      {
+        "rank": 3,
+        "team": "IGT",
+        "rouge1_f1": 0.307075,
+        "rouge1_f1_percent": 30.71,
+        "rouge1_precision": 0.282108,
+        "rouge1_recall": 0.40444,
+        "coverage": 100.0,
+        "easy_coverage": 100.0,
+        "expert_coverage": 100.0,
+        "updated_utc": "2026-05-20T22:18:54Z"
+      },
+      {
+        "rank": 4,
+        "team": "AI_TLfanclub",
+        "rouge1_f1": 0.303923,
+        "rouge1_f1_percent": 30.39,
+        "rouge1_precision": 0.364714,
+        "rouge1_recall": 0.30701,
+        "coverage": 100.0,
+        "easy_coverage": 100.0,
+        "expert_coverage": 100.0,
+        "updated_utc": "2026-05-15T10:26:07Z"
+      },
+      {
+        "rank": 5,
+        "team": "PooRi",
+        "rouge1_f1": 0.297152,
+        "rouge1_f1_percent": 29.72,
+        "rouge1_precision": 0.278093,
+        "rouge1_recall": 0.379763,
+        "coverage": 100.0,
+        "easy_coverage": 100.0,
+        "expert_coverage": 100.0,
+        "updated_utc": "2026-05-14T16:25:07Z"
+      },
+      {
+        "rank": 6,
+        "team": "DS@GT FinMMEval",
+        "rouge1_f1": 0.285309,
+        "rouge1_f1_percent": 28.53,
+        "rouge1_precision": 0.257237,
+        "rouge1_recall": 0.388839,
+        "coverage": 100.0,
+        "easy_coverage": 100.0,
+        "expert_coverage": 100.0,
+        "updated_utc": "2026-05-14T21:41:53Z"
+      },
+      {
+        "rank": 7,
+        "team": "The Lab Rats",
+        "rouge1_f1": 0.273353,
+        "rouge1_f1_percent": 27.34,
+        "rouge1_precision": 0.273697,
+        "rouge1_recall": 0.34169,
+        "coverage": 100.0,
+        "easy_coverage": 100.0,
+        "expert_coverage": 100.0,
+        "updated_utc": "2026-05-24T15:29:17Z"
+      },
+      {
+        "rank": 8,
+        "team": "Ethereum Team B CLEF",
+        "rouge1_f1": 0.254618,
+        "rouge1_f1_percent": 25.46,
+        "rouge1_precision": 0.308559,
+        "rouge1_recall": 0.264243,
+        "coverage": 100.0,
+        "easy_coverage": 100.0,
+        "expert_coverage": 100.0,
+        "updated_utc": "2026-05-17T10:14:30Z"
+      },
+      {
+        "rank": 9,
+        "team": "TCLabs",
+        "rouge1_f1": 0.250643,
+        "rouge1_f1_percent": 25.06,
+        "rouge1_precision": 0.2321,
+        "rouge1_recall": 0.32574,
+        "coverage": 100.0,
+        "easy_coverage": 100.0,
+        "expert_coverage": 100.0,
+        "updated_utc": "2026-05-12T08:16:43Z"
+      },
+      {
+        "rank": 10,
+        "team": "HU_LLM_Fin",
+        "rouge1_f1": 0.228886,
+        "rouge1_f1_percent": 22.89,
+        "rouge1_precision": 0.258063,
+        "rouge1_recall": 0.280321,
+        "coverage": 100.0,
+        "easy_coverage": 100.0,
+        "expert_coverage": 100.0,
+        "updated_utc": "2026-05-26T15:19:53Z"
+      },
+      {
+        "rank": 11,
+        "team": "NLP-DE",
+        "rouge1_f1": 0.204852,
+        "rouge1_f1_percent": 20.49,
+        "rouge1_precision": 0.264342,
+        "rouge1_recall": 0.190123,
+        "coverage": 100.0,
+        "easy_coverage": 100.0,
+        "expert_coverage": 100.0,
+        "updated_utc": "2026-05-23T08:53:18Z"
+      },
+      {
+        "rank": 12,
+        "team": "TextSentinels",
+        "rouge1_f1": 0.18734,
+        "rouge1_f1_percent": 18.73,
+        "rouge1_precision": 0.30288,
+        "rouge1_recall": 0.175564,
+        "coverage": 100.0,
+        "easy_coverage": 100.0,
+        "expert_coverage": 100.0,
+        "updated_utc": "2026-05-20T11:47:52Z"
+      }
+    ],
+    "not_ranked_count": 1,
+    "count": 12,
+    "metric": "ROUGE-1 F1"
+  }
+}
