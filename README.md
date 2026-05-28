@@ -30,6 +30,12 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 - Participant working notes should follow the CLEF Labs Working Notes format.
 - Working notes are published in CEUR-WS proceedings and should use the CLEF 2026 1-column CEURART working notes template.
 - Papers should be written in English, with a minimum length of 5 pages and no maximum page limit.
+- Paper titles must clearly include the team/system name, `FinMMEval 2026`, and the task number(s) covered by the paper. This is important for EasyChair metadata, review handling, proceedings grouping, and the CEUR-WS table of contents.
+- Recommended title patterns:
+  - `<Team Name> @ FinMMEval 2026 Task <X>: <Short System Description>`
+  - `<Team Name> @ FinMMEval 2026: Systems for Tasks 1 and 2`
+  - If the team name already contains `@`, for example `DS@GT`, `DS@GT at FinMMEval 2026 Task 2: <Short System Description>` is also acceptable.
+- Please make sure the title in EasyChair exactly matches the title in the PDF.
 - CLEF 2026 LaTeX template: https://clef2026.clef-initiative.eu/calls/submitting/clef26-working-notes-template.zip
 - CLEF 2026 ODT template: https://clef2026.clef-initiative.eu/calls/submitting/clef26-working-notes-template.odt
 - CLEF 2026 instructions PDF: https://clef2026.clef-initiative.eu/calls/submitting/clef26-working-notes-instructions.pdf
