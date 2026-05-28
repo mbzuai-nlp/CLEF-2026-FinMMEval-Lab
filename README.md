@@ -70,6 +70,16 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 
 Please cite the FinMMEval Lab overview paper when referring to the full lab. If your work is associated with a specific task, please also cite the corresponding task overview paper.
 
+In addition, please cite the task source or platform papers used by the tracks you participated in:
+
+- Task 1 English / Chinese: cite RealFin.
+- Task 1 Hindi: cite BhashaBench V1 / BhashaBench-Finance.
+- Task 1 Arabic: cite SAHM.
+- Task 2: cite MultiFinBen.
+- Task 3: cite Agent Market Arena / When Agents Trade.
+
+Some source papers have been accepted but are not yet available in the official proceedings. We provide the arXiv citations below for now and will update them to the official proceedings BibTeX once available.
+
 ```bibtex
 @inproceedings{FinMMEval2026,
   title = {Overview of {FinMMEval} 2026: Multilingual and Multimodal Financial Evaluation},
@@ -113,6 +123,60 @@ Please cite the FinMMEval Lab overview paper when referring to the full lab. If 
   month = {September 21--24},
   address = {Jena, Germany},
   publisher = {CEUR-WS.org},
+}
+
+@misc{dai2026realfin,
+  title = {{RealFin}: How Well Do {LLM}s Reason About Finance When Users Leave Things Unsaid?},
+  author = {Yuyang Dai and Yan Lin and Zhuohan Xie and Yuxia Wang},
+  year = {2026},
+  eprint = {2602.07096},
+  archivePrefix = {arXiv},
+  primaryClass = {q-fin.ST},
+  doi = {10.48550/arXiv.2602.07096},
+  url = {https://arxiv.org/abs/2602.07096},
+}
+
+@misc{devane2025bhashabenchv1,
+  title = {{BhashaBench V1}: A Comprehensive Benchmark for the Quadrant of Indic Domains},
+  author = {Vijay Devane and Mohd Nauman and Bhargav Patel and Aniket Mahendra Wakchoure and Yogeshkumar Sant and Shyam Pawar and Viraj Thakur and Ananya Godse and Sunil Patra and Neha Maurya and Suraj Racha and Nitish Kamal Singh and Ajay Nagpal and Piyush Sawarkar and Kundeshwar Vijayrao Pundalik and Rohit Saluja and Ganesh Ramakrishnan},
+  year = {2025},
+  eprint = {2510.25409},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CL},
+  url = {https://arxiv.org/abs/2510.25409},
+}
+
+@misc{elbadry2026sahm,
+  title = {{SAHM}: A Benchmark for Arabic Financial and Shari'ah-Compliant Reasoning},
+  author = {Rania Elbadry and Sarfraz Ahmad and Ahmed Heakl and Dani Bouch and Momina Ahsan and Muhra AlMahri and Marwa Elsaid khalil and Yuxia Wang and Salem Lahlou and Sophia Ananiadou and Veselin Stoyanov and Jimin Huang and Xueqing Peng and Preslav Nakov and Zhuohan Xie},
+  year = {2026},
+  eprint = {2604.19098},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CL},
+  doi = {10.48550/arXiv.2604.19098},
+  url = {https://arxiv.org/abs/2604.19098},
+}
+
+@misc{peng2025multifinben,
+  title = {{MultiFinBen}: Benchmarking Large Language Models for Multilingual and Multimodal Financial Application},
+  author = {Xueqing Peng and Lingfei Qian and Yan Wang and Ruoyu Xiang and Yueru He and Yang Ren and Mingyang Jiang and Vincent Jim Zhang and Yuqing Guo and Jeff Zhao and Huan He and Yi Han and Yun Feng and Yuechen Jiang and Yupeng Cao and Haohang Li and Yangyang Yu and Xiaoyu Wang and Penglei Gao and Shengyuan Lin and Keyi Wang and Shanshan Yang and Yilun Zhao and Zhiwei Liu and Peng Lu and Jerry Huang and Suyuchen Wang and Triantafillos Papadopoulos and Polydoros Giannouris and Efstathia Soufleri and Nuo Chen and Zhiyang Deng and Heming Fu and Yijia Zhao and Mingquan Lin and Meikang Qiu and Kaleb E Smith and Arman Cohan and Xiao-Yang Liu and Jimin Huang and Guojun Xiong and Alejandro Lopez-Lira and Xi Chen and Junichi Tsujii and Jian-Yun Nie and Sophia Ananiadou and Qianqian Xie},
+  year = {2025},
+  eprint = {2506.14028},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CL},
+  doi = {10.48550/arXiv.2506.14028},
+  url = {https://arxiv.org/abs/2506.14028},
+}
+
+@misc{qian2025whenagentstrade,
+  title = {When Agents Trade: Live Multi-Market Trading Benchmark for {LLM} Agents},
+  author = {Lingfei Qian and Xueqing Peng and Yan Wang and Vincent Jim Zhang and Huan He and Hanley Smith and Yi Han and Yueru He and Haohang Li and Yupeng Cao and Yangyang Yu and Alejandro Lopez-Lira and Peng Lu and Jian-Yun Nie and Guojun Xiong and Jimin Huang and Sophia Ananiadou},
+  year = {2025},
+  eprint = {2510.11695},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CL},
+  doi = {10.48550/arXiv.2510.11695},
+  url = {https://arxiv.org/abs/2510.11695},
 }
 ```
 
