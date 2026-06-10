@@ -210,7 +210,7 @@ Some source papers have been accepted but are not yet available in the official 
 - Yuxia Wang (INSAIT, Bulgaria)
 - Ivan Koychev (Sofia University "St. Kliment Ohridski", Bulgaria)
 - Veselin Stoyanov (MBZUAI, UAE)
-- Mingzi Song (Nikkei Financial Technology Research Institute, Inc., Japan)
+- Mingzi Song (Meiji Gakuin University, Japan)
 - Yu Chen (The University of Tokyo, Japan)
 - Steve Liu (McGill University, Canada & MBZUAI, UAE)
 - Preslav Nakov (MBZUAI, UAE)
