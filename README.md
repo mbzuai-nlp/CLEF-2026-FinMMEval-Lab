@@ -68,9 +68,13 @@ Multilingual and multimodal evaluation of financial AI systems. The lab spans th
 - Task 3 historical data for backtesting, validation, and training: https://huggingface.co/collections/MBZUAI/finmmeval-lab-clef2026
 
 ## Awards
-- 🏆 Best Paper Award: USD 500
-- 🥈 Outstanding Paper Award ×3: USD 300 each
-- 🌱 Merit / Encouragement Award ×2: USD 200 each
+
+The FinMMEval 2026 awards recognize seven participant papers: six team-level cash awards totaling USD 1,800, plus one Special Recognition Award.
+
+- 🏆 Best Paper Award — USD 500: Calibrated Signals
+- 🌟 Outstanding Paper Award ×3 — USD 300 each: Infraglyph, Pranshu Rastogi, fosu ltw
+- 👏 Merit / Encouragement Award ×2 — USD 200 each: CLaC, Fin-Analyst
+- 🎖️ Special Recognition Award — non-cash recognition: IGT
 
 ## Recommended Citations
 
