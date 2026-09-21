@@ -1958,7 +1958,7 @@
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
           window.scrollTo({
-            top: targetElement.offsetTop - 80, // Adjusted for sticky header
+            top: targetElement.getBoundingClientRect().top + window.scrollY - 80, // Document position below sticky header
             behavior: 'smooth'
           });
           
